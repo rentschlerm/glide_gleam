@@ -1,0 +1,32 @@
+/* Your existing CSS styles here */
+
+#search {
+    background-color: #fff;
+    padding: 40px 0;
+}
+
+#results {
+    background-color: #f9f9f9;
+    padding: 40px 0;
+}
+
+.car-wash-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.car-wash-card {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.car-wash-card h3 {
+    margin-top: 0;
+}
+
+.car-wash-card p {
+    margin-bottom: 10px;
+}

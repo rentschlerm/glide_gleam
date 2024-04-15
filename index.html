@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Wash Booking System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Stylesheet -->
+    <link href="./css/style.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Top Bar Start -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-4 col-md-12">
+                    <div class="logo">
+                        <a href="index.html">
+                            <h1>Glide<span>Gleam</span></h1>
+                            <!-- <img src="img/logo.jpg" alt="Logo"> -->
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-7 d-none d-lg-block">
+                    <div class="row">
+                        <div class="col-4">
+                        </div>
+                        <div class="col-4">
+                            <div class="top-bar-item">
+                                <div class="top-bar-icon">
+                                    <i class="fa fa-phone-alt"></i>
+                                </div>
+                                <div class="top-bar-text">
+                                    <h3>Call Us</h3>
+                                    <p>+012 345 6789</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="top-bar-item">
+                                <div class="top-bar-icon">
+                                    <i class="far fa-envelope"></i>
+                                </div>
+                                <div class="top-bar-text">
+                                    <h3>Email Us</h3>
+                                    <p>info@example.com</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Top Bar End -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Your Instant Car Wash</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <!-- <a class="nav-link" href="#">Sign In</a> -->
+                        <!-- Trigger the modal with a button -->
+                        <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#signIn">Sign in</button>
+                    </li>
+                    <li class="nav-item">
+                        <!-- <a class="nav-link" href="#">Sign Up</a> -->&nbsp
+                        <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#signUp">Sign up</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Modal for Sign in -->
+<div id="signIn" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <div class="modal-header">
+                
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body">
+                <center>
+                <div class="container">
+                    <table border="0" style="margin: 0;padding: 0;width: 60%;">
+                        <tr>
+                            <td>
+                                <p class="header-text">Welcome Back!</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p class="sub-text">Login with your details to continue</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <form action="signin.php" method="post"> <!-- Corrected form action -->
+                                <td class="label-td">
+                                    <label for="email" class="form-label">Email: </label>
+                                </td>
+                        </tr>
+                        <tr>
+                            <td class="label-td">
+                                <input type="email" name="email" class="input-text" placeholder="Email Address" required>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-td">
+                                <label for="password" class="form-label">Password: </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-td">
+                                <input type="password" name="password" class="input-text" placeholder="Password" required>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="submit" value="Login" class="login-btn btn-primary btn">
+                            </td>
+                        </tr>
+                        </form>
+                        <tr>
+                            <td>
+                                <br>
+                                <label for="" class="sub-text" style="font-weight: 280;">Don't have an account? </label>
+                                <a href="choose_account_type.php" class="hover-link1 non-style-link">Sign Up</a>
+                                <br><br><br>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </center>
+                <p>Some text in the modal.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- Modal for Sign up -->
+<div id="signUp" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                
+                <h4 class="modal-title">Sign up</h4>
+            </div>
+            <div class="modal-body">
+                <center>
+                    <div class="container">
+                        <table border="0">
+                           
+                            <tr>
+                                <form action="./createAccount/save_user_type.php" method="POST" id="signup-form">
+
+                                    <td class="label-td" colspan="2">
+                                        <label for="name" class="form-label">Name: </label>
+                                    </td>
+                            </tr>
+                            <tr>
+                                <td class="label-td">
+                                    <input type="text" name="fname" class="input-text" placeholder="First Name" required>
+                                </td>
+                                <td class="label-td">
+                                    <input type="text" name="lname" class="input-text" placeholder="Last Name" required>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label-td" colspan="2">
+                                    <label for="phone" class="form-label">Phone Number: </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label-td" colspan="2">
+                                    <input type="tel" name="phone" class="input-text" placeholder="Phone Number" required>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label-td" colspan="2">
+                                    <label for="email" class="form-label">Email: </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label-td" colspan="2">
+                                    <input type="text" name="email" class="input-text" placeholder="Email" required>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label-td" colspan="2">
+                                    <label for="password" class="form-label">Password: </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label-td" colspan="2">
+                                    <input type="password" id = "password" name="password" class="input-text" placeholder="Password" required>
+                                    <img id="toggle-icon" class="password-toggle-icon" src="https://img.icons8.com/material-outlined/24/000000/invisible--v1.png" onclick="togglePasswordVisibility()" alt="Toggle Password Visibility">
+       
+                                </td>
+                            </tr>
+                           <tr>
+                            <td>
+                                &nbsp;
+                                <div class="radio-container">
+                                    <input type="radio" id="shopOwner" name="userType" value="shop_owner" onclick="handleUserType('shop_owner')">
+                                    <label for="shopOwner">Shop Owner</label>
+                                    <span class="radio-button"></span>
+                                </div>
+                                <div class="radio-container">
+                                    <input type="radio" id="vehicleOwner" name="userType" value="vehicle_owner" onclick="handleUserType('vehicle_owner')">
+                                    <label for="vehicleOwner">Vehicle Owner</label>
+                                    <span class="radio-button"></span>
+                                </div>
+                            </td>
+                           </tr>
+                           
+                            <tr>
+                                <td>
+                                    <input type="reset" value="Reset" class="login-btn btn-primary-soft btn">
+                                </td>
+                                <td>
+                                    <input type="submit" value="Next" class="btn btn-custom">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <br>
+                                    <label for="" class="sub-text" style="font-weight: 280;">Already have an account&#63; </label>
+                                    <a href="login.php" class="hover-link1 non-style-link">Login</a>
+                                    <br><br><br>
+                                </td>
+                            </tr>
+                        </form>
+                    </tr>
+                </table>
+            
+            </div>
+            </center>
+                
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-custom" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+    
+    <header class="jumbotron text-center">
+        <div class="container">
+            <h1 class="display-4">Book Your Car Wash Appointment</h1>
+            <p class="lead">Convenient, Fast, and Reliable</p>
+            <!-- <a href="#" class="btn btn-primary btn-lg">Book Appointment</a> -->
+            <div class="ml-auto">
+                <a class="btn btn-custom" data-toggle="modal" data-target="#signIn">Get Appointment</a>
+            </div>
+        </div>
+    </header>
+    
+    <footer class="bg-dark text-white py-4">
+        <div class="container text-center">
+            <p>&copy; 2024 Car Wash Booking System</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function togglePasswordVisibility() {
+            var passwordInput = document.getElementById("password");
+            var icon = document.getElementById("toggle-icon");
+            
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                icon.setAttribute("src", "https://img.icons8.com/material-outlined/24/000000/visible--v1.png");
+            } else {
+                passwordInput.type = "password";
+                icon.setAttribute("src", "https://img.icons8.com/material-outlined/24/000000/invisible--v1.png");
+            }
+        }
+    </script>
+     <script>
+         function handleUserType(userType) {
+        // Send an HTTP request to the server-side script with the selected user type
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "save_user_type.php");
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                // Handle response from the server if needed
+                console.log(xhr.responseText);
+            }
+        };
+
+        // Send user type as JSON
+        xhr.send(JSON.stringify({ userType: userType }));
+    
+    
+            // Get form data
+            var form = document.getElementById("signup-form");
+            var formData = new FormData(form);
+    
+            // Append user type to form data
+            formData.append("userType", userType);
+    
+            // Send form data as JSON
+            xhr.send(JSON.stringify(Object.fromEntries(formData.entries())));
+        }
+    </script>
+
+    
+</body>
+</html>
