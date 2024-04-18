@@ -1,64 +1,55 @@
 <?php
-// Retrieve the POST data sent from the client-side JavaScript
-$data = json_decode(file_get_contents("php://input"), true);
-
-var_dump($data);
-
-// Check if the user type is valid
-$userType = isset($data['userType']) ? $data['userType'] : null;
-
-// Debugging: Print out the user type
-echo "User type received: " . $userType;
-
-// Check if the user type is valid
-$userType = $data['userType'] ?? null;
-if ($userType !== 'shop_owner' && $userType !== 'vehicle_owner') {
-    // Invalid user type
-    http_response_code(400);
-    echo "Invalid user type";
-    exit;
-}
-
+session_start();
 include('../connection.php');
 
-$email = $_POST['email'];
-$password = $_POST['password'];
-$firstName = $_POST['first_name'];
-$lastName = $_POST['last_name'];
-$phone = $_POST['phone'];
+// Check if the form has been submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Retrieve form data
+    $firstName = $_POST['fname'];
+    $lastName = $_POST['lname'];
+    $phone = $_POST['phone'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $userType = $_POST['userType']; // This will contain either 'shop_owner' or 'vehicle_owner'
+    $model = $_POST ['model'];
+    $licensePlate = $_POST ['license_plate'];
+    $vehicleSize = $_POST ['vehicle_size'];
+    $vehicleBrand = $_POST ['brand'];
+    $vehicleYear = $_POST ['vehicle_year'];
+    $vehicleColor = $_POST ['color'];
+    $vehicleType = $_POST ['vehicle_type'];
 
-// Prepare and execute SQL statement to save the user type to the appropriate table
-if ($userType === 'shop_owner') {
-    $database->query("INSERT INTO shop_owners (first_name, last_name, phone) VALUES ('$firstName', '$lastName', '$phone')");
-    $shopOwnerId = $database->insert_id;
+    // Prepare and execute SQL statement to save the user type to the appropriate table
+    if ($userType === 'shop_owner') {
+        $database->query("INSERT INTO shop_owners (first_name, last_name, phone) VALUES ('$firstName', '$lastName', '$phone')");
+        $shopOwnerId = $database->insert_id;
 
-    // Insert account details
-    $database->query("INSERT INTO accounts (email, password, type, status) VALUES ('$email', '$password', '1', 'Accept registration')");
-    $accountId = $database->insert_id;
+        // Insert account details
+        $database->query("INSERT INTO accounts (email, password, type, status) VALUES ('$email', '$password', '1', 'Accept registration')");
+        $accountId = $database->insert_id;
 
-    // Update shop owner with account ID
-    $database->query("UPDATE shop_owners SET account_id = '$accountId' WHERE shop_owner_id = '$shopOwnerId'");
+        // Update shop owner with account ID
+        $database->query("UPDATE shop_owners SET shop_owner_id = '$accountId' WHERE shop_owner_id = '$shopOwnerId'");
 
-    // Set shop_owner_id in session
-    $_SESSION['shop_owner_id'] = $shopOwnerId;
-} else {
-    $database->query("INSERT INTO vehicle_owners (first_name, last_name, phone) VALUES ('$firstName', '$lastName', '$phone')");
-    $vehicleOwnerId = $database->insert_id;
-    $database->query("INSERT INTO accounts (email, password, type, status) VALUES ('$email', '$password', '2', 'Accept registration')");
-    $accountId = $database->insert_id;
-    $database->query("UPDATE vehicle_owners SET account_id = '$accountId' WHERE vehicle_owner_id = '$vehicleOwnerId'");
+        // Set shop_owner_id in session
+        $_SESSION['shop_owner_id'] = $shopOwnerId;
+    } else {
+        $database->query("INSERT INTO vehicle_owners (first_name, last_name, phone,brand,model,vehicle_year,license_plate,vehicle_size,color,vehicle_type) VALUES ('$firstName', '$lastName', '$phone', '$vehicleBrand', '$model', '$vehicleYear', '$licensePlate', '$vehicleSize', '$vehicleColor', '$vehicleType')");
+        $vehicleOwnerId = $database->insert_id;
+        $database->query("INSERT INTO accounts (email, password, type, status) VALUES ('$email', '$password', '2', 'Accept registration')");
+        $accountId = $database->insert_id;
+        $database->query("UPDATE vehicle_owners SET vehicle_owner_id = '$accountId' WHERE vehicle_owner_id = '$vehicleOwnerId'");
+    }
 
-}
-
-if ($databse->query($sql) === TRUE) {
-    // User type saved successfully, redirect to login page
-    header("Location: index.html");
+    // Redirect to login page after successfully saving user type
+    
+    header("Location: ../index.html?signup=success");
     exit;
 } else {
-    echo "Error: " . $sql . "<br>" . $databse->error;
+    echo "Error: Form not submitted.";
 }
 
-echo "User type saved successfully";
 // Close the database connection
-$databse->close();
+$database->close();
 ?>
+

@@ -1,10 +1,13 @@
-
+<?php
+    session_start();
+    include("../connection.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Appointments</title>
+    <title>Services</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- Google Font -->
@@ -20,15 +23,7 @@
 
         <!-- Stylesheet -->
         <link href="../css/style.css" rel="stylesheet">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" />
-        <style>
-        .popup{
-            animation: transitionIn-Y-bottom 0.5s;
-        }
-        .sub-table{
-            animation: transitionIn-Y-bottom 0.5s;
-        }
-    </style>
+
 </head>
 <body>
      <!-- Top Bar Start -->
@@ -88,7 +83,13 @@
                         <a class="nav-link" href="appointment.php">Appointments</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Car Wash</a>
+                        <a class="nav-link" href="#">Customers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="services.php">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="addShop.php">Shop</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Settings</a>
@@ -100,7 +101,74 @@
             </div>
         </div>
     </nav>
+    <div class="container my-5">
+        <h2>My Carwash Shop</h2>
+        <a class="btn btn-primary" href="../carwashowner/index.php" role="button">Back</a>
+        <a class="btn btn-primary" href="../carwashowner/create.php" role="button">Add Carwash Shop</a>
 
+        <br>
+        <table class="table">
+            <thead>
+                <br><br><br>
+            <h2> Shops </h2>
+                <tr>
+                    <th>Shop Name</th>
+                    <th>Location</th>
+                    <th>Open</th>
+                    <th>Close</th>
+                    <!-- <th>Services</th>
+                    <th>Price</th>
+                    <th>Category</th> -->
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                <?php
+                
 
-</body>
+                if($database->connect_error) {
+                    die("Connection Failed:" . database->connect_error);
+                }
+               
+
+                // Check if the user ID is set in the session
+                // if(isset($_SESSION['id'])) {
+                    // Output the user ID for verification
+                //     echo "User ID: " . $_SESSION['id'];
+                // } else {
+                //     echo "User ID is not set in the session.";
+                // }
+                
+                // Assuming your connection.php file defines $connection
+                $shop_owner_id = $_SESSION['id'];
+                $sql = "SELECT * FROM shop_info WHERE shop_owner_id = '$shop_owner_id'";
+                $result = $database->query($sql);
+
+                if (!$result) {
+                    die("Invalid query: " . $database->error);
+                }
+
+                // <td>{$row['service_name']}</td>
+                // <td>{$row['price']}</td>
+                // <td>{$row['category']}</td>
+                while ($row = $result->fetch_assoc()) {
+                    echo "
+                    <tr>
+                        <td>{$row['shop_name']}</td>
+                        <td>{$row['location']}</td>
+                        <td>{$row['operating_from']}</td>
+                        <td>{$row['operating_to']}</td>
+                        <td>
+                            <a class='btn btn-primary btn-sm' href='/cws/carwashowner/edit.php?shop_info_id={$row['shop_info_id']}'>EDIT</a>
+                            <a class='btn btn-primary btn-sm' href='/cws/carwashowner/delete.php?shop_info_id={$row['shop_info_id']}'>DELETE</a>
+                        </td>
+                    </tr>";
+                }
+                ?>
+                
+            
+    </div>
+
+    </body>
 </html>

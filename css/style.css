@@ -31,45 +31,7 @@ h6 {
     cursor: pointer;
 }
 
- /* Custom radio button styling */
- .radio-container {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-}
-.radio-container input[type="radio"] {
-    display: none; /* Hide the default radio button */
-}
-.radio-container label {
-    font-size: 16px;
-    cursor: pointer;
-    margin-left: 5px;
-}
-/* Radio button custom styles */
-.radio-button {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    border: 2px solid #666;
-    display: inline-block;
-    position: relative;
-}
-.radio-button::after {
-    content: "";
-    width: 12px;
-    height: 12px;
-    background-color: #666;
-    border-radius: 50%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    opacity: 0; /* Hide by default */
-}
-/* Show the dot when the radio button is checked */
-.radio-container input[type="radio"]:checked + .radio-button::after {
-    opacity: 1;
-}
+ 
 
 a {
     color: #202C45;

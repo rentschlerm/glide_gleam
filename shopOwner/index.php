@@ -27,7 +27,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-4 col-md-12">
                         <div class="logo">
-                            <a href="index.html">
+                            <a href="index.php">
                                 <h1>Glide<span>Gleam</span></h1>
                                 <!-- <img src="img/logo.jpg" alt="Logo"> -->
                             </a>
@@ -75,16 +75,16 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="./appointment.php">Appointments</a>
+                        <a class="nav-link" href="appointment.php">Appointments</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Customers</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Services</a>
+                        <a class="nav-link" href="services.php">Services</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Availability</a>
+                        <a class="nav-link" href="addShop.php">Shop</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Settings</a>
