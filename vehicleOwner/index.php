@@ -88,7 +88,7 @@
                         <a class="nav-link" href="appointment.php">Appointments</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Car Wash</a>
+                        <a class="nav-link" href="booking.php">Car Wash</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Settings</a>
