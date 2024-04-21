@@ -1,4 +1,48 @@
+<?php
+// Start the session at the very beginning of the file
+session_start();
 
+// Import database connection
+include("../connection.php");
+
+// Check if the selectedServices session variable is set
+if(isset($_SESSION['selectedServices'])) {
+    $selectedServices = $_SESSION['selectedServices'];
+    // Now you can use $selectedServices array in this file
+} else {
+    // Handle the case where selectedServices is not set
+    $selectedServices = array(); // Initialize as an empty array
+}
+
+// Check if the user is logged in and has the correct type
+if(isset($_SESSION["user"]) && $_SESSION['type'] == '2'){
+    $useremail = $_SESSION["user"];
+} else {
+    // Redirect to login page if user is not logged in or has incorrect type
+    header("location: ../index.html");
+    exit(); // Terminate script execution after redirection
+}
+
+// Fetch appointments for the logged-in user
+$sql = "SELECT appointment.*, accounts.*, vehicle_owners.*, shop_info.*, services.serviceName, services.service_price
+        FROM `appointment` 
+        JOIN accounts ON appointment.vehicle_owner_id = accounts.account_id 
+        JOIN vehicle_owners ON accounts.account_id = vehicle_owners.vehicle_owner_id
+        JOIN shop_info ON appointment.shop_info_id = shop_info.shop_info_id
+        LEFT JOIN services ON appointment.service_id = services.service_id
+        WHERE accounts.account_id = {$_SESSION['id']} 
+        AND appointment.status = 'Not Completed'";
+
+
+$result = $database->query($sql);
+
+// Check for SQL query errors
+if ($result === false) {
+    die("Error executing query: " . $database->error);
+}
+
+// Output HTML content
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,9 +72,27 @@
         .sub-table{
             animation: transitionIn-Y-bottom 0.5s;
         }
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* Optional: Hide horizontal scrollbar */
+        }
+
+        body {
+        background: linear-gradient(to bottom, #000000, #8A2BE2); /* Black to Violet gradient */
+        
+        }
+
+        /* Adjusted CSS */
+        .appointment-card {
+            max-width: 400px; /* Set the maximum width of the card */
+            margin: -10 auto; /* Center the card horizontally */
+        }
     </style>
 </head>
 <body>
+
      <!-- Top Bar Start -->
      <div class="top-bar">
             <div class="container">
@@ -85,6 +147,9 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
+                        <a class="nav-link" href="index.php">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="appointment.php">Appointments</a>
                     </li>
                     <li class="nav-item">
@@ -100,7 +165,81 @@
             </div>
         </div>
     </nav>
+    
+    <div class="container my-5">
+    <a class="btn btn-custom" href="index.php" role="button">Back</a>
+    <?php
+    // Check if the result is not empty
+    if ($result->num_rows > 0) {
+        // Output data of each row
+        while($row = $result->fetch_assoc()) {
+            // Output appointment details in a card
+            echo "<div class='card my-2 appointment-card'>";
+            echo "<div class='card-body'>";
+            echo "<h5 class='card-title'>Shop Name: " . $row["shop_name"]. "</h5>";
+            echo "<p class='card-text'>Location: " . $row["location"]. "</p>";
+            echo "<p class='card-text'>Queue Number: " . $row["queue_number"] . "</p>";
 
+            // Display selected services and their prices
+            if(!empty($selectedServices)) {
+                echo "<p class='card-text'>Selected Service(s): <br>";
+                foreach($selectedServices as $service => $price) {
+                    echo "- $service (₱$price)<br>";
+                }
+                echo "</p>";
+            } else {
+                echo "<p class='card-text'>No service selected</p>";
+            }
+            
+            echo "<p class='card-text'>Appointment Date: " . date('F d, Y', strtotime($row["appointment_date"])). "</p>";
+            echo "<p class='card-text'>Appointment Time: " . date('h:i A', strtotime($row["appointment_date"])). "</p>";
+             // Button to handle cancellation of appointment
+             echo "<button id='cancelBtn' class='btn btn-danger' onclick='completeAppointment(" . $row["appointment_id"] . ", \"Cancelled\")'>Cancel</button>";
+
+            echo "</div>";
+            echo "</div>";
+        }
+    } else {
+        // Output a message if no appointments are found
+        echo "<p>No appointments found</p>";
+    }
+    ?>
+    </div>
+
+    <script>
+    // Function to hide the cancel button after 5 minutes
+    setTimeout(function(){
+        document.getElementById('cancelBtn').style.display = 'none';
+    }, 300000); // 5 minutes in milliseconds
+
+   
+    function completeAppointment(appointmentId, status) {
+        // Display a confirmation prompt
+        var confirmAction = confirm("Are you sure you want to mark this appointment as " + status + "?");
+
+        if (confirmAction) {
+            // Send an AJAX request to mark the appointment as completed or cancelled
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "update_appointment.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // Handle the response from the PHP script
+                    alert(xhr.responseText);
+                    // Optionally, you can update the UI to reflect the completed/cancelled appointment
+                    location.reload(); // Reload the page to reflect the changes
+                    
+                    // If the appointment is marked as completed, send notification
+                    if (status === "Completed") {
+                        sendNotification(appointmentId);
+                    }
+                }
+            };
+            xhr.send("appointment_id=" + appointmentId + "&status=" + status);
+        }
+    }
+    
+    </script>
 
 </body>
 </html>

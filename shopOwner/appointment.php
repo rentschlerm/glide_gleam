@@ -6,16 +6,10 @@ session_start();
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/animations.css">  
-    <link rel="stylesheet" href="../css/main.css">  
-    <link rel="stylesheet" href="../css/admin.css">
-    <link rel="stylesheet" href="../css/app.css">
-        
-    <title>Appointments</title>
-     <!-- Bootstrap CSS -->
-     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Services</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"> 
      <!-- CSS Libraries -->
@@ -29,35 +23,24 @@ session_start();
 
         <!-- Stylesheet -->
         <link href="../css/style.css" rel="stylesheet">
-    <style>
-        .container {
-            position: relative;
+        <style>
+             html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* Optional: Hide horizontal scrollbar */
         }
-        .back-btn {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            padding: 10px 10px; /* Adjust padding as needed */
-            border: none;
-            background-color: #007bff; /* Your desired button color */
-            color: #fff; /* Text color */
-            border-radius: 5px; /* Rounded corners */
-            cursor: pointer;
+
+        body {
+        background: linear-gradient(to bottom, #000000, #8A2BE2); /* Black to Violet gradient */
+        
         }
-        .logout-btn:hover {
-            background-color: #0056b3; /* Hover color */
-        }
-        .appointments-heading {
-            margin-top: 20px; /* Adjust the margin as needed */
-        }
-        .popup {
-            animation: transitionIn-Y-bottom 0.5s;
-        }
-        .sub-table {
-            animation: transitionIn-Y-bottom 0.5s;
-        }
-    </style>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        .section-title h2 {
+            color: white;
+        } 
+
+            </style>
+
 </head>
 <body>
      <!-- Top Bar Start -->
@@ -111,20 +94,19 @@ session_start();
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="back-btn" href="index.php" role="button">Back</a>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="./appointment.php">Appointments</a>
+                        <a class="nav-link" href="appointment.php">Appointments</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Customers</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Services</a>
+                        <a class="nav-link" href="services.php">Services</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Availability</a>
+                        <a class="nav-link" href="addShop.php">Shop</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Settings</a>
@@ -136,8 +118,11 @@ session_start();
             </div>
         </div>
     </nav>
+    <a class="btn btn-primary" href="index.php" role="button">Back</a>
     <div class="container my-5">
+    <div class="section-title">
     <h2 class="appointments-heading">Appointments</h2>
+    </div>
     <?php
     // Start session at the very beginning of the script
     
@@ -169,18 +154,18 @@ session_start();
             echo "<div class='card-body'>";
             echo "<h5 class='card-title'>Customer Name: " . $row["first_name"] . " " . $row["last_name"] . "</h5>";
             echo "<p class='card-text'>Shop Name: " . $row["shop_name"] . "</p>";
-            echo "<p class='card-text'>Queue Number: " . $row["apponum"] . "</p>";
+            echo "<p class='card-text'>Queue Number: " . $row["queue_number"] . "</p>";
             // echo "<p class='card-text'>Service Name: " . $row["service_name"] . "</p>";
             // echo "<p class='card-text'>Price: ₱" . $row["price"] . "</p>";
             // echo "<p class='card-text'>Category: " . $row["category"] . "</p>";
-            echo "<p class='card-text'>Appointment Date: " . date('F d, Y', strtotime($row["appodate"])) . "</p>";
-            echo "<p class='card-text'>Appointment Time: " . date('h:i A', strtotime($row["appodate"])) . "</p>";
+            echo "<p class='card-text'>Appointment Date: " . date('F d, Y', strtotime($row["appointment_date"])) . "</p>";
+            echo "<p class='card-text'>Appointment Time: " . date('h:i A', strtotime($row["appointment_date"])) . "</p>";
 
             // Button to handle completion of appointment
-            echo "<button class='btn btn-primary' onclick='completeAppointment(" . $row["appoid"] . ", \"Completed\")'>Completed</button>";
+            echo "<button class='btn btn-primary' onclick='completeAppointment(" . $row["appointment_id"] . ", \"Completed\")'>Completed</button>";
 
             // Button to handle cancellation of appointment
-            echo "<button class='btn btn-danger' onclick='completeAppointment(" . $row["appoid"] . ", \"Cancelled\")'>Cancel</button>";
+            echo "<button class='btn btn-danger' onclick='completeAppointment(" . $row["appointment_id"] . ", \"Cancelled\")'>Cancel</button>";
 
             echo "</div>";
             echo "</div>";

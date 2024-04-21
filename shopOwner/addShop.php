@@ -23,7 +23,42 @@
 
         <!-- Stylesheet -->
         <link href="../css/style.css" rel="stylesheet">
+        <style>
+        .section-title h2 {
+            color: white;
+        } 
 
+        /* Style for the table header */
+        th {
+            background-color: #343a40; /* Dark grey */
+            color: #fff; /* White text */
+        }
+        /* Alternate row color for better readability */
+        tbody tr {
+            background-color: #fff; /* Violet */
+            color: #000000; /* White text */
+        }
+        tbody tr:nth-child(even) {
+            background-color: #fff; /* Violet */
+            color: #000000; /* White text */
+        }
+        /* Style for action buttons */
+        .action-btns .btn {
+            margin-right: 5px;
+        }
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* Optional: Hide horizontal scrollbar */
+        }
+
+        body {
+        background: linear-gradient(to bottom, #000000, #8A2BE2); /* Black to Violet gradient */
+        
+        }
+           
+    </style>
 </head>
 <body>
      <!-- Top Bar Start -->
@@ -102,15 +137,19 @@
         </div>
     </nav>
     <div class="container my-5">
+    <div class="section-title">
         <h2>My Carwash Shop</h2>
-        <a class="btn btn-primary" href="../carwashowner/index.php" role="button">Back</a>
-        <a class="btn btn-primary" href="../carwashowner/create.php" role="button">Add Carwash Shop</a>
+    </div>
+        <a class="btn btn-primary" href="index.php" role="button">Back</a>
+        <a class="btn btn-primary" href="create.php" role="button">Add Carwash Shop</a>
 
         <br>
         <table class="table">
             <thead>
                 <br><br><br>
+                <div class="section-title">
             <h2> Shops </h2>
+                </div>
                 <tr>
                     <th>Shop Name</th>
                     <th>Location</th>

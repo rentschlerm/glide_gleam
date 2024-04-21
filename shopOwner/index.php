@@ -19,6 +19,7 @@
 
         <!-- Stylesheet -->
         <link href="../css/style.css" rel="stylesheet">
+        
 </head>
 <body>
      <!-- Top Bar Start -->
@@ -142,10 +143,10 @@
             // Loop through the query result and populate the service usage data array
             while ($row = $serviceResult->fetch_assoc()) {
                 // table named 'services' to map service_id to service names
-                $service_name_query = "SELECT service_name FROM services WHERE service_id = ".$row['service_id'];
-                $service_name_result = $db->query($service_name_query);
+                $service_name_query = "SELECT serviceName FROM services WHERE service_id = ".$row['service_id'];
+                $service_name_result = $database->query($service_name_query);
                 $service_name_row = $service_name_result->fetch_assoc();
-                $service_name = $service_name_row['service_name'];
+                $service_name = $service_name_row['serviceName'];
 
                 // Store service usage data in the format 'Service Name' => Service Count
                 $serviceData[$service_name] = (int)$row['service_count'];

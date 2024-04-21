@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,6 +26,25 @@
         }
         .sub-table{
             animation: transitionIn-Y-bottom 0.5s;
+        }
+        .custom-card {
+            max-width: 300px; /* Set the maximum width of the card */
+            margin-bottom: 5px; /* Add some space below the card */
+        }
+        .queue-number {
+            font-size: 72px; /* Increase the font size of the queue number */
+            font-weight: bold; /* Make the queue number bold */
+        }
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* Optional: Hide horizontal scrollbar */
+        }
+
+        body {
+        background: linear-gradient(to bottom, #000000, #8A2BE2); /* Black to Violet gradient */
+        
         }
     </style>
 </head>
@@ -85,6 +103,9 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
+                        <a class="nav-link" href="index.php">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="appointment.php">Appointments</a>
                     </li>
                     <li class="nav-item">
@@ -101,6 +122,59 @@
         </div>
     </nav>
 
+    <!-- Left side card -->
+    <div class="container mt-4">
+        <div class="row justify-content-start">
+            <div class="col-md-4">
+                <div class="card custom-card">
+                    <div class="card-body text-center">
+                    <?php
+// Include your database connection file
+include("../connection.php");
+
+// Fetch appointments data from the database with service details
+$sql = "SELECT appointment.*, services.service_price 
+        FROM appointment 
+        INNER JOIN services ON appointment.service_id = services.service_id 
+        WHERE appointment.status = 'Not Completed'";
+$result = $database->query($sql);
+
+// Check if there are appointments
+if ($result->num_rows > 0) {
+    // Loop through each appointment
+    while($row = $result->fetch_assoc()) {
+        // Extract appointment details
+        $queue_number = $row["queue_number"];
+        $shop_info_id = $row["shop_info_id"];
+        $service_price = $row["service_price"];
+        // Fetch shop name based on shop_info_id
+        $shop_sql = "SELECT shop_name FROM shop_info WHERE shop_info_id = $shop_info_id";
+        $shop_result = $database->query($shop_sql);
+        $shop_name = "";
+        if ($shop_result->num_rows > 0) {
+            $shop_row = $shop_result->fetch_assoc();
+            $shop_name = $shop_row["shop_name"];
+        }
+
+        // Output the card with fetched data
+        echo '<div class="card custom-card">';
+        echo '<div class="card-body text-center">';
+        echo '<p class="queue-number">'.$queue_number.'</p>';
+        echo '<p class="card-text">Your Queue</p>';
+        echo '<p class="card-text">Shop: '.$shop_name.'</p>';
+        echo '<p class="card-text">Price: &#x20B1;'.$service_price.'</p>';
+        echo '</div>';
+        echo '</div>';
+    }
+} else {
+    echo "No appointments found.";
+}
+?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>

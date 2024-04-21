@@ -121,7 +121,7 @@ $database->close();
                         <a class="nav-link" href="#">Services</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Availability</a>
+                        <a class="nav-link" href="addShop.php">Shop</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Settings</a>
@@ -134,7 +134,7 @@ $database->close();
         </div>
     </nav>
     <div class="container my-5">
-    <a class="btn btn-primary" href="services.php" role="button">Back</a>
+    <a class="btn btn-primary" href="addShop.php" role="button">Back</a>
         <h2>Add Carwash Shop</h2>
         <form action="" method="post">
             <div class="mb-3">

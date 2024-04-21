@@ -1,14 +1,14 @@
 <?php
-// Include database connection
+
 include("../connection.php");
 
 // Check if the user is authenticated and their vehicle type is set
 session_start();
 if(isset($_SESSION['id'])) {
     // Retrieve user's vehicle type from the database
-    $userId = $_SESSION['id']; // Assuming you have a user ID stored in the session
+    $userId = $_SESSION['id']; // user ID stored in the session
     
-    // Modify this query to retrieve the user's vehicle type from your database
+    // Query to retrieve the user's vehicle type from the database
     $sql = "SELECT vehicle_type FROM vehicle_owners WHERE vehicle_owner_id = '$userId'";
     $result = $database->query($sql);
 

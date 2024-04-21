@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-
+// var_dump($_POST['service_id']);
 if(isset($_SESSION["user"])){
     if($_SESSION["user"] == "" or $_SESSION['type'] != '2'){
         header("location: ../login.php");
@@ -49,6 +49,98 @@ $shops = ($result->num_rows > 0)? mysqli_fetch_all($result, MYSQLI_ASSOC) : [];
         .sub-table{
             animation: transitionIn-Y-bottom 0.5s;
         }
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* Optional: Hide horizontal scrollbar */
+        }
+
+        body {
+        background: linear-gradient(to bottom, #000000, #8A2BE2); /* Black to Violet gradient */
+        
+        }
+        .section-title h2 {
+        color: white;
+    } 
+    .paragraph-color p {
+        color: white; 
+    }
+
+    /* Style for the table header */
+    th {
+        background-color: #343a40; /* Dark grey */
+        color: #fff; /* White text */
+    }
+    /* Alternate row color for better readability */
+    tbody tr {
+        background-color: #fff; /* Violet */
+        color: #000000; /* Black text */
+    }
+    tbody tr:nth-child(even) {
+        background-color: #f2f2f2; /* Light gray */
+        color: #000000; /* Black text */
+    }
+    /* Style for action buttons */
+    .action-btns .btn {
+        margin-right: 5px;
+    }
+    /* Adjusted table size */
+    .table {
+        max-width: 800px; /* Set the maximum width of the table */
+        margin: 0 auto; /* Center the table horizontally */
+    }
+    /* The alert message box */
+.alert {
+    padding: 20px;
+    background-color: #f44336; /* Red */
+    color: white;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px; /* Adjust width as needed */
+    margin-top: 20px;
+    z-index: 9999; /* Ensure it appears above other content */
+    margin-bottom: 15px;
+    opacity: 1;
+    transition: opacity 0.6s; /* 600ms to fade out */
+}
+.alert-success{
+    padding: 20px;
+    background-color: #7CFC00; /* Red */
+    color: white;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px; /* Adjust width as needed */
+    margin-top: 20px;
+    z-index: 9999; /* Ensure it appears above other content */
+    margin-bottom: 15px;
+    opacity: 1;
+    transition: opacity 0.6s; /* 600ms to fade out */
+}
+
+/* The close button */
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* When moving the mouse over the close button */
+.closebtn:hover {
+  color: black;
+}
+
     </style>
 </head>
 <body>
@@ -106,6 +198,9 @@ $shops = ($result->num_rows > 0)? mysqli_fetch_all($result, MYSQLI_ASSOC) : [];
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
+                        <a class="nav-link" href="index.php">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="appointment.php">Appointments</a>
                     </li>
                     <li class="nav-item">
@@ -123,8 +218,8 @@ $shops = ($result->num_rows > 0)? mysqli_fetch_all($result, MYSQLI_ASSOC) : [];
     </nav>
 
 
-    <a class="btn btn-primary" href="index.php" role="button">Back</a>
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <a class="btn btn-custom" href="index.php" role="button">Back</a>
+<button type="button" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#exampleModal">
   Create Appointment
 </button>
     <?php
@@ -149,36 +244,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($result->num_rows > 0) {
         // Conflict found
+        echo "
+        <div class='alert'>
+            <span class='closebtn' onclick='this.parentElement.style.display='none';'>&times;</span>
+            Time conflict! This time slot is already booked.
+        </div>";
         echo "Time conflict! This time slot is already booked.";
     } else {
         // Check if a service was selected
-        if (isset($_POST['service_sizes']) && is_array($_POST['service_sizes'])) {
+        if (isset($_POST['service_id']) && !empty($_POST['service_id'])) {
             // Get the selected service ID
-            $selectedServiceId = null;
-            foreach ($_POST['service_sizes'] as $serviceId => $size) {
-                if (!empty($size)) {
-                    $selectedServiceId = $serviceId;
-                    break; // Stop the loop since a service is already selected
-                }
-            }
-
-            // Check if a service was actually selected
-            if (!is_null($selectedServiceId)) {
-                // Insert the appointment into the database
-                $insertQuery = "INSERT INTO `appointment`(`vehicle_owner_id`, `shop_info_id`, `queue_number`, `appointment_date`, `service_id`) VALUES ('{$_SESSION['id']}','{$_POST['shop_id']}','{$getCurrentAppID}','{$appDate}', '{$selectedServiceId}')";
-
-                // Execute the query
-                if ($database->query($insertQuery) === TRUE) {
-                    echo "Appointment Recorded";
-                } else {
-                    echo "Error: " . $insertQuery . "<br>" . $database->error;
-                }
+            $selectedServiceId = $_POST['service_id'];
+        
+            // Insert the appointment into the database
+            $insertQuery = "INSERT INTO `appointment`(`vehicle_owner_id`, `shop_info_id`, `queue_number`, `appointment_date`,`status`, `service_id`) VALUES ('{$_SESSION['id']}','{$_POST['shop_id']}','{$getCurrentAppID}','{$appDate}','Not Completed', '{$selectedServiceId}')";
+        
+            // Execute the query
+            if ($database->query($insertQuery) === TRUE) {
+                echo "
+                <div class='alert-success'>
+                    <span class='closebtn' onclick='this.parentElement.style.display='none';'>&times;</span>
+                    Appointment Recorded.
+                </div>";
+                echo "Appointment Recorded";
             } else {
-                echo "No service selected.2";
+                echo "Error: " . $insertQuery . "<br>" . $database->error;
             }
         } else {
-            echo "No service selected.1";
+            echo "No service selected.";
         }
+        
     }
 }
 
@@ -193,9 +288,9 @@ if (count($shops)) {
     foreach ($shops as $shopKey => $value) {
         // Display shop information
         echo "<div>";
-        echo "<h2>Shop Name: " . $value["shop_name"]. "</h2>";
-        echo "<p>Location: " . $value["location"] . "</p>";
-        echo "<p>Operating Hours: " . date('h:i A', strtotime($value["operating_from"])) . " to " . date('h:i A', strtotime($value["operating_to"])) . "</p>";
+        echo "<div class='section-title'><h2>Shop Name: " . $value["shop_name"]. "</h2></div>";
+        echo "<div class='paragraph-color'><p>Location: " . $value["location"] . "</p>";
+        echo "<p>Operating Hours: " . date('h:i A', strtotime($value["operating_from"])) . " to " . date('h:i A', strtotime($value["operating_to"])) . "</p></div>";
         
         // Fetch services for this shop
         $serviceSql = "SELECT * FROM services WHERE shop_info_id = {$value['shop_info_id']}";
@@ -269,6 +364,9 @@ $database->close();
                             <!-- Options will be populated dynamically based on selected vehicle type -->
                         </select>
                     </div>
+                    <!-- Hidden input fields for vehicle size and license plate -->
+                        <input type="hidden" id="vehicleSizeInput" name="vehicle_size">
+                        <input type="hidden" id="licensePlateInput" name="license_plate">
                     <div class="mb-3">
                         <label for="appointmentDate" class="form-label">Appointment Date</label>
                         <input type="date" class="form-control" id="appointmentDate" name="appointment_date" required>
@@ -346,6 +444,39 @@ $(document).ready(function(){
         }
     });
 });
+</script>
+<script>
+$(document).ready(function(){
+    $('#registeredVehicleSelect').change(function(){
+        var selectedOption = $(this).find(':selected');
+        var vehicleSize = selectedOption.data('size');
+        var licensePlate = selectedOption.data('plate');
+        // Set the vehicle size and license plate in hidden input fields
+        $('#vehicleSizeInput').val(vehicleSize);
+        $('#licensePlateInput').val(licensePlate);
+    });
+});
+</script>
+<script>
+// Get all elements with class="closebtn"
+var close = document.getElementsByClassName("closebtn");
+var i;
+
+// Loop through all close buttons
+for (i = 0; i < close.length; i++) {
+  // When someone clicks on a close button
+  close[i].onclick = function(){
+
+    // Get the parent of <span class="closebtn"> (<div class="alert">)
+    var div = this.parentElement;
+
+    // Set the opacity of div to 0 (transparent)
+    div.style.opacity = "0";
+
+    // Hide the div after 600ms (the same amount of milliseconds it takes to fade out)
+    setTimeout(function(){ div.style.display = "none"; }, 600);
+  }
+}
 </script>
 </body>
 </html>
