@@ -409,6 +409,7 @@ $database->close();
 <!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+
 <script>
     // Function to fetch and populate services based on the selected vehicle type
     $(document).ready(function(){
@@ -477,6 +478,41 @@ for (i = 0; i < close.length; i++) {
     setTimeout(function(){ div.style.display = "none"; }, 600);
   }
 }
+</script>
+<!--<script>
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    let month = currentDate.getMonth() + 1;
+    let day = currentDate.getDate();
+
+    month = month < 10 ? "0" + month : month;
+    day = day < 10 ? "0" + day : day;
+
+    document.querySelector(#appointmentDate).min = `${year}-${month}-${day}`;
+</script>
+
+<script>
+$ ( function() {
+    $( "appointment_date").datepicker({ min.Date: -20, maxDate: "+M + 10D" });
+} );
+</script> -->
+<!-- PAST DATE DISABLE -->
+<script>
+$(document).ready(function() {
+    var dtToday = new Date();
+
+    var month = dtToday.getMonth() + 1;
+    var day = dtToday.getDate();
+    var year = dtToday.getFullYear();
+    if (month < 10)
+        month = '0' + month.toString();
+    if(day < 10)
+        day = '0' + day.toString();
+
+    var maxDate = year + '-' + month + '-' + day;
+
+    $('#appointmentDate').attr('min', maxDate);
+})
 </script>
 </body>
 </html>
