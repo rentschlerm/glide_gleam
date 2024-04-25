@@ -125,10 +125,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["save_changes"])) {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="appointment.php">Appointments</a>
+                    <a class="nav-link" href="index.php">Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Customers</a>
+                        <a class="nav-link" href="appointment.php">Appointments</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="services.php">Services</a>
@@ -136,9 +136,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["save_changes"])) {
                     <li class="nav-item">
                         <a class="nav-link" href="addShop.php">Shop</a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link" href="#">Settings</a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link" href="../signout.php">Logout</a>
                     </li>
@@ -187,7 +187,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["save_changes"])) {
     </div>
 </form>
 <?php if (!empty($alertMessage)): ?>
-<div id="alertDiv" class="alert alert-success alert-dismissible text-center" style="position: fixed; top: 50px; left: 50%; transform: translateX(-50%);" role="alert">
+<div id="alertDiv" class="alert alert-success alert-dismissible text-center" style="position: fixed; top: 80px; left: 50%; transform: translateX(-50%);" role="alert">
     <?php echo $alertMessage; ?>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>

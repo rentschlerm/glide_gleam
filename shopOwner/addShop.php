@@ -27,6 +27,9 @@
         .section-title h2 {
             color: white;
         } 
+        .heading-title{
+            color:white;
+        }
 
         /* Style for the table header */
         th {
@@ -114,11 +117,11 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="appointment.php">Appointments</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php">Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Customers</a>
+                        <a class="nav-link" href="appointment.php">Appointments</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="services.php">Services</a>
@@ -126,9 +129,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="addShop.php">Shop</a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link" href="#">Settings</a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link" href="../signout.php">Logout</a>
                     </li>
@@ -150,7 +153,7 @@
                 <div class="section-title">
             <h2> Shops </h2>
                 </div>
-                <tr>
+                <tr >
                     <th>Shop Name</th>
                     <th>Location</th>
                     <th>Open</th>

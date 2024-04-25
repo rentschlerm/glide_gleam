@@ -55,7 +55,26 @@ $database->close();
             <link href="../css/style.css" rel="stylesheet">
             <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+<style>
+     html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* Optional: Hide horizontal scrollbar */
+        }
 
+        body {
+        background: linear-gradient(to bottom, #000000, #8A2BE2); /* Black to Violet gradient */
+        
+        }
+        .section-title h2 {
+            color: white;
+        } 
+        .mb-3{
+            color:white;
+        }
+
+    </style>
 </head>
 <body>
      <!-- Top Bar Start -->
@@ -111,21 +130,21 @@ $database->close();
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="./appointment.php">Appointments</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php">Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Customers</a>
+                        <a class="nav-link" href="appointment.php">Appointments</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Services</a>
+                        <a class="nav-link" href="services.php">Services</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="addShop.php">Shop</a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link" href="#">Settings</a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link" href="../signout.php">Logout</a>
                     </li>
@@ -135,7 +154,10 @@ $database->close();
     </nav>
     <div class="container my-5">
     <a class="btn btn-primary" href="addShop.php" role="button">Back</a>
-        <h2>Add Carwash Shop</h2>
+        <div class="section-title">
+            <h2>Add Carwash Shop</h2>
+        </div>    
+    
         <form action="" method="post">
             <div class="mb-3">
                 <label for="shop_name" class="form-label">Shop Name</label>
