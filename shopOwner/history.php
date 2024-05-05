@@ -1,9 +1,13 @@
+<?php
+session_start();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Services</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- Google Font -->
@@ -17,25 +21,14 @@
           <!-- Include Chart.js library -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+    <link href="../css/style.css" rel="stylesheet">
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" />
+            
+
         <!-- Stylesheet -->
         <link href="../css/style.css" rel="stylesheet">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" />
         <style>
-        .popup{
-            animation: transitionIn-Y-bottom 0.5s;
-        }
-        .sub-table{
-            animation: transitionIn-Y-bottom 0.5s;
-        }
-        .custom-card {
-            max-width: 300px; /* Set the maximum width of the card */
-            margin-bottom: 5px; /* Add some space below the card */
-        }
-        .queue-number {
-            font-size: 72px; /* Increase the font size of the queue number */
-            font-weight: bold; /* Make the queue number bold */
-        }
-        html, body {
+             html, body {
             height: 100%;
             margin: 0;
             padding: 0;
@@ -46,7 +39,12 @@
         background: linear-gradient(to bottom, #000000, #8A2BE2); /* Black to Violet gradient */
         
         }
-    </style>
+        .section-title h2 {
+            color: white;
+        } 
+
+            </style>
+
 </head>
 <body>
      <!-- Top Bar Start -->
@@ -102,21 +100,24 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.php">Dashboard</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php">Dashboard</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="appointment.php">Appointments</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="booking.php">Car Wash</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="history.php">History</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Settings</a>
+                        <a class="nav-link" href="services.php">Services</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="addShop.php">Shop</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="#">Settings</a>
+                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link" href="../signout.php">Logout</a>
                     </li>
@@ -124,60 +125,56 @@
             </div>
         </div>
     </nav>
+    <a class="btn btn-primary" href="index.php" role="button">Back</a>
+    <div class="container my-5">
+    <div class="section-title">
+    <h2 class="appointments-heading">Appointments</h2>
+    </div>
+    <?php
 
-    <!-- Left side card -->
-    <div class="container mt-4">
-        <div class="row justify-content-start">
-            <div class="col-md-4">
-                <div class="card custom-card">
-                    <div class="card-body text-center">
-                    <?php
-// Include your database connection file
-include("../connection.php");
+if(isset($_SESSION["user"]) && $_SESSION['type'] == '1') {
+    // Import database connection
+    include("../connection.php");
 
-// Fetch appointments data from the database with service details
-$sql = "SELECT appointment.*, services.service_price 
-        FROM appointment 
-        INNER JOIN services ON appointment.service_id = services.service_id 
-        WHERE appointment.status = 'Not Completed'";
-$result = $database->query($sql);
+    // Fetch appointment history for the logged-in user using the stored user ID
+    $historyQuery = "SELECT * FROM appointment_history";
 
-// Check if there are appointments
-if ($result->num_rows > 0) {
-    // Loop through each appointment
-    while($row = $result->fetch_assoc()) {
-        // Extract appointment details
-        $queue_number = $row["queue_number"];
-        $shop_info_id = $row["shop_info_id"];
-        $service_price = $row["service_price"];
-        // Fetch shop name based on shop_info_id
-        $shop_sql = "SELECT shop_name FROM shop_info WHERE shop_info_id = $shop_info_id";
-        $shop_result = $database->query($shop_sql);
-        $shop_name = "";
-        if ($shop_result->num_rows > 0) {
-            $shop_row = $shop_result->fetch_assoc();
-            $shop_name = $shop_row["shop_name"];
+    $historyResult = $database->query($historyQuery);
+
+    // Check for SQL query errors
+    if ($historyResult === false) {
+        die("Error executing query: " . $database->error);
+    }
+
+    // Output appointment history data
+    if ($historyResult->num_rows > 0) {
+        echo "<table class='table'>";
+        echo "<thead>";
+        echo "<tr>";
+        echo "<th>Queue Number</th>";
+        echo "<th>Appointment Date</th>";
+        echo "<th>Status</th>";
+        echo "</tr>";
+        echo "</thead>";
+        echo "<tbody>";
+
+        while ($row = $historyResult->fetch_assoc()) {
+            echo "<tr>";
+            echo "<td>{$row['queue_number']}</td>";
+            echo "<td>{$row['appointment_date']}</td>";
+            echo "<td>{$row['status']}</td>";
+            echo "</tr>";
         }
 
-        // Output the card with fetched data
-        echo '<div class="card custom-card">';
-        echo '<div class="card-body text-center">';
-        echo '<p class="queue-number">'.$queue_number.'</p>';
-        echo '<p class="card-text">Your Queue</p>';
-        echo '<p class="card-text">Shop: '.$shop_name.'</p>';
-        echo '<p class="card-text">Price: &#x20B1;'.$service_price.'</p>';
-        echo '</div>';
-        echo '</div>';
+        echo "</tbody>";
+        echo "</table>";
+    } else {
+        echo "<p>No appointment history found</p>";
     }
+
+    // Close the database connection
+    $database->close();
 } else {
-    echo "No appointments found.";
+    header("location: ../login.php");
 }
 ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</body>
-</html>

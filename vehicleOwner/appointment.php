@@ -156,6 +156,10 @@ if ($result === false) {
                         <a class="nav-link" href="booking.php">Car Wash</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="history.php">History</a>
+                    </li>
+                   
+                    <li class="nav-item">
                         <a class="nav-link" href="#">Settings</a>
                     </li>
                     <li class="nav-item">
@@ -164,6 +168,8 @@ if ($result === false) {
                 </ul>
             </div>
         </div>
+
+        
     </nav>
     
     <div class="container my-5">
@@ -205,6 +211,10 @@ if ($result === false) {
     }
     ?>
     </div>
+
+    
+    
+    
 
     <script>
     // Function to hide the cancel button after 5 minutes
