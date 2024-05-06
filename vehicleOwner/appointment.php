@@ -19,7 +19,7 @@ if(isset($_SESSION["user"]) && $_SESSION['type'] == '2'){
     $useremail = $_SESSION["user"];
 } else {
     // Redirect to login page if user is not logged in or has incorrect type
-    header("location: ../index.html");
+    header("location: ../index.php");
     exit(); // Terminate script execution after redirection
 }
 
@@ -30,8 +30,10 @@ $sql = "SELECT appointment.*, accounts.*, vehicle_owners.*, shop_info.*, service
         JOIN vehicle_owners ON accounts.account_id = vehicle_owners.vehicle_owner_id
         JOIN shop_info ON appointment.shop_info_id = shop_info.shop_info_id
         LEFT JOIN services ON appointment.service_id = services.service_id
-        WHERE accounts.account_id = {$_SESSION['id']} 
-        AND appointment.status = 'Not Completed'";
+        WHERE accounts.account_id = {$_SESSION['id']}
+        AND appointment.status = 'Not Completed'
+        ORDER BY appointment.appointment_date ASC
+        ";
 
 
 $result = $database->query($sql);
@@ -147,6 +149,9 @@ if ($result === false) {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
+                        <a class="nav-link" href="maps.php">Carwash Maps</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="index.php">Dashboard</a>
                     </li>
                     <li class="nav-item">
@@ -156,10 +161,6 @@ if ($result === false) {
                         <a class="nav-link" href="booking.php">Car Wash</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="history.php">History</a>
-                    </li>
-                   
-                    <li class="nav-item">
                         <a class="nav-link" href="#">Settings</a>
                     </li>
                     <li class="nav-item">
@@ -168,8 +169,6 @@ if ($result === false) {
                 </ul>
             </div>
         </div>
-
-        
     </nav>
     
     <div class="container my-5">
@@ -211,10 +210,6 @@ if ($result === false) {
     }
     ?>
     </div>
-
-    
-    
-    
 
     <script>
     // Function to hide the cancel button after 5 minutes
