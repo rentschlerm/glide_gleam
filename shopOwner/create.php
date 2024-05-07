@@ -45,12 +45,16 @@ $database->close();
         <!-- CSS Libraries -->
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
             <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-            <link href="lib/flaticon/font/flaticon.css" rel="stylesheet">
-            <link href="lib/animate/animate.min.css" rel="stylesheet">
-            <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+          
             <!-- Include Chart.js library -->
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+ <!-- Include HERE Maps JavaScript API -->
+ <script src="https://js.api.here.com/v3/3.1/mapsjs-core.js"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-service.js"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>
+<script src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
 
+    <link rel="stylesheet" href="https://js.api.here.com/v3/3.1/mapsjs-ui.css" />
             <!-- Stylesheet -->
             <link href="../css/style.css" rel="stylesheet">
             <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -73,7 +77,10 @@ $database->close();
         .mb-3{
             color:white;
         }
-
+        #mapContainer {
+            height: 400px;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
@@ -175,10 +182,88 @@ $database->close();
                 <label for="operating_to" class="form-label">Operating To</label>
                 <input type="time" class="form-control" id="operating_to" name="operating_to" required>
             </div>
-            
+            <h1>Add to map</h1>
+            <div id="mapContainer"></div>
+            <button id="saveLocationBtn">Save Location</button>
+
             <button type="submit" class="btn btn-primary">Add Shop</button>
         </form>
     </div>
-   
+    <script>
+    var map;
+    var defaultLayers;
+    var platform;
+    var behavior;
+    var longTapTimer;
+
+    function initMap() {
+        // initialize platform
+        platform = new H.service.Platform({
+            'apikey': 'xzrMvhwIvXQkL4ODYBNn02k3U2AL1aC974XXIb6M9Eo' 
+        });
+
+        // obtain the default map types from the platform object
+        defaultLayers = platform.createDefaultLayers();
+
+        // initialize map object
+        map = new H.Map(
+            document.getElementById('mapContainer'),
+            defaultLayers.vector.normal.map,
+            {
+                center: { lat: 12.8797, lng: 121.774 },
+                zoom: 6, 
+                pixelRatio: window.devicePixelRatio || 1
+            }
+        );
+
+        // map interaction
+        var mapEvents = new H.mapevents.MapEvents(map);
+        behavior = new H.mapevents.Behavior(mapEvents);
+        var ui = H.ui.UI.createDefault(map, defaultLayers);
+
+        //event listener to the map for long tap to drop a pin
+        map.addEventListener('pointerdown', function (evt) {
+            longTapTimer = setTimeout(function() {
+                var coord = map.screenToGeo(evt.currentPointer.viewportX, evt.currentPointer.viewportY);
+                addMarker(coord.lat, coord.lng);
+            }, 500); // Set the duration for long tap in milliseconds
+        });
+
+        map.addEventListener('pointerup', function () {
+            clearTimeout(longTapTimer);
+        });
+    }
+
+    // add a marker at a specified location
+    function addMarker(latitude, longitude) {
+        // remove existing marker if any
+        map.removeObjects(map.getObjects());
+
+        // add a marker to the map
+        var marker = new H.map.Marker({ lat: latitude, lng: longitude });
+        map.addObject(marker);
+
+        // update map center
+        map.setCenter({ lat: latitude, lng: longitude });
+    }
+
+    // handle saving the location
+    function saveLocation() {
+        var coord = map.getCenter();
+        var latitude = coord.lat;
+        var longitude = coord.lng;
+
+        
+        console.log("Latitude:", latitude);
+        console.log("Longitude:", longitude);
+    }
+
+    // load the HERE Map after page is fully loaded
+    window.addEventListener('load', initMap);
+
+    // event listener to the Save Location button
+    document.getElementById('saveLocationBtn').addEventListener('click', saveLocation);
+</script>
+
 </body>
 </html>

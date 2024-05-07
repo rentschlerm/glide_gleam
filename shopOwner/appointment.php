@@ -139,12 +139,20 @@ session_start();
     include("../connection.php");
 
     // Fetch shop information from the database
-    $sql = "SELECT * FROM `appointment` 
+    $sql = "SELECT appointment.*, 
+                vehicle_owners.*, 
+                shop_info.*, 
+                services.serviceName, 
+                services.service_price, 
+                services.vehicle_type
+            FROM appointment 
             JOIN vehicle_owners ON appointment.vehicle_owner_id = vehicle_owners.vehicle_owner_id 
             JOIN shop_info ON shop_info.shop_info_id = appointment.shop_info_id 
-            -- JOIN specialties ON specialties.shop_info_id = appointment.shop_info_id
-            WHERE shop_info.shop_owner_id = {$_SESSION['id']} AND appointment.status = 'Not Completed'
-            ORDER BY appointment.queue_number ASC;";
+            JOIN services ON services.service_id = appointment.service_id
+            WHERE shop_info.shop_owner_id = {$_SESSION['id']} 
+            AND appointment.status = 'Not Completed'
+            ORDER BY appointment.queue_number ASC;
+            ";
     $result = $database->query($sql);
 
     if ($result->num_rows > 0) {
@@ -155,14 +163,14 @@ session_start();
             echo "<h5 class='card-title'>Customer Name: " . $row["first_name"] . " " . $row["last_name"] . "</h5>";
             echo "<p class='card-text'>Shop Name: " . $row["shop_name"] . "</p>";
             echo "<p class='card-text'>Queue Number: " . $row["queue_number"] . "</p>";
-            // echo "<p class='card-text'>Service Name: " . $row["service_name"] . "</p>";
-            // echo "<p class='card-text'>Price: ₱" . $row["price"] . "</p>";
-            // echo "<p class='card-text'>Category: " . $row["category"] . "</p>";
+            echo "<p class='card-text'>Service Name: " . $row["serviceName"] . "</p>";
+            echo "<p class='card-text'>Price: ₱" . $row["service_price"] . "</p>";
+            echo "<p class='card-text'>Category: " . $row["vehicle_type"] . "</p>";
             echo "<p class='card-text'>Appointment Date: " . date('F d, Y', strtotime($row["appointment_date"])) . "</p>";
             echo "<p class='card-text'>Appointment Time: " . date('h:i A', strtotime($row["appointment_date"])) . "</p>";
 
             // Button to handle completion of appointment
-            echo "<button class='btn btn-primary' onclick='completeAppointment(" . $row["appointment_id"] . ", \"Completed\")'>Completed</button>";
+            echo "<button class='btn btn-primary' onclick='completeAppointment(" . $row["appointment_id"] . ", \"Completed\")'>Mark as Completed</button>";
 
             // Button to handle cancellation of appointment
             echo "<button class='btn btn-danger' onclick='completeAppointment(" . $row["appointment_id"] . ", \"Cancelled\")'>Cancel</button>";
@@ -215,7 +223,8 @@ session_start();
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 // Handle the response from the PHP script (optional)
-                console.log(xhr.responseText);
+                // console.log(xhr.responseText);
+                alert(xhr.responseText);
             }
         };
         xhr.send("appointment_id=" + appointmentId);

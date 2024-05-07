@@ -10,17 +10,17 @@ if(isset($_POST['appointment_id'])) {
     $appointmentId = $_POST['appointment_id'];
 
     // Fetch the recipient's phone number associated with the appointment from the database
-    // Replace this with your own database retrieval logic
     include("../connection.php"); // Include database connection
     $sql = "SELECT phone 
             FROM vehicle_owners 
             JOIN (
                 SELECT vehicle_owner_id, queue_number 
                 FROM appointment 
-                WHERE status = 'Not Completed'  -- Added WHERE clause
+                WHERE status = 'Completed'
                 ORDER BY queue_number 
                 LIMIT 1 OFFSET 1
-            ) AS second_appointment ON vehicle_owners.account_id = second_appointment.vehicle_owner_id;";
+            ) AS appointment ON vehicle_owners.vehicle_owner_id = appointment.vehicle_owner_id;
+            ";
 
     $result = $database->query($sql);
 
