@@ -202,8 +202,8 @@
                         <td>{$row['operating_from']}</td>
                         <td>{$row['operating_to']}</td>
                         <td>
-                            <a class='btn btn-primary btn-sm' href='/cws/carwashowner/edit.php?shop_info_id={$row['shop_info_id']}'>EDIT</a>
-                            <a class='btn btn-primary btn-sm' href='/cws/carwashowner/delete.php?shop_info_id={$row['shop_info_id']}'>DELETE</a>
+                            <a class='btn btn-primary btn-sm' href='/glide_gleam/shopOwner/edit.php?shop_info_id={$row['shop_info_id']}'>EDIT</a>
+                            <a class='btn btn-primary btn-sm' href='/glide_gleam/shopOwner/deleteShop.php?shop_info_id={$row['shop_info_id']}'>DELETE</a>
                         </td>
                     </tr>";
                 }

@@ -162,8 +162,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["save_changes"])) {
         </thead>
         <tbody id="services">
             <tr>
-                <td><input type="text" class="form-control" name="sname" required></td>
-                <td>
+                    <td><input type="text" class="form-control" name="sname" required></td>
+                    <td>
                     <select class="form-select" name="vehicle_size" required>
                         <option value="Small">Small</option>
                         <option value="Medium">Medium</option>

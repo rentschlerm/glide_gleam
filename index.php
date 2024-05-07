@@ -75,8 +75,8 @@
                     </li>
                     <li class="nav-item">
                         <!-- <a class="nav-link" href="#">Sign Up</a> -->&nbsp
-                        <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#signUp">Sign up</button>
-                    </li>
+                        
+                    </li><button type="button" class="btn btn-custom" data-toggle="modal" data-target="#signUp">Sign up</button>
                 </ul>
             </div>
         </div>
@@ -135,11 +135,12 @@
                             </td>
                         </tr>
                         </form>
+                        
                         <tr>
                             <td>
                                 <br>
                                 <label for="" class="sub-text" style="font-weight: 280;">Don't have an account? </label>
-                                <a href="choose_account_type.php" class="hover-link1 non-style-link">Sign Up</a>
+                                <a href="choose_account_type.php" class="hover-link1 non-style-link" data-toggle="modal" data-target="#signUp">Sign Up</a>
                                 <br><br><br>
                             </td>
                         </tr>

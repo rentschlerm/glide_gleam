@@ -182,10 +182,10 @@ include("../connection.php");
                                 <td>{$row['vehicle_type']}</td>
                                 
                                 <td class='action-btns'>
-                                    <a class='btn btn-custom btn-sm' href='/cws/carwashowner/edit.php?shop_info_id={$row['shop_info_id']}'>
+                                    <a class='btn btn-custom btn-sm' href='/glide_gleam/shopOwner/editServices.php?service_id={$row['service_id']}'>
                                         <i class='fas fa-edit fa-sm'></i> <!-- Edit icon -->
                                     </a>
-                                    <a class='btn btn-custom btn-sm' href='/cws/carwashowner/delete.php?shop_info_id={$row['shop_info_id']}'>
+                                    <a class='btn btn-custom btn-sm' href='/glide_gleam/shopOwner/deleteServices.php?service_id={$row['service_id']}'>
                                         <i class='fas fa-trash-alt fa-sm'></i> <!-- Delete icon -->
                                     </a>
                                 </td>

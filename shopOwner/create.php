@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($database->query($insertQuery) === TRUE) {
         
-        echo " <script>alert('New shop added successfully!');</script>";
+        $alertMessage = "Shop added successfully!";
     } else {
         echo "Error: " . $insertQuery . "<br>" . $database->error;
     }
@@ -189,6 +189,22 @@ $database->close();
             <button type="submit" class="btn btn-primary">Add Shop</button>
         </form>
     </div>
+
+    <?php if (!empty($alertMessage)): ?>
+<div id="alertDiv" class="alert alert-success alert-dismissible text-center" style="position: fixed; top: 80px; left: 50%; transform: translateX(-50%);" role="alert">
+    <?php echo $alertMessage; ?>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<script>
+    // Automatically close the alert after 5 seconds
+    setTimeout(function() {
+        document.getElementById('alertDiv').style.display = 'none';
+    }, 5000);
+</script>
+<?php endif; ?>
+
     <script>
     var map;
     var defaultLayers;
