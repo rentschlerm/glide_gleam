@@ -496,7 +496,7 @@ $ ( function() {
     $( "appointment_date").datepicker({ min.Date: -20, maxDate: "+M + 10D" });
 } );
 </script> -->
-<!-- PAST DATE DISABLE -->
+<!-- PAST DATE DISABLE --> 
 <script>
 $(document).ready(function() {
     var dtToday = new Date();
@@ -514,5 +514,123 @@ $(document).ready(function() {
     $('#appointmentDate').attr('min', maxDate);
 })
 </script>
+<!-- DISABLE PAST TIME
+<script>
+     // Function to disable past times in appointment time selector
+     $('#appointmentTime').on('change', function() {
+        var selectedTime = $(this).val();
+        var currentTime = new Date();
+        var hours = currentTime.getHours();
+        var minutes = currentTime.getMinutes();
+        var currentFormattedTime = hours + ":" + minutes;
+
+        if (selectedTime < currentFormattedTime) {
+            alert('Please select a future time.');
+            $(this).val('');
+        }
+    }); 
+</script> -->
+
+<script>
+    $(document).ready(function() {
+    // Get the current date and time
+    var currentDate = new Date();
+    var currentYear = currentDate.getFullYear();
+    var currentMonth = ('0' + (currentDate.getMonth() + 1)).slice(-2); // Add leading zero if needed
+    var currentDay = ('0' + currentDate.getDate()).slice(-2); // Add leading zero if needed
+    var currentHours = ('0' + currentDate.getHours()).slice(-2); // Add leading zero if needed
+    var currentMinutes = ('0' + currentDate.getMinutes()).slice(-2); // Add leading zero if needed
+
+    // Set the minimum date for the appointment date selector to the current date
+    var minDate = currentYear + '-' + currentMonth + '-' + currentDay;
+    $('#appointmentDate').attr('min', minDate);
+
+    // Function to disable past times in appointment time selector
+    $('#appointmentTime').on('change', function() {
+        var selectedTime = $(this).val();
+        var selectedDate = $('#appointmentDate').val();
+
+        if (selectedDate === minDate) {
+            // Compare selected time with current time if the date is today
+            if (selectedTime < currentHours + ':' + currentMinutes) {
+                alert('Please select a future time.');
+                $(this).val('');
+            }
+        }
+    });
+});
+</script>
+
+<script>
+    $(document).ready(function() {
+    // Function to fetch booked times and their status for the selected date and shop ID
+    function fetchBookedTimesAndStatus(date, shopId) {
+        $.ajax({
+            url: 'fetch_booked_times.php',
+            type: 'POST',
+            data: { date: date, shop_id: shopId },
+            dataType: 'json',
+            success: function(response) {
+                disableBookedTimesAndStatus(response);
+            }
+        });
+    }
+
+    // Function to disable booked times and their status in appointment time selector
+    function disableBookedTimesAndStatus(bookedSlots) {
+        $('#appointmentTime option').each(function() {
+            var slotValue = $(this).val();
+            var slotStatus = bookedSlots[slotValue];
+            if (slotStatus && slotStatus === 'Not Completed') {
+                $(this).prop('disabled', true);
+            } else {
+                $(this).prop('disabled', false);
+            }
+        });
+    }
+
+    // Event listener for date and shop selection changes
+    $('#appointmentDate, #shopSelect').on('change', function() {
+        var selectedDate = $('#appointmentDate').val();
+        var selectedShopId = $('#shopSelect').val();
+        if (selectedDate && selectedShopId) {
+            fetchBookedTimesAndStatus(selectedDate, selectedShopId);
+        }
+    });
+
+    // Initial fetch and disable booked times and their status based on default date and shop selection
+    var defaultDate = $('#appointmentDate').val();
+    var defaultShopId = $('#shopSelect').val();
+    if (defaultDate && defaultShopId) {
+        fetchBookedTimesAndStatus(defaultDate, defaultShopId);
+    }
+});
+
+</script>
+<!--
+<script>
+    $(document).ready(function() {
+    // Function to disable booked time slots
+    function disableBookedTimeSlots(bookedTimes) {
+        // Loop through each option in the appointment time selector
+        $('#appointmentTime option').each(function() {
+            var slotValue = $(this).val();
+            // Check if the slotValue is in the bookedTimes array
+            if (bookedTimes.includes(slotValue)) {
+                // Disable the option if it's booked
+                $(this).prop('disabled', true);
+            } else {
+                // Enable the option if it's not booked
+                $(this).prop('disabled', false);
+            }
+        });
+    }
+
+    // Example usage
+    var bookedTimes = ['09:00', '10:00', '11:00']; // Assume these are booked times fetched from the server
+    disableBookedTimeSlots(bookedTimes);
+});
+
+</script> -->
 </body>
 </html>

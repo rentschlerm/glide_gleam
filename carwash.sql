@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 23, 2024 at 12:55 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Generation Time: May 06, 2024 at 07:54 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `accounts` (
   `account_id` int(4) NOT NULL,
   `email` varchar(25) NOT NULL,
-  `password` varchar(25) NOT NULL,
+  `password` varchar(100) NOT NULL,
   `type` varchar(15) NOT NULL,
   `status` varchar(9) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -42,7 +42,14 @@ CREATE TABLE `accounts` (
 INSERT INTO `accounts` (`account_id`, `email`, `password`, `type`, `status`) VALUES
 (39, 'vehicleowner@gmail.com', '123', '2', 'Accept re'),
 (40, 'shopowner@gmail.com', '123', '1', 'Accept re'),
-(41, 'testshop@gmail.com', '123', '1', 'Accept re');
+(41, 'testshop@gmail.com', '123', '1', 'Accept re'),
+(42, 'test@email.com', '123', '2', 'Accept re'),
+(66, 'test11111@email.com', '123123', '2', 'Accept re'),
+(67, 'guiang.vwasdf@gmail.com', '123123123', '1', 'Accept re'),
+(70, 'guiang.vw123123@gmail.com', '$2y$10$zaOvD8SuNMGB6AHzd3', '1', 'Accept re'),
+(71, 'bersotto18@gmail.com', '$2y$10$YTNc.XuNZ3RVb1fSXpCPVukGl7wwGs/u21ln8PFzLXwEdWuW4/PI6', '1', 'Accept re'),
+(73, 'bersotto28@gmail.com', '$2y$10$kLs3zVbXXZniFcy52A8niuV0BO5zhD9JQF.HovWo8OxtZZVV3MbIi', '2', 'Accept re'),
+(74, 'bersotto20@gmail.com', '$2y$10$KUGLpfpZ96h1Oy9XTlj1Cu1zOttCitJB9.UWJu9QNR2kTKDgxr1tG', '2', 'Accept re');
 
 -- --------------------------------------------------------
 
@@ -191,7 +198,12 @@ CREATE TABLE `shop_owners` (
 
 INSERT INTO `shop_owners` (`shop_owner_id`, `first_name`, `last_name`, `phone`) VALUES
 (40, 'Rentschler ', 'Capacite', 2147483647),
-(41, 'test', 'shop', 123456789);
+(41, 'test', 'shop', 123456789),
+(67, '123123', '123123', 2147483647),
+(68, '123123', '123123', 2147483647),
+(70, 'Von Wilhelm', 'Guiang', 2147483647),
+(71, 'Iverson', 'Sotto', 2147483647),
+(72, 'Iverson', 'Sotto', 2147483647);
 
 -- --------------------------------------------------------
 
@@ -219,7 +231,34 @@ CREATE TABLE `vehicle_owners` (
 --
 
 INSERT INTO `vehicle_owners` (`vehicle_owner_id`, `vehicle_info_id`, `first_name`, `last_name`, `phone`, `brand`, `model`, `vehicle_year`, `license_plate`, `vehicle_size`, `color`, `vehicle_type`) VALUES
-(39, 0, 'Rentschler', 'Capacite', '09265305143', 'Suzuki', 'Jimny', '2024', 'GTA1231', 'Medium', 'White', 'Automobile');
+(39, 0, 'Rentschler', 'Capacite', '09265305143', 'Suzuki', 'Jimny', '2024', 'GTA1231', 'Medium', 'White', 'Automobile'),
+(42, 0, '123123', 'jkhkjh', '12312312', 'Nissan', '123123', '0000', '1231231', 'Small', 'Black', 'Automobile'),
+(43, 0, '123123', '123123', '123123', 'Toyota', '123123', '0000', '1231231', 'Large', 'White', 'Automobile'),
+(44, 0, '123123', '123123', '123123', 'Toyota', '123123', '0000', '1231231', 'Large', 'White', 'Automobile'),
+(45, 0, '123123', '123123', '123123', 'Toyota', '123123', '0000', '1231231', 'Medium', 'Black', 'Motorcycle'),
+(46, 0, '123123', '123123', '123123', 'Kia', '123123', '0000', '1231231', 'Medium', 'White', 'Motorcycle'),
+(47, 0, '123123', '123123', '123123', 'Kia', '123123', '0000', '1231231', 'Medium', 'White', 'Motorcycle'),
+(48, 0, '123123', '123123', '123123', 'Kia', '123123', '0000', '1231231', 'Medium', 'White', 'Motorcycle'),
+(49, 0, '123123', '123123', '123123', 'Kia', '123123', '0000', '1231231', 'Medium', 'White', 'Motorcycle'),
+(50, 0, '123123', '123123', '123123', 'Kia', '123123', '0000', '1231231', 'Small', 'Black', 'Automobile'),
+(51, 0, '123123', '123123', '123123', 'Kia', '123123', '0000', '1231231', 'Small', 'Black', 'Automobile'),
+(52, 0, '123123', '123123', '123123', 'Nissan', '123123', '0000', '1231231', 'Medium', 'Black', 'Automobile'),
+(53, 0, '123123', '123123', '123123', 'Nissan', '123123', '0000', '1231231', 'Medium', 'Black', 'Automobile'),
+(54, 0, '123123', '123123', '123123', 'Kia', '123123', '0000', '1231231', 'Large', 'Silver', 'Automobile'),
+(55, 0, '123123', '123123', '123123', 'Kia', '123123', '0000', '1231231', 'Large', 'Silver', 'Automobile'),
+(56, 0, '123123', '123123', '123123', 'Kia', '123123', '0000', '1231231', 'Large', 'Silver', 'Automobile'),
+(57, 0, '123123', '123123', '123123', 'Kia', '123123', '0000', '1231231', 'Large', 'Silver', 'Automobile'),
+(58, 0, '123123', '123123', '123123', 'Kia', '123123', '0000', '1231231', 'Large', 'Silver', 'Automobile'),
+(59, 0, '123123', '123123', '123123', 'Kia', '123123', '0000', '1231231', 'Large', 'Silver', 'Automobile'),
+(60, 0, '123123', '123123', '123123', 'Kia', '123123', '0000', '1231231', 'Large', 'Silver', 'Automobile'),
+(61, 0, '123123', '123123', '123123', 'Kia', '123123', '0000', '1231231', 'Large', 'Silver', 'Automobile'),
+(62, 0, '123123', '123123', '123123', 'Kia', '123123', '0000', '1231231', 'Large', 'Silver', 'Automobile'),
+(63, 0, '123123', '123123', '123123', 'Kia', '123123', '0000', '1231231', 'Large', 'Silver', 'Automobile'),
+(64, 0, '123123', '123123', '123123', 'Kia', '123123', '0000', '1231231', 'Small', 'Black', 'Automobile'),
+(66, 0, '123123', '123123', '123123', 'Kia', '123123', '0000', '1231231', 'Large', 'White', 'Motorcycle'),
+(67, 0, '123123', '123123', '123123', 'Toyota', '123123', '0000', '1231231', 'Medium', 'Silver', 'Automobile'),
+(73, 0, 'Iverson', 'Sotto', '09458054983', 'Suzuki', 'dsdsdsd', '0000', '12', 'Medium', 'Yellow', 'Motorcycle'),
+(74, 0, 'Iverson', 'Sotto', '09458054983', 'Honda', 'dsdsdsd', '0000', '23123', 'Medium', 'Red', 'Motorcycle');
 
 --
 -- Indexes for dumped tables
@@ -229,7 +268,8 @@ INSERT INTO `vehicle_owners` (`vehicle_owner_id`, `vehicle_info_id`, `first_name
 -- Indexes for table `accounts`
 --
 ALTER TABLE `accounts`
-  ADD PRIMARY KEY (`account_id`);
+  ADD PRIMARY KEY (`account_id`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- Indexes for table `appointment`
@@ -272,7 +312,7 @@ ALTER TABLE `vehicle_owners`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `account_id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `account_id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- AUTO_INCREMENT for table `appointment`
@@ -296,13 +336,13 @@ ALTER TABLE `shop_info`
 -- AUTO_INCREMENT for table `shop_owners`
 --
 ALTER TABLE `shop_owners`
-  MODIFY `shop_owner_id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `shop_owner_id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT for table `vehicle_owners`
 --
 ALTER TABLE `vehicle_owners`
-  MODIFY `vehicle_owner_id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `vehicle_owner_id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- Constraints for dumped tables

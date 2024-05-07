@@ -170,81 +170,12 @@ if ($result === false) {
             </div>
         </div>
     </nav>
-    
+
     <div class="container my-5">
     <a class="btn btn-custom" href="index.php" role="button">Back</a>
-    <?php
-    // Check if the result is not empty
-    if ($result->num_rows > 0) {
-        // Output data of each row
-        while($row = $result->fetch_assoc()) {
-            // Output appointment details in a card
-            echo "<div class='card my-2 appointment-card'>";
-            echo "<div class='card-body'>";
-            echo "<h5 class='card-title'>Shop Name: " . $row["shop_name"]. "</h5>";
-            echo "<p class='card-text'>Location: " . $row["location"]. "</p>";
-            echo "<p class='card-text'>Queue Number: " . $row["queue_number"] . "</p>";
 
-            // Display selected services and their prices
-            if(!empty($selectedServices)) {
-                echo "<p class='card-text'>Selected Service(s): <br>";
-                foreach($selectedServices as $service => $price) {
-                    echo "- $service (₱$price)<br>";
-                }
-                echo "</p>";
-            } else {
-                echo "<p class='card-text'>No service selected</p>";
-            }
-            
-            echo "<p class='card-text'>Appointment Date: " . date('F d, Y', strtotime($row["appointment_date"])). "</p>";
-            echo "<p class='card-text'>Appointment Time: " . date('h:i A', strtotime($row["appointment_date"])). "</p>";
-             // Button to handle cancellation of appointment
-             echo "<button id='cancelBtn' class='btn btn-danger' onclick='completeAppointment(" . $row["appointment_id"] . ", \"Cancelled\")'>Cancel</button>";
-
-            echo "</div>";
-            echo "</div>";
-        }
-    } else {
-        // Output a message if no appointments are found
-        echo "<p>No appointments found</p>";
-    }
-    ?>
     </div>
 
-    <script>
-    // Function to hide the cancel button after 5 minutes
-    setTimeout(function(){
-        document.getElementById('cancelBtn').style.display = 'none';
-    }, 300000); // 5 minutes in milliseconds
-
-   
-    function completeAppointment(appointmentId, status) {
-        // Display a confirmation prompt
-        var confirmAction = confirm("Are you sure you want to mark this appointment as " + status + "?");
-
-        if (confirmAction) {
-            // Send an AJAX request to mark the appointment as completed or cancelled
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "update_appointment.php", true);
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    // Handle the response from the PHP script
-                    alert(xhr.responseText);
-                    // Optionally, you can update the UI to reflect the completed/cancelled appointment
-                    location.reload(); // Reload the page to reflect the changes
-                    
-                    // If the appointment is marked as completed, send notification
-                    if (status === "Completed") {
-                        sendNotification(appointmentId);
-                    }
-                }
-            };
-            xhr.send("appointment_id=" + appointmentId + "&status=" + status);
-        }
-    }
-    
-    </script>
 
 </body>
 </html>
