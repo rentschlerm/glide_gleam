@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Appointments</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- Google Font -->
@@ -110,9 +110,6 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="booking.php">Car Wash</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="history.php">History</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Settings</a>

@@ -1,13 +1,56 @@
 <?php
+// Start the session at the very beginning of the file
 session_start();
 
+// Import database connection
+include("../connection.php");
+
+// Check if the selectedServices session variable is set
+if(isset($_SESSION['selectedServices'])) {
+    $selectedServices = $_SESSION['selectedServices'];
+    // Now you can use $selectedServices array in this file
+} else {
+    // Handle the case where selectedServices is not set
+    $selectedServices = array(); // Initialize as an empty array
+}
+
+// Check if the user is logged in and has the correct type
+if(isset($_SESSION["user"]) && $_SESSION['type'] == '2'){
+    $useremail = $_SESSION["user"];
+} else {
+    // Redirect to login page if user is not logged in or has incorrect type
+    header("location: ../index.php");
+    exit(); // Terminate script execution after redirection
+}
+
+// Fetch appointments for the logged-in user
+$sql = "SELECT appointment.*, accounts.*, vehicle_owners.*, shop_info.*, services.serviceName, services.service_price
+        FROM `appointment` 
+        JOIN accounts ON appointment.vehicle_owner_id = accounts.account_id 
+        JOIN vehicle_owners ON accounts.account_id = vehicle_owners.vehicle_owner_id
+        JOIN shop_info ON appointment.shop_info_id = shop_info.shop_info_id
+        LEFT JOIN services ON appointment.service_id = services.service_id
+        WHERE accounts.account_id = {$_SESSION['id']}
+        AND appointment.status = 'Not Completed'
+        ORDER BY appointment.appointment_date ASC
+        ";
+
+
+$result = $database->query($sql);
+
+// Check for SQL query errors
+if ($result === false) {
+    die("Error executing query: " . $database->error);
+}
+
+// Output HTML content
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Services</title>
+    <title>Appointments</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- Google Font -->
@@ -21,14 +64,17 @@ session_start();
           <!-- Include Chart.js library -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <link href="../css/style.css" rel="stylesheet">
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" />
-            
-
         <!-- Stylesheet -->
         <link href="../css/style.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" />
         <style>
-             html, body {
+        .popup{
+            animation: transitionIn-Y-bottom 0.5s;
+        }
+        .sub-table{
+            animation: transitionIn-Y-bottom 0.5s;
+        }
+        html, body {
             height: 100%;
             margin: 0;
             padding: 0;
@@ -39,14 +85,16 @@ session_start();
         background: linear-gradient(to bottom, #000000, #8A2BE2); /* Black to Violet gradient */
         
         }
-        .section-title h2 {
-            color: white;
-        } 
 
-            </style>
-
+        /* Adjusted CSS */
+        .appointment-card {
+            max-width: 400px; /* Set the maximum width of the card */
+            margin: -10 auto; /* Center the card horizontally */
+        }
+    </style>
 </head>
 <body>
+
      <!-- Top Bar Start -->
      <div class="top-bar">
             <div class="container">
@@ -100,24 +148,21 @@ session_start();
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php">Dashboard</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="maps.php">Carwash Maps</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.php">Dashboard</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="appointment.php">Appointments</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="history.php">History</a>
+                        <a class="nav-link" href="booking.php">Car Wash</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="services.php">Services</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="addShop.php">Shop</a>
-                    </li>
-                    <!-- <li class="nav-item">
                         <a class="nav-link" href="#">Settings</a>
-                    </li> -->
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../signout.php">Logout</a>
                     </li>
@@ -125,56 +170,12 @@ session_start();
             </div>
         </div>
     </nav>
-    <a class="btn btn-primary" href="index.php" role="button">Back</a>
+
     <div class="container my-5">
-    <div class="section-title">
-    <h2 class="appointments-heading">Appointments</h2>
+    <a class="btn btn-custom" href="index.php" role="button">Back</a>
+
     </div>
-    <?php
 
-if(isset($_SESSION["user"]) && $_SESSION['type'] == '1') {
-    // Import database connection
-    include("../connection.php");
 
-    // Fetch appointment history for the logged-in user using the stored user ID
-    $historyQuery = "SELECT * FROM appointment_history";
-
-    $historyResult = $database->query($historyQuery);
-
-    // Check for SQL query errors
-    if ($historyResult === false) {
-        die("Error executing query: " . $database->error);
-    }
-
-    // Output appointment history data
-    if ($historyResult->num_rows > 0) {
-        echo "<table class='table'>";
-        echo "<thead>";
-        echo "<tr>";
-        echo "<th>Queue Number</th>";
-        echo "<th>Appointment Date</th>";
-        echo "<th>Status</th>";
-        echo "</tr>";
-        echo "</thead>";
-        echo "<tbody>";
-
-        while ($row = $historyResult->fetch_assoc()) {
-            echo "<tr>";
-            echo "<td>{$row['queue_number']}</td>";
-            echo "<td>{$row['appointment_date']}</td>";
-            echo "<td>{$row['status']}</td>";
-            echo "</tr>";
-        }
-
-        echo "</tbody>";
-        echo "</table>";
-    } else {
-        echo "<p>No appointment history found</p>";
-    }
-
-    // Close the database connection
-    $database->close();
-} else {
-    header("location: ../login.php");
-}
-?>
+</body>
+</html>

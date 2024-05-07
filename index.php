@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +11,9 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- Stylesheet -->
     <link href="./css/style.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
     <!-- Top Bar Start -->
@@ -16,7 +22,7 @@
             <div class="row align-items-center">
                 <div class="col-lg-4 col-md-12">
                     <div class="logo">
-                        <a href="index.html">
+                        <a href="index.php">
                             <h1>Glide<span>Gleam</span></h1>
                             <!-- <img src="img/logo.jpg" alt="Logo"> -->
                         </a>
@@ -102,6 +108,7 @@
                             </td>
                         </tr>
                         <tr>
+                            
                             <form action="signin.php" method="post"> <!-- Corrected form action -->
                                 <td class="label-td">
                                     <label for="email" class="form-label">Email: </label>
@@ -392,6 +399,54 @@
             
         </div>
     </div>
+
+    <!--MODAL COPY AND PASTE-->
+    <div class="modal fade" id="message-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="message-modal-title"></h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="mesasge-modal-body">
+              <!--MESSAGE-->
+            </div>
+            <div class="modal-footer">
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <?php 
+        if(!empty($_SESSION['login_message']) && $_SESSION['login_message'] !== 'success')
+        {
+      ?>
+            <div class="modal fade" id="signin-message-modal" >
+                <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="sign-in-message-modal-title">SIGN IN</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="sign-in-mesasge-modal-body text-center p-5">
+                        <?= $_SESSION['login_message'] ?>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+                </div>
+            </div>
+            <script>
+                $('#signin-message-modal').modal('show');
+            </script>
+      <?php
+        }
+      ?>
 </div>
 
     <header class="jumbotron text-center">
@@ -412,9 +467,6 @@
     </footer>
 
     <!-- Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         function togglePasswordVisibility() {
             var passwordInput = document.getElementById("password");
@@ -457,9 +509,12 @@
 <script>
     // Check if the URL contains the query parameter "signup=success"
     const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.has('signup') && urlParams.get('signup') === 'success') {
-        // Show a prompt message
-        alert("Successful! Please Log in to continue");
+    const message = urlParams.has('signup') && urlParams.get('signup') === 'success' ? "Successful! Please Log in to continue" : urlParams.get('signup');
+    if(urlParams.has('signup')){
+        // modal changes
+        $('.message-modal-title').text('Sign Up');
+        $('.mesasge-modal-body').html(`<div class="text-center py-5"> ${message} </div>`)
+        $('#message-modal').modal('show');
     }
 </script>
 
