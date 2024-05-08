@@ -452,7 +452,7 @@
 
     <header class="jumbotron text-center">
         <div class="container">
-            <h1 class="display-4">Book Your Car Wash Appointment</h1>
+            <h1 class="display-1">Book Your Car Wash Appointment</h1>
             <p class="lead">Convenient, Fast, and Reliable</p>
             <!-- <a href="#" class="btn btn-primary btn-lg">Book Appointment</a> -->
             <div class="ml-auto">
@@ -461,7 +461,7 @@
         </div>
     </header>
     
-    <footer class="bg-dark text-white py-4">
+    <footer class="bg-dark text-white py-4" style="position: fixed; left: 0; bottom: 0; width: 100%; background-color: red; color: white; text-align: center;">
         <div class="container text-center">
             <p>&copy; 2024 Car Wash Booking System</p>
         </div>
