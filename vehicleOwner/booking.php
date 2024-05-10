@@ -207,6 +207,9 @@ $shops = ($result->num_rows > 0)? mysqli_fetch_all($result, MYSQLI_ASSOC) : [];
                         <a class="nav-link" href="#">Car Wash</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="history.php">History</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="#">Settings</a>
                     </li>
                     <li class="nav-item">

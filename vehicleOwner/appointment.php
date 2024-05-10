@@ -148,9 +148,7 @@ if ($result === false) {
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="maps.php">Carwash Maps</a>
-                    </li>
+                    
                     <li class="nav-item">
                         <a class="nav-link" href="index.php">Dashboard</a>
                     </li>
@@ -159,6 +157,9 @@ if ($result === false) {
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="booking.php">Car Wash</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="history.php">History</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Settings</a>

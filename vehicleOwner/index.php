@@ -112,6 +112,9 @@
                         <a class="nav-link" href="booking.php">Car Wash</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="history.php">History</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="#">Settings</a>
                     </li>
                     <li class="nav-item">
