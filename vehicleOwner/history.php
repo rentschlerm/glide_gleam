@@ -44,10 +44,24 @@ if ($result === false) {
     <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"> 
     <!-- Custom CSS -->
     <link href="../css/style.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+        <link href="lib/flaticon/font/flaticon.css" rel="stylesheet">
+        <link href="lib/animate/animate.min.css" rel="stylesheet">
+        <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+          <!-- Include Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
     <style>
-        .section-title h2 {
+         .section-title h2 {
             color: white;
         } 
+        .heading-title{
+            color:white;
+        }
 
         /* Style for the table header */
         th {
@@ -78,6 +92,7 @@ if ($result === false) {
         background: linear-gradient(to bottom, #000000, #8A2BE2); /* Black to Violet gradient */
         
         }
+           
            
     </style>
 </head>

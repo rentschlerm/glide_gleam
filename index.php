@@ -207,6 +207,12 @@
                     <!-- Form fields for shop owner -->
                     <div class="col-sm-4">
                     </div>
+
+                    <select class="form-control" name="userType" id="userType"  onload="handleUserType(this.value)" required>
+
+                            <option value="shop_owner">Shop Owner</option>
+                        </select>
+                            
                     <div class="form-group row">
                         <label for="fname" class="col-sm-2 col-form-label">First Name:</label>
                         <div class="col-sm-4">

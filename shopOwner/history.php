@@ -126,7 +126,7 @@
 
     // Check if the user is logged in
     if(!isset($_SESSION["user"]) || $_SESSION['type'] != '1' || $_SESSION["user"] == "") {
-        header("location: ../login.php");
+        header("location: ../signin.php");
         exit(); // Stop further execution
     }
 

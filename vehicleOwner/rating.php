@@ -44,55 +44,148 @@ if ($result === false) {
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"> 
+     <!-- CSS Libraries -->
+     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+        <link href="lib/flaticon/font/flaticon.css" rel="stylesheet">
+        <link href="lib/animate/animate.min.css" rel="stylesheet">
+        <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-    
+
     <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+<!-- Stylesheet -->
+<link href="../css/style.css" rel="stylesheet">
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
 
-        * {
+        .section-title h2 {
+            color: white;
+        } 
+        .heading-title{
+            color:white;
+        }
+
+        /* Style for the table header */
+        th {
+            background-color: #343a40; /* Dark grey */
+            color: #fff; /* White text */
+        }
+        /* Alternate row color for better readability */
+        tbody tr {
+            background-color: #fff; /* Violet */
+            color: #000000; /* White text */
+        }
+        tbody tr:nth-child(even) {
+            background-color: #fff; /* Violet */
+            color: #000000; /* White text */
+        }
+        /* Style for action buttons */
+        .action-btns .btn {
+            margin-right: 5px;
+        }
+        html, body {
+            height: 100%;
             margin: 0;
             padding: 0;
-            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden; /* Optional: Hide horizontal scrollbar */
         }
 
         body {
-            background-image: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%);
-            background-repeat: no-repeat;
-            background-attachment: fixed;
+        background: linear-gradient(to bottom, #000000, #8A2BE2); /* Black to Violet gradient */
+        
         }
-
-        .progress-label-left {
-            float: left;
-            margin-right: 0.5em;
-            line-height: 1em;
-        }
-        .progress-label-right {
-            float: right;
-            margin-left: 0.3em;
-            line-height: 1em;
-        }
-        .star-light {
-            color:#e9ecef;
-        }
-
-        .row {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
+           
     </style>
 </head>
 <body>
+     <!-- Top Bar Start -->
+     <div class="top-bar">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-4 col-md-12">
+                        <div class="logo">
+                            <a href="index.php">
+                                <h1>Glide<span>Gleam</span></h1>
+                                <!-- <img src="img/logo.jpg" alt="Logo"> -->
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-8 col-md-7 d-none d-lg-block">
+                        <div class="row">
+                            <div class="col-4">
+                            </div>
+                            <div class="col-4">
+                                <div class="top-bar-item">
+                                    <div class="top-bar-icon">
+                                        <i class="fa fa-phone-alt"></i>
+                                    </div>
+                                    <div class="top-bar-text">
+                                        <h3>Call Us</h3>
+                                        <p>+012 345 6789</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="top-bar-item">
+                                    <div class="top-bar-icon">
+                                        <i class="far fa-envelope"></i>
+                                    </div>
+                                    <div class="top-bar-text">
+                                        <h3>Email Us</h3>
+                                        <p>info@example.com</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Top Bar End -->
+
+    <!-- Navbar -->
+    <nav class="nav-bar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.php">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="appointment.php">Appointments</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="booking.php">Car Wash</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="history.php">History</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Settings</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../signout.php">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+<body>
     <div class="alert alert-primary" role="alert">
-        <h1 class="text-center mt-2 mb-2">Shop Rating/Review</h1>
     </div>
     <div class="container">
 
