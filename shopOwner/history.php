@@ -114,9 +114,9 @@
                     </li>
                 </ul>
             </div>
-        </div>
+        </div>  
 
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
     
     </nav>
@@ -154,7 +154,7 @@
     if ($result->num_rows > 0) {
         // Output data of each row
         while($row = $result->fetch_assoc()) {
-            echo "<div class='card my-2'>";
+            echo "<div class='card my-2 m-4 d-inline-block' style='width: 45%'>";
             echo "<div class='card-body'>";
             echo "<h5 class='card-title'>Customer Name: " . $row["first_name"] . " " . $row["last_name"] . "</h5>";
             echo "<p class='card-text'>Shop Name: " . $row["shop_name"] . "</p>";
@@ -164,7 +164,7 @@
             echo "<p class='card-text'>Category: " . $row["vehicle_type"] . "</p>";
             echo "<p class='card-text'>Appointment Date: " . date('F d, Y', strtotime($row["appointment_date"])) . "</p>";
             echo "<p class='card-text'>Appointment Time: " . date('h:i A', strtotime($row["appointment_date"])) . "</p>";
-
+            echo "<button class='btn-view-feedback btn btn-primary' data-id='". $row['appointment_id'] ."'> View Feedback </button>";
             // Button to handle cancellation of appointment
 
             echo "</div>";
@@ -177,6 +177,40 @@
     // Close the database connection
     $database->close();
     ?>
+<div class="modal fade" id="feedback-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="feedback-user-name"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="feedback-content"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+            </div>
+        </div>
+    </div>
 
+    <script>
+        $('.btn-view-feedback').on('click',function(){
+            const feedbackId = $(this).data('id');
+
+            $.ajax({
+                url: 'viewHistory.php?getFeedbackId=true&id=' + feedbackId,
+                method: 'GET',
+                success:function(response){
+                    const review = JSON.parse(response);
+                    $('#feedback-modal').modal('show')
+                    $('#feedback-user-name').html(review.user_name)
+                    $('#feedback-content').html(review.user_review)
+                }
+            })
+        });
+    </script>
 </body>
 </html>
