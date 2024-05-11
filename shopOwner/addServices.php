@@ -18,18 +18,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["save_changes"])) {
         if ($result->num_rows > 0) {
             $shop_info_row = $result->fetch_assoc();
             $shop_info_id = $shop_info_row['shop_info_id'];
+
+            $insertQuery2 = "INSERT INTO services (serviceName, shop_info_id, vehicle_size, service_price, vehicle_type)
+            VALUES ('$service_name','$shop_info_id', '$size', '$price', '$vehicle_type')";
+
+            if($database->query($insertQuery2) === TRUE) {
+                $alertMessage = "Service added successfully!";
+            } else {
+                $alertMessage = "Error: " . $insertQuery2 . "<br>" . $database->error;
+        }
         } else {
-            die("Error: Shop info not found.");
+            $alertMessage = "Please Add a Shop first!";
+            // die("Please Add a Shop first!");
         }
 
-        $insertQuery2 = "INSERT INTO services (serviceName, shop_info_id, vehicle_size, service_price, vehicle_type)
-        VALUES ('$service_name','$shop_info_id', '$size', '$price', '$vehicle_type')";
-
-        if($database->query($insertQuery2) === TRUE) {
-            $alertMessage = "Service added successfully!";
-        } else {
-            $alertMessage = "Error: " . $insertQuery2 . "<br>" . $database->error;
-        }
+        
     } else {
         die("Error: Shop owner ID not available.");
     }

@@ -1,3 +1,8 @@
+<?php
+
+session_start();
+include("../connection.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,9 +16,6 @@
      <!-- CSS Libraries -->
      <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-        <link href="lib/flaticon/font/flaticon.css" rel="stylesheet">
-        <link href="lib/animate/animate.min.css" rel="stylesheet">
-        <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
           <!-- Include Chart.js library -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -130,13 +132,16 @@
                     <div class="card-body text-center">
                     <?php
 // Include your database connection file
-include("../connection.php");
+
+$vehicle_owner_id = isset($_SESSION['id']) ? $_SESSION['id'] : ""; 
 
 // Fetch appointments data from the database with service details
 $sql = "SELECT appointment.*, services.service_price 
         FROM appointment 
         INNER JOIN services ON appointment.service_id = services.service_id 
-        WHERE appointment.status = 'Not Completed'";
+        WHERE appointment.status = 'Not Completed' 
+        AND vehicle_owner_id = '$vehicle_owner_id'"
+        ;
 $result = $database->query($sql);
 
 // Check if there are appointments

@@ -26,6 +26,7 @@ $shops = ($result->num_rows > 0)? mysqli_fetch_all($result, MYSQLI_ASSOC) : [];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Appointments</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- Google Font -->
@@ -411,20 +412,40 @@ $database->close();
 
 
 <script>
-    // Function to fetch and populate services based on the selected vehicle type
-    $(document).ready(function(){
-        $('#vehicleTypeSelect').change(function(){
-            var vehicleType = $(this).val();
-            $.ajax({
-                url: 'fetch_services.php',
-                type: 'POST',
-                data: {vehicle_type: vehicleType},
-                success: function(response){
-                    $('#servicesSelect').html(response);
-                }
-            });
+$(document).ready(function(){
+    // Function to fetch services based on selected vehicle type and shop
+    function fetchServices() {
+        var vehicleType = $('#vehicleTypeSelect').val();
+        var shopId = $('#shopSelect').val(); // Get the selected shop ID
+        
+        // Log to console for debugging
+        console.log('Vehicle Type:', vehicleType);
+        console.log('Shop ID:', shopId);
+        
+        $.ajax({
+            type: 'POST',
+            url: 'fetch_services.php',
+            data: {vehicle_type: vehicleType, shop_id: shopId},
+            success: function(response) {
+                $('#servicesSelect').html(response);
+            }
         });
+    }
+
+    // Event listener for vehicle type change
+    $('#vehicleTypeSelect').change(function(){
+        fetchServices();
     });
+
+    // Event listener for shop change
+    $('#shopSelect').change(function(){
+        fetchServices();
+    });
+
+    // Call fetchServices() initially to populate services based on default vehicle type and shop
+    fetchServices();
+});
+
 </script>
 <script>
 $(document).ready(function(){

@@ -1,6 +1,13 @@
 <?php
 session_start();
-
+include("../connection.php");
+// Check if the user is logged in
+if(!isset($_SESSION["user"]) || $_SESSION['type'] != '1' || $_SESSION["user"] == "") {
+    header("location: ../index.php");
+    exit(); // Stop further execution
+} else {
+    $useremail = $_SESSION["user"];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -124,20 +131,6 @@ session_start();
     <h2 class="appointments-heading">Appointments</h2>
     </div>
     <?php
-    // Start session at the very beginning of the script
-    
-
-    // Check if the user is logged in
-    if(!isset($_SESSION["user"]) || $_SESSION['type'] != '1' || $_SESSION["user"] == "") {
-        header("location: ../login.php");
-        exit(); // Stop further execution
-    } else {
-        $useremail = $_SESSION["user"];
-    }
-
-    // Import database connection
-    include("../connection.php");
-
     // Fetch shop information from the database
     $sql = "SELECT appointment.*, 
                 vehicle_owners.*, 

@@ -15,10 +15,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $location = $_POST["location"];
     $operating_from = $_POST["operating_from"];
     $operating_to = $_POST["operating_to"];
+    $latitude = $_POST["latitude"];
+    $longitude = $_POST["longitude"];
    
     
-    $insertQuery = "INSERT INTO shop_info (shop_owner_id, shop_name, location, operating_from, operating_to)
-                    VALUES ('$shop_owner_id', '$shop_name', '$location', '$operating_from', '$operating_to')";
+    $insertQuery = "INSERT INTO shop_info (shop_owner_id, shop_name, location, operating_from, operating_to, longitude, latitude)
+                    VALUES ('$shop_owner_id', '$shop_name', '$location', '$operating_from', '$operating_to', '$longitude', '$latitude')";
 
     if ($database->query($insertQuery) === TRUE) {
         
@@ -161,51 +163,37 @@ $database->close();
     </nav>
     <div class="container my-5">
     <a class="btn btn-primary" href="addShop.php" role="button">Back</a>
-        <div class="section-title">
-            <h2>Add Carwash Shop</h2>
-        </div>    
+    <div class="section-title">
+        <h2>Add Carwash Shop</h2>
+    </div>    
     
-        <form action="" method="post">
-            <div class="mb-3">
-                <label for="shop_name" class="form-label">Shop Name</label>
-                <input type="text" class="form-control" id="shop_name" name="shop_name" required>
-            </div>
-            <div class="mb-3">
-                <label for="location" class="form-label">Location</label>
-                <input type="text" class="form-control" id="location" name="location" required>
-            </div>
-            <div class="mb-3">
-                <label for="operating_from" class="form-label">Operating From</label>
-                <input type="time" class="form-control" id="operating_from" name="operating_from" required>
-            </div>
-            <div class="mb-3">
-                <label for="operating_to" class="form-label">Operating To</label>
-                <input type="time" class="form-control" id="operating_to" name="operating_to" required>
-            </div>
-            <h1>Add to map</h1>
-            <div id="mapContainer"></div>
-            <button id="saveLocationBtn">Save Location</button>
+    <form action="" method="post">
+        <div class="mb-3">
+            <label for="shop_name" class="form-label">Shop Name</label>
+            <input type="text" class="form-control" id="shop_name" name="shop_name" required>
+        </div>
+        <div class="mb-3">
+            <label for="location" class="form-label">Location</label>
+            <input type="text" class="form-control" id="location" name="location" required>
+        </div>
+        <div class="mb-3">
+            <label for="operating_from" class="form-label">Operating From</label>
+            <input type="time" class="form-control" id="operating_from" name="operating_from" required>
+        </div>
+        <div class="mb-3">
+            <label for="operating_to" class="form-label">Operating To</label>
+            <input type="time" class="form-control" id="operating_to" name="operating_to" required>
+        </div>
+        <h1>Add to map</h1>
+        <div id="mapContainer"></div>
+        <button id="saveLocationBtn" type="button" class="btn btn-primary">Save Location</button>
 
-            <button type="submit" class="btn btn-primary">Add Shop</button>
-        </form>
-    </div>
-
-    <?php if (!empty($alertMessage)): ?>
-<div id="alertDiv" class="alert alert-success alert-dismissible text-center" style="position: fixed; top: 80px; left: 50%; transform: translateX(-50%);" role="alert">
-    <?php echo $alertMessage; ?>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
+        <button type="submit" class="btn btn-primary">Add Shop</button>
+    </form>
 </div>
-<script>
-    // Automatically close the alert after 5 seconds
-    setTimeout(function() {
-        document.getElementById('alertDiv').style.display = 'none';
-    }, 5000);
-</script>
-<?php endif; ?>
 
-    <script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
     var map;
     var defaultLayers;
     var platform;
@@ -237,7 +225,7 @@ $database->close();
         behavior = new H.mapevents.Behavior(mapEvents);
         var ui = H.ui.UI.createDefault(map, defaultLayers);
 
-        //event listener to the map for long tap to drop a pin
+        // event listener to the map for long tap to drop a pin
         map.addEventListener('pointerdown', function (evt) {
             longTapTimer = setTimeout(function() {
                 var coord = map.screenToGeo(evt.currentPointer.viewportX, evt.currentPointer.viewportY);
@@ -268,10 +256,26 @@ $database->close();
         var coord = map.getCenter();
         var latitude = coord.lat;
         var longitude = coord.lng;
+        var shopName = document.getElementById('shop_name').value;
 
-        
-        console.log("Latitude:", latitude);
-        console.log("Longitude:", longitude);
+        $.ajax({
+            url: 'save_location.php',
+            type: 'POST',
+            data: {
+                latitude: latitude,
+                longitude: longitude,
+                shop_name: shopName
+            },
+            success: function(response) {
+                alert('Location saved successfully!');
+                console.log(latitude);
+                console.log(longitude);
+                console.log(shopName);
+            },
+            error: function(xhr, status, error) {
+                alert('Error saving location: ' + error);
+            }
+        });
     }
 
     // load the HERE Map after page is fully loaded

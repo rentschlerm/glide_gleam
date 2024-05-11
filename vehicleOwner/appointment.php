@@ -200,7 +200,7 @@ if ($result === false) {
             echo "<p class='card-text'>Appointment Time: " . date('h:i A', strtotime($row["appointment_date"])). "</p>";
              // Button to handle cancellation of appointment
              echo "<button id='cancelBtn' class='btn btn-danger' onclick='completeAppointment(" . $row["appointment_id"] . ", \"Cancelled\")'>Cancel</button>";
-
+            echo"<span id='countdown'></span>";
             echo "</div>";
             echo "</div>";
         }
@@ -214,8 +214,9 @@ if ($result === false) {
     <script>
     // Function to hide the cancel button after 5 minutes
     setTimeout(function(){
+        console.log('Hiding cancel button...');
         document.getElementById('cancelBtn').style.display = 'none';
-    }, 300000); // 5 minutes in milliseconds
+    }, 900000); // 15 minutes in milliseconds
 
    
     function completeAppointment(appointmentId, status) {
@@ -244,6 +245,51 @@ if ($result === false) {
         }
     }
     
+    </script>
+    <script>
+        // Function to update the countdown
+    function updateCountdown() {
+        var startTime = localStorage.getItem('countdownStartTime');
+        if (!startTime) {
+            return; // Countdown hasn't started yet
+        }
+
+        var currentTime = new Date().getTime();
+        var elapsedTime = currentTime - startTime;
+        var remainingTime = 15 * 60 * 1000 - elapsedTime;
+
+        // Convert remaining milliseconds to minutes and seconds
+        var minutes = Math.floor(remainingTime / 60000);
+        var seconds = ((remainingTime % 60000) / 1000).toFixed(0);
+
+        // Display the remaining time in the format "MM:SS"
+        document.getElementById('countdown').textContent = minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+
+        // Check if the duration has elapsed
+        if (remainingTime <= 0) {
+            hideCancelButton(); // Hide the cancel button
+            return;
+        }
+
+        // Continue updating the countdown
+        setTimeout(updateCountdown, 1000);
+    }
+
+    // Function to hide the cancel button after the countdown
+    function hideCancelButton() {
+        document.getElementById('cancelBtn').style.display = 'none';
+        document.getElementById('countdown').style.display = 'none'; // Hide the countdown
+    }
+
+    // Start the countdown
+    if (!localStorage.getItem('countdownStartTime')) {
+        // Start the countdown only if it hasn't started yet
+        localStorage.setItem('countdownStartTime', new Date().getTime());
+    }
+
+    // Update the countdown
+    updateCountdown();
+
     </script>
 
 </body>
