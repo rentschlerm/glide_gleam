@@ -1,62 +1,10 @@
 <?php
-session_start();
-include("../connection.php");
-
-if(isset($_GET['shop_info_id'])) {
-    $shop_info_id = $_GET['shop_info_id'];
-
-    // Fetch shop information
-    $sql = "SELECT * FROM shop_info WHERE shop_info_id = '$shop_info_id'";
-    $result = $database->query($sql);
-
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $shop_name = $row['shop_name'];
-        $location = $row['location'];
-        $operating_from = $row['operating_from'];
-        $operating_to = $row['operating_to'];
-    } else {
-        echo "Shop not found!";
-        exit;
-    }
-} else {
-    echo "Invalid request!";
-    exit;
-}
-
-// Update shop information
-if(isset($_POST['submit'])) {
-    $new_shop_name = $_POST['shop_name'];
-    $new_location = $_POST['location'];
-    $new_operating_from = $_POST['operating_from'];
-    $new_operating_to = $_POST['operating_to'];
-
-    $sql_update = "UPDATE shop_info SET shop_name = '$new_shop_name', location = '$new_location', operating_from = '$new_operating_from', operating_to = '$new_operating_to' WHERE shop_info_id = '$shop_info_id'";
-    if ($database->query($sql_update) === TRUE) {
-        echo "
-        <div class='alert-success'>
-                    <span class='closebtn' onclick='this.parentElement.style.display='none';'>&times;</span>
-                    Edit Successful.
-        </div>";
-
-        // Redirect to the shop list page or any other page you want
-        header("Location: addShop.php");
-
-        
-    } else {
-        echo "Error updating shop information: " . $database->error;
-    }
-}
+    session_start();
+    include('../connection.php');
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Shop</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-</head>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -166,33 +114,103 @@ if(isset($_POST['submit'])) {
                     </li>
                 </ul>
             </div>
-        </div>
-    </nav>
-<body>
-    <div class="container">
-        <h2>Edit Shop</h2>
-        <a href="services.php" class="btn btn-secondary">Back to Shop</a>
+        </div>  
 
-        <form method="POST">
-            <div class="form-group">
-                <label for="shop_name">Shop Name:</label>
-                <input type="text" class="form-control" id="shop_name" name="shop_name" value="<?php echo $shop_name; ?>">
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    </nav>
+
+    <?php
+    // Start PHP session
+
+    // Check if the user is logged in
+    if(!isset($_SESSION["user"]) || $_SESSION['type'] != '1' || $_SESSION["user"] == "") {
+        header("location: ../signin.php");
+        exit(); // Stop further execution
+    }
+
+    // Import database connection
+    include("../connection.php");
+
+    // Fetch past appointments for the logged-in user
+    $sql = "SELECT appointment.*, 
+                    vehicle_owners.*, 
+                    shop_info.*, 
+                    services.serviceName, 
+                    services.service_price, 
+                    services.vehicle_type
+            FROM appointment 
+            JOIN vehicle_owners ON appointment.vehicle_owner_id = vehicle_owners.vehicle_owner_id 
+            JOIN shop_info ON shop_info.shop_info_id = appointment.shop_info_id 
+            JOIN services ON services.service_id = appointment.service_id
+            WHERE shop_info.shop_owner_id = {$_SESSION['id']} 
+            AND appointment.status != 'Not Completed'
+            ORDER BY appointment.appointment_date DESC;
+            ";
+
+    $result = $database->query($sql);
+
+    if ($result->num_rows > 0) {
+        // Output data of each row
+        while($row = $result->fetch_assoc()) {
+            echo "<div class='card my-2 m-4 d-inline-block' style='width: 45%'>";
+            echo "<div class='card-body'>";
+            echo "<h5 class='card-title'>Customer Name: " . $row["first_name"] . " " . $row["last_name"] . "</h5>";
+            echo "<p class='card-text'>Shop Name: " . $row["shop_name"] . "</p>";
+            echo "<p class='card-text'>Queue Number: " . $row["queue_number"] . "</p>";
+            echo "<p class='card-text'>Service Name: " . $row["serviceName"] . "</p>";
+            echo "<p class='card-text'>Price: ₱" . $row["service_price"] . "</p>";
+            echo "<p class='card-text'>Category: " . $row["vehicle_type"] . "</p>";
+            echo "<p class='card-text'>Appointment Date: " . date('F d, Y', strtotime($row["appointment_date"])) . "</p>";
+            echo "<p class='card-text'>Appointment Time: " . date('h:i A', strtotime($row["appointment_date"])) . "</p>";
+            echo "<button class='btn-view-feedback btn btn-primary' data-id='". $row['appointment_id'] ."'> View Feedback </button>";
+            // Button to handle cancellation of appointment
+
+            echo "</div>";
+            echo "</div>";
+        }
+    } else {
+        echo "<p>No past appointments found</p>";
+    }
+
+    // Close the database connection
+    $database->close();
+    ?>
+<div class="modal fade" id="feedback-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="feedback-user-name"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="form-group">
-                <label for="location">Location:</label>
-                <input type="text" class="form-control" id="location" name="location" value="<?php echo $location; ?>">
+            <div class="modal-body">
+                <p id="feedback-content"></p>
             </div>
-            <div class="form-group">
-                <label for="operating_from">Operating From:</label>
-                <input type="time" class="form-control" id="operating_from" name="operating_from" value="<?php echo $operating_from; ?>">
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
-            <div class="form-group">
-                <label for="operating_to">Operating To:</label>
-                <input type="time" class="form-control" id="operating_to" name="operating_to" value="<?php echo $operating_to; ?>">
             </div>
-            <button type="submit" name="submit" class="btn btn-primary">Update</button>
-            <a href="services.php" class="btn btn-secondary">Cancel</a>
-        </form>
+        </div>
     </div>
+
+    <script>
+        $('.btn-view-feedback').on('click',function(){
+            const feedbackId = $(this).data('id');
+
+            $.ajax({
+                url: 'viewHistory.php?getFeedbackId=true&id=' + feedbackId,
+                method: 'GET',
+                success:function(response){
+                    const review = JSON.parse(response);
+                    $('#feedback-modal').modal('show')
+                    $('#feedback-user-name').html(review.user_name)
+                    $('#feedback-content').html(review.user_review)
+                }
+            })
+        });
+    </script>
 </body>
 </html>

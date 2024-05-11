@@ -103,6 +103,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="addShop.php">Shop</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="history.php">History</a>
+                    </li>
                     <!-- <li class="nav-item">
                         <a class="nav-link" href="#">Settings</a>
                     </li> -->

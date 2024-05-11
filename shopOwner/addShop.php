@@ -129,6 +129,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="addShop.php">Shop</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="history.php">History</a>
+                    </li>
                     <!-- <li class="nav-item">
                         <a class="nav-link" href="#">Settings</a>
                     </li> -->
@@ -204,6 +207,7 @@
                         <td>
                             <a class='btn btn-primary btn-sm' href='/glide_gleam/shopOwner/edit.php?shop_info_id={$row['shop_info_id']}'>EDIT</a>
                             <a class='btn btn-primary btn-sm' href='/glide_gleam/shopOwner/deleteShop.php?shop_info_id={$row['shop_info_id']}'>DELETE</a>
+
                         </td>
                     </tr>";
                 }
