@@ -18,12 +18,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $latitude = $_POST["latitude"];
     $longitude = $_POST["longitude"];
    
-    
+    // Inserting data directly into the database
     $insertQuery = "INSERT INTO shop_info (shop_owner_id, shop_name, location, operating_from, operating_to, longitude, latitude)
                     VALUES ('$shop_owner_id', '$shop_name', '$location', '$operating_from', '$operating_to', '$longitude', '$latitude')";
 
     if ($database->query($insertQuery) === TRUE) {
-        
         $alertMessage = "Shop added successfully!";
     } else {
         echo "Error: " . $insertQuery . "<br>" . $database->error;
@@ -257,23 +256,33 @@ $database->close();
         var latitude = coord.lat;
         var longitude = coord.lng;
         var shopName = document.getElementById('shop_name').value;
+        var location = document.getElementById('location').value;
+        var operating_from = document.getElementById('operating_from').value;
+        var operating_to = document.getElementById('operating_to').value;
 
+        // Inserting latitude, longitude, and shop name directly into the database
         $.ajax({
-            url: 'save_location.php',
+            url: '', // Leave empty as it points to the same script
             type: 'POST',
             data: {
                 latitude: latitude,
                 longitude: longitude,
-                shop_name: shopName
+                shop_name: shopName,
+                location: location,
+                operating_from: operating_from,
+                operating_to: operating_to
             },
             success: function(response) {
-                alert('Location saved successfully!');
+                alert('Shop added successfully!');
                 console.log(latitude);
                 console.log(longitude);
                 console.log(shopName);
+                console.log(location);
+                console.log(operating_from);
+                console.log(operating_to);
             },
             error: function(xhr, status, error) {
-                alert('Error saving location: ' + error);
+                alert('Error adding shop: ' + error);
             }
         });
     }
