@@ -15,11 +15,23 @@ if(isset($_SESSION["user"])){
 // Import database connection
 include("../connection.php");
 
+
+$sqlmain= "select * from accounts where email=?";
+    $stmt = $database->prepare($sqlmain);
+    $stmt->bind_param("s",$email);
+    $stmt->execute();
+    $userrow = $stmt->get_result();
+    $userfetch=$userrow->fetch_assoc();
+
+
 // Fetch shop information from the database
 $sql = "SELECT * FROM shop_info";
 $result = $database->query($sql);
 $shops = ($result->num_rows > 0)? mysqli_fetch_all($result, MYSQLI_ASSOC) : [];
+
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

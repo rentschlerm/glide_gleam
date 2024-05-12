@@ -132,6 +132,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="history.php">History</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="generate_pdf.php">REPORTS</a>
+                    </li>
                     <!-- <li class="nav-item">
                         <a class="nav-link" href="#">Settings</a>
                     </li> -->
