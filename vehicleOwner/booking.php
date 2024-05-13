@@ -235,6 +235,18 @@ $shops = ($result->num_rows > 0)? mysqli_fetch_all($result, MYSQLI_ASSOC) : [];
 <button type="button" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#exampleModal">
   Create Appointment
 </button>
+ <!-- Search Bar -->
+ <div class="row mb-4 mt-5">
+        <div class="col">
+            <form action="#" method="GET">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for a shop..." name="search">
+                    <button class="btn btn-custom" type="submit">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
 </div>
     <?php
     
@@ -297,10 +309,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <div class="container-fluid mt-5">
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         <?php
-        // Fetch shop information from the database
-        $sql = "SELECT * FROM shop_info";
-        $result = $database->query($sql);
-        $shops = ($result->num_rows > 0) ? mysqli_fetch_all($result, MYSQLI_ASSOC) : [];
+        // Fetch shop information from the database based on the search query
+        $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
+        $searchSql = "SELECT * FROM shop_info WHERE shop_name LIKE '%$searchTerm%'";
+        $searchResult = $database->query($searchSql);
+        $shops = ($searchResult->num_rows > 0) ? mysqli_fetch_all($searchResult, MYSQLI_ASSOC) : [];
 
         if (count($shops)) {
             // Output data of each shop
