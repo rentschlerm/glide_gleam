@@ -15,23 +15,11 @@ if(isset($_SESSION["user"])){
 // Import database connection
 include("../connection.php");
 
-
-$sqlmain= "select * from accounts where email=?";
-    $stmt = $database->prepare($sqlmain);
-    $stmt->bind_param("s",$email);
-    $stmt->execute();
-    $userrow = $stmt->get_result();
-    $userfetch=$userrow->fetch_assoc();
-
-
 // Fetch shop information from the database
 $sql = "SELECT * FROM shop_info";
 $result = $database->query($sql);
 $shops = ($result->num_rows > 0)? mysqli_fetch_all($result, MYSQLI_ASSOC) : [];
-
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -56,103 +44,115 @@ $shops = ($result->num_rows > 0)? mysqli_fetch_all($result, MYSQLI_ASSOC) : [];
         <link href="../css/style.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" />
         <style>
-        .popup{
-            animation: transitionIn-Y-bottom 0.5s;
-        }
-        .sub-table{
-            animation: transitionIn-Y-bottom 0.5s;
-        }
         html, body {
             height: 100%;
             margin: 0;
             padding: 0;
             overflow-x: hidden; /* Optional: Hide horizontal scrollbar */
+            font-family: Arial, sans-serif; /* Optional: Choose a commonly used font */
         }
 
         body {
-        background: linear-gradient(to bottom, #000000, #8A2BE2); /* Black to Violet gradient */
-        
+            background-color: #F2F2F2; /* Dominant Color */
         }
-        .section-title h2 {
+
+        .container {
+            /* background-color: #B0C4DE; Secondary Color */
+            border-radius: 10px; /* Optional: Add some rounded corners */
+            /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); Optional: Add a subtle shadow for depth */
+        }
+
+        .navbar-dark .navbar-nav .nav-link {
+            color: #FFF; /* Text color for navbar links */
+        }
+
+        .navbar-dark .navbar-nav .nav-link:hover {
+            color: #4682B4; /* Accent color on hover for navbar links */
+        }
+
+        .top-bar {
+            background-color: #4682B4; /* Accent Color */
+            color: #FFF; /* Text color for top bar */
+        }
+
+        .top-bar-item h3 {
+            color: #FFF; /* Text color for top bar headings */
+        }
+
+        .top-bar-item p {
+            color: #F2F2F2; /* Text color for top bar content */
+        }
+
+        .nav-bar {
+            background-color: #4682B4; /* Accent Color */
+        }
+        /* Table Row Colors */
+        tbody tr:nth-child(even) {
+            background-color: #E6E6E6; /* Light Gray */
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: #FFFFFF; /* White */
+        }
+        /* Style for action buttons */
+        .action-btns .btn {
+            margin-right: 5px;
+        }
+        /* Adjusted table size */
+        .table {
+            max-width: 800px; /* Set the maximum width of the table */
+            margin: 0 auto; /* Center the table horizontally */
+        }
+        /* The alert message box */
+    .alert {
+        padding: 20px;
+        background-color: #f44336; /* Red */
         color: white;
-    } 
-    .paragraph-color p {
-        color: white; 
+        text-align: center;
+        position: fixed;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 400px; /* Adjust width as needed */
+        margin-top: 20px;
+        z-index: 9999; /* Ensure it appears above other content */
+        margin-bottom: 15px;
+        opacity: 1;
+        transition: opacity 0.6s; /* 600ms to fade out */
+    }
+    .alert-success{
+        padding: 20px;
+        background-color: #7CFC00; /* Red */
+        color: white;
+        text-align: center;
+        position: fixed;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 400px; /* Adjust width as needed */
+        margin-top: 20px;
+        z-index: 9999; /* Ensure it appears above other content */
+        margin-bottom: 15px;
+        opacity: 1;
+        transition: opacity 0.6s; /* 600ms to fade out */
     }
 
-    /* Style for the table header */
-    th {
-        background-color: #343a40; /* Dark grey */
-        color: #fff; /* White text */
-    }
-    /* Alternate row color for better readability */
-    tbody tr {
-        background-color: #fff; /* Violet */
-        color: #000000; /* Black text */
-    }
-    tbody tr:nth-child(even) {
-        background-color: #f2f2f2; /* Light gray */
-        color: #000000; /* Black text */
-    }
-    /* Style for action buttons */
-    .action-btns .btn {
-        margin-right: 5px;
-    }
-    /* Adjusted table size */
-    .table {
-        max-width: 800px; /* Set the maximum width of the table */
-        margin: 0 auto; /* Center the table horizontally */
-    }
-    /* The alert message box */
-.alert {
-    padding: 20px;
-    background-color: #f44336; /* Red */
+    /* The close button */
+    .closebtn {
+    margin-left: 15px;
     color: white;
-    text-align: center;
-    position: fixed;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 400px; /* Adjust width as needed */
-    margin-top: 20px;
-    z-index: 9999; /* Ensure it appears above other content */
-    margin-bottom: 15px;
-    opacity: 1;
-    transition: opacity 0.6s; /* 600ms to fade out */
-}
-.alert-success{
-    padding: 20px;
-    background-color: #7CFC00; /* Red */
-    color: white;
-    text-align: center;
-    position: fixed;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 400px; /* Adjust width as needed */
-    margin-top: 20px;
-    z-index: 9999; /* Ensure it appears above other content */
-    margin-bottom: 15px;
-    opacity: 1;
-    transition: opacity 0.6s; /* 600ms to fade out */
-}
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+    }
 
-/* The close button */
-.closebtn {
-  margin-left: 15px;
-  color: white;
-  font-weight: bold;
-  float: right;
-  font-size: 22px;
-  line-height: 20px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-/* When moving the mouse over the close button */
-.closebtn:hover {
-  color: black;
-}
+    /* When moving the mouse over the close button */
+    .closebtn:hover {
+    color: black;
+    }
 
     </style>
 </head>
@@ -221,9 +221,6 @@ $shops = ($result->num_rows > 0)? mysqli_fetch_all($result, MYSQLI_ASSOC) : [];
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="history.php">History</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Settings</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../signout.php">Logout</a>
@@ -592,7 +589,7 @@ $(document).ready(function() {
                 alert('Please select a future time.');
                 $(this).val('');
             }
-        }
+        }   
     });
 });
 </script>

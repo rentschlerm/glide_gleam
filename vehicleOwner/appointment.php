@@ -68,22 +68,51 @@ if ($result === false) {
         <link href="../css/style.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" />
         <style>
-        .popup{
-            animation: transitionIn-Y-bottom 0.5s;
-        }
-        .sub-table{
-            animation: transitionIn-Y-bottom 0.5s;
-        }
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden; /* Optional: Hide horizontal scrollbar */
-        }
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden; /* Optional: Hide horizontal scrollbar */
+        font-family: Arial, sans-serif; /* Optional: Choose a commonly used font */
+    }
 
-        body {
-        background: linear-gradient(to bottom, #000000, #8A2BE2); /* Black to Violet gradient */
-        
+    body {
+        background-color: #F2F2F2; /* Dominant Color */
+    }
+
+    .container {
+       /*  background-color: #B0C4DE; /* Secondary Color */
+        border-radius: 10px; /* Optional: Add some rounded corners */
+        /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow for depth */
+    }
+
+    .navbar-dark .navbar-nav .nav-link {
+        color: #FFF; /* Text color for navbar links */
+    }
+
+    .navbar-dark .navbar-nav .nav-link:hover {
+        color: #4682B4; /* Accent color on hover for navbar links */
+    }
+
+    .top-bar {
+        background-color: #4682B4; /* Accent Color */
+        color: #FFF; /* Text color for top bar */
+    }
+
+    .top-bar-item h3 {
+        color: #FFF; /* Text color for top bar headings */
+    }
+
+    .top-bar-item p {
+        color: #F2F2F2; /* Text color for top bar content */
+    }
+
+    .nav-bar {
+        background-color: #4682B4; /* Accent Color */
+    }
+    .bg-gradient-custom {
+            background-color: #4682B4; /* Matching color from your scheme */
+            color: #FFF; /* Text color */
         }
 
         /* Adjusted CSS */
@@ -160,9 +189,6 @@ if ($result === false) {
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="history.php">History</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Settings</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../signout.php">Logout</a>

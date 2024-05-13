@@ -14,6 +14,56 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+    html, body {
+        height: 100%;
+        font-weight: 300;
+        font-size: 15px;
+        line-height: 1.7;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden; /* Optional: Hide horizontal scrollbar */
+        font-family: Arial, sans-serif,'Poppins'; /* Optional: Choose a commonly used font */
+    }
+
+    body {
+        background-color: #F2F2F2; /* Dominant Color */
+    }
+
+    .container {
+       /*  background-color: #B0C4DE; /* Secondary Color */
+        border-radius: 10px; /* Optional: Add some rounded corners */
+        /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow for depth */
+    }
+
+    .navbar-dark .navbar-nav .nav-link {
+        color: #FFF; /* Text color for navbar links */
+    }
+
+    .navbar-dark .navbar-nav .nav-link:hover {
+        color: #4682B4; /* Accent color on hover for navbar links */
+    }
+
+    .top-bar {
+        background-color: #4682B4; /* Accent Color */
+        color: #FFF; /* Text color for top bar */
+    }
+
+    .top-bar-item h3 {
+        color: #FFF; /* Text color for top bar headings */
+    }
+
+    .top-bar-item p {
+        color: #F2F2F2; /* Text color for top bar content */
+    }
+
+    .nav-bar {
+        background-color: #4682B4; /* Accent Color */
+    }
+</style>
+
 </head>
 <body>
     <!-- Top Bar Start -->
@@ -82,78 +132,56 @@
         </div>
     </nav>
 
-    <!-- Modal for Sign in -->
-<div id="signIn" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                
-                <h4 class="modal-title">Sign In </h4>
-            </div>
-            <div class="modal-body">
-                <center>
-                <div class="container">
-                    <table border="0" style="margin: 0;padding: 0;width: 60%;">
-                        <tr>
-                            <td>
-                            <p class="header-text" style="text-align: center; font-size: 25px; font-weight: bold;">Welcome Back!</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: justify; font-size: 15px;">
-                                <p class="sub-text">Login with your details to continue</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            
-                            <form action="signin.php" method="post"> <!-- Corrected form action -->
-                                <td class="label-td">
-                                    <label for="email" class="form-label">Email: </label>
-                                </td>
-                        </tr>
-                        <tr>
-                            <td class="label-td">
-                                <input type="email" name="email" class="input-text" placeholder="Email Address" required>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="label-td">
-                                <label for="password" class="form-label">Password: </label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="label-td">
-                                <input type="password" name="password" class="input-text" placeholder="Password" required>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input type="submit" value="Login" class="login-btn btn-primary btn">
-                            </td>
-                        </tr>
-                        </form>
-                        
-                        <tr>
-                            <td>
-                                <br>
-                                <label for="" class="sub-text" style="font-weight: 280;">Don't have an account? </label>
-                                <a href="choose_account_type.php" class="hover-link1 non-style-link" data-toggle="modal" data-target="#signUp">Sign Up</a>
-                                <br><br><br>
-                            </td>
-                        </tr>
-                    </table>
+            <!-- Modal for Sign in -->
+        <div id="signIn" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                    </div>
+                    <div class="modal-body">
+                        <center>
+                        <div class="container">
+                            <table border="0" style="margin: 0;padding: 0;width: 60%;">
+                                    <form action="signin.php" method="post"> <!-- Corrected form action -->
+                                
+                                <tr>
+                                    <td class="label-td">
+                                        <input type="email" name="email" class="input-text" placeholder="Your Email" required>
+                                        <i class="input-icon uil uil-at"></i>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label-td">
+                                        <input type="password" name="password" class="input-text" placeholder="Password" required>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="submit" value="Login" class="login-btn btn-custom btn">
+                                    </td>
+                                </tr>
+                                </form>
+                                
+                                <tr>
+                                    <td>
+                                        <br>
+                                        <label for="" class="sub-text" style="font-weight: 280;">Don't have an account? </label>
+                                        <a href="choose_account_type.php" class="hover-link1 non-style-link" data-toggle="modal" data-target="#signUp">Sign Up</a>
+                                        <br><br><br>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </center>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-custom" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
-            </center>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-custom" data-dismiss="modal">Close</button>
+
             </div>
         </div>
-
-    </div>
-</div>
 
 <!-- Modal for Sign up -->
 <div id="signUp" class="modal fade" role="dialog">

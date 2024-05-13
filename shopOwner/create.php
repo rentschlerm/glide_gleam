@@ -60,29 +60,63 @@ $database->close();
             <link href="../css/style.css" rel="stylesheet">
             <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-<style>
-     html, body {
+    <style>
+        html, body {
             height: 100%;
             margin: 0;
             padding: 0;
             overflow-x: hidden; /* Optional: Hide horizontal scrollbar */
+            font-family: Arial, sans-serif; /* Optional: Choose a commonly used font */
         }
 
         body {
-        background: linear-gradient(to bottom, #000000, #8A2BE2); /* Black to Violet gradient */
-        
+            background-color: #F2F2F2; /* Dominant Color */
         }
-        .section-title h2 {
-            color: white;
-        } 
-        .mb-3{
-            color:white;
+
+        .container {
+            /* background-color: #B0C4DE; Secondary Color */
+            border-radius: 10px; /* Optional: Add some rounded corners */
+            /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); Optional: Add a subtle shadow for depth */
+        }
+
+        .navbar-dark .navbar-nav .nav-link {
+            color: #FFF; /* Text color for navbar links */
+        }
+
+        .navbar-dark .navbar-nav .nav-link:hover {
+            color: #4682B4; /* Accent color on hover for navbar links */
+        }
+
+        .top-bar {
+            background-color: #4682B4; /* Accent Color */
+            color: #FFF; /* Text color for top bar */
+        }
+
+        .top-bar-item h3 {
+            color: #FFF; /* Text color for top bar headings */
+        }
+
+        .top-bar-item p {
+            color: #F2F2F2; /* Text color for top bar content */
+        }
+
+        .nav-bar {
+            background-color: #4682B4; /* Accent Color */
+        }
+        /* Table Row Colors */
+        tbody tr:nth-child(even) {
+            background-color: #E6E6E6; /* Light Gray */
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: #FFFFFF; /* White */
         }
         #mapContainer {
             height: 400px;
             width: 100%;
         }
     </style>
+
 </head>
 <body>
      <!-- Top Bar Start -->
@@ -161,7 +195,7 @@ $database->close();
         </div>
     </nav>
     <div class="container my-5">
-    <a class="btn btn-primary" href="addShop.php" role="button">Back</a>
+    <a class="btn btn-custom" href="addShop.php" role="button">Back</a>
     <div class="section-title">
         <h2>Add Carwash Shop</h2>
     </div>    
@@ -185,9 +219,7 @@ $database->close();
         </div>
         <h1>Add to map</h1>
         <div id="mapContainer"></div>
-        <button id="saveLocationBtn" type="button" class="btn btn-primary">Save Location</button>
-
-        <button type="submit" class="btn btn-primary">Add Shop</button>
+        <button id="saveLocationBtn" type="submit" class="btn btn-custom">Add Shop</button>
     </form>
 </div>
 

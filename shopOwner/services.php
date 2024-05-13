@@ -19,40 +19,56 @@ include("../connection.php");
     <!-- Stylesheet -->
     <link href="../css/style.css" rel="stylesheet">
     <style>
-        .section-title h2 {
-            color: white;
-        } 
-
-        /* Style for the table header */
-        th {
-            background-color: #343a40; /* Dark grey */
-            color: #fff; /* White text */
-        }
-        /* Alternate row color for better readability */
-        tbody tr {
-            background-color: #fff; /* Violet */
-            color: #000000; /* White text */
-        }
-        tbody tr:nth-child(even) {
-            background-color: #fff; /* Violet */
-            color: #000000; /* White text */
-        }
-        /* Style for action buttons */
-        .action-btns .btn {
-            margin-right: 5px;
-        }
         html, body {
             height: 100%;
             margin: 0;
             padding: 0;
             overflow-x: hidden; /* Optional: Hide horizontal scrollbar */
+            font-family: Arial, sans-serif; /* Optional: Choose a commonly used font */
         }
 
         body {
-        background: linear-gradient(to bottom, #000000, #8A2BE2); /* Black to Violet gradient */
-        
+            background-color: #F2F2F2; /* Dominant Color */
         }
-           
+
+        .container {
+            /* background-color: #B0C4DE; Secondary Color */
+            border-radius: 10px; /* Optional: Add some rounded corners */
+            /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); Optional: Add a subtle shadow for depth */
+        }
+
+        .navbar-dark .navbar-nav .nav-link {
+            color: #FFF; /* Text color for navbar links */
+        }
+
+        .navbar-dark .navbar-nav .nav-link:hover {
+            color: #4682B4; /* Accent color on hover for navbar links */
+        }
+
+        .top-bar {
+            background-color: #4682B4; /* Accent Color */
+            color: #FFF; /* Text color for top bar */
+        }
+
+        .top-bar-item h3 {
+            color: #FFF; /* Text color for top bar headings */
+        }
+
+        .top-bar-item p {
+            color: #F2F2F2; /* Text color for top bar content */
+        }
+
+        .nav-bar {
+            background-color: #4682B4; /* Accent Color */
+        }
+        /* Table Row Colors */
+        tbody tr:nth-child(even) {
+            background-color: #E6E6E6; /* Light Gray */
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: #FFFFFF; /* White */
+        }
     </style>
 </head>
 <body>

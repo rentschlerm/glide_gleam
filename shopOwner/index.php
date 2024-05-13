@@ -16,6 +16,7 @@
 
         <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
           <!-- Include Chart.js library -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -23,57 +24,92 @@
         <!-- Stylesheet -->
         <link href="../css/style.css" rel="stylesheet">
         <link href="../css/ui-dashboard.css" rel="stylesheet">
-        <style>
-             html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden; /* Optional: Hide horizontal scrollbar */
+    <style>
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden; /* Optional: Hide horizontal scrollbar */
+        font-family: Arial, sans-serif; /* Optional: Choose a commonly used font */
+    }
+
+    body {
+        background-color: #F2F2F2; /* Dominant Color */
+    }
+
+    .container {
+       /*  background-color: #B0C4DE; /* Secondary Color */
+        border-radius: 10px; /* Optional: Add some rounded corners */
+        /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow for depth */
+    }
+
+    .navbar-dark .navbar-nav .nav-link {
+        color: #FFF; /* Text color for navbar links */
+    }
+
+    .navbar-dark .navbar-nav .nav-link:hover {
+        color: #4682B4; /* Accent color on hover for navbar links */
+    }
+
+    .top-bar {
+        background-color: #4682B4; /* Accent Color */
+        color: #FFF; /* Text color for top bar */
+    }
+
+    .top-bar-item h3 {
+        color: #FFF; /* Text color for top bar headings */
+    }
+
+    .top-bar-item p {
+        color: #F2F2F2; /* Text color for top bar content */
+    }
+
+    .nav-bar {
+        background-color: #4682B4; /* Accent Color */
+    }
+    .bg-gradient-custom {
+            background-color: #4682B4; /* Matching color from your scheme */
+            color: #FFF; /* Text color */
         }
 
-        body {
-        background: linear-gradient(to bottom, #000000, #8A2BE2); /* Black to Violet gradient */
-        
-        }
-        </style>
+</style>
+
+
 </head>
 <body>
-     <!-- Top Bar Start -->
-     <div class="top-bar">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-4 col-md-12">
-                        <div class="logo">
-                            <a href="index.php">
-                                <h1>Glide<span>Gleam</span></h1>
-                                <!-- <img src="img/logo.jpg" alt="Logo"> -->
-                            </a>
-                        </div>
+<!-- Top Bar Start -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-4 col-md-12">
+                    <div class="logo">
+                        <a href="index.php">
+                            <h1>Glide<span>Gleam</span></h1>
+                        </a>
                     </div>
-                    <div class="col-lg-8 col-md-7 d-none d-lg-block">
-                        <div class="row">
-                            <div class="col-4">
-                            </div>
-                            <div class="col-4">
-                                <div class="top-bar-item">
-                                    <div class="top-bar-icon">
-                                        <i class="fa fa-phone-alt"></i>
-                                    </div>
-                                    <div class="top-bar-text">
-                                        <h3>Call Us</h3>
-                                        <p>+012 345 6789</p>
-                                    </div>
+                </div>
+                <div class="col-lg-8 col-md-7 d-none d-lg-block">
+                    <div class="row">
+                        <div class="col-4"></div>
+                        <div class="col-4">
+                            <div class="top-bar-item">
+                                <div class="top-bar-icon">
+                                    <i class="fa fa-phone-alt"></i>
+                                </div>
+                                <div class="top-bar-text">
+                                    <h3>Call Us</h3>
+                                    <p>+012 345 6789</p>
                                 </div>
                             </div>
-                            <div class="col-4">
-                                <div class="top-bar-item">
-                                    <div class="top-bar-icon">
-                                        <i class="far fa-envelope"></i>
-                                    </div>
-                                    <div class="top-bar-text">
-                                        <h3>Email Us</h3>
-                                        <p>info@example.com</p>
-                                    </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="top-bar-item">
+                                <div class="top-bar-icon">
+                                    <i class="far fa-envelope"></i>
+                                </div>
+                                <div class="top-bar-text">
+                                    <h3>Email Us</h3>
+                                    <p>info@example.com</p>
                                 </div>
                             </div>
                         </div>
@@ -81,7 +117,8 @@
                 </div>
             </div>
         </div>
-        <!-- Top Bar End -->
+    </div>
+    <!-- Top Bar End -->
 
     <!-- Navbar -->
     <nav class="nav-bar navbar-expand-lg navbar-dark bg-dark">
@@ -91,7 +128,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
+                <li class="nav-item">
                     <a class="nav-link" href="index.php">Dashboard</a>
                     </li>
                     <li class="nav-item">
@@ -109,7 +146,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="generate_pdf.php">REPORTS</a>
                     </li>
-                
                     <!-- <li class="nav-item">
                         <a class="nav-link" href="#">Settings</a>
                     </li> -->
@@ -120,7 +156,7 @@
             </div>
         </div>
     </nav>
-    <!-- End of Navbar-->
+
     <?php
 
       // Fetch total sales for the shop owner
@@ -170,8 +206,8 @@
                   </div>
                 </div>
                 <div class="col-4 text-end">
-                  <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                    <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
+                  <div class="icon icon-shape bg-gradient-custom shadow text-center border-radius-md">
+                  <i class="fas fa-coins text-lg opacity-10"></i> <!-- Money icon -->
                   </div>
                 </div>
               </div>
@@ -191,8 +227,8 @@
                   </div>
                 </div>
                 <div class="col-4 text-end">
-                  <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                    <i class="ni ni-world text-lg opacity-10" aria-hidden="true"></i>
+                  <div class="icon icon-shape bg-gradient-custom shadow text-center border-radius-md">
+                  <i class="fas fa-globe text-lg opacity-10"></i> <!-- World icon -->
                   </div>
                 </div>
               </div>
@@ -212,8 +248,8 @@
                   </div>
                 </div>
                 <div class="col-4 text-end">
-                  <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                    <i class="ni ni-paper-diploma text-lg opacity-10" aria-hidden="true"></i>
+                  <div class="icon icon-shape bg-gradient-custom shadow text-center border-radius-md">
+                  <i class="fas fa-graduation-cap text-lg opacity-10"></i> <!-- Graduation cap icon -->
                   </div>
                 </div>
               </div>
@@ -233,8 +269,8 @@
                           </div>
                       </div>
                       <div class="col-4 text-end">
-                          <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                              <i class="ni ni-cart text-lg opacity-10" aria-hidden="true"></i>
+                          <div class="icon icon-shape bg-gradient-custom shadow text-center border-radius-md">
+                          <i class="fas fa-shopping-cart text-lg opacity-10"></i> <!-- Shopping cart icon -->
                           </div>
                       </div>
                   </div>
@@ -414,31 +450,32 @@
         });
     </script>
      <script>
-        // JavaScript to render radar chart
-        var ctx = document.getElementById('serviceUsageChart').getContext('2d');
-        var serviceUsageChart = new Chart(ctx, {
-            type: 'radar',
-            data: {
-                labels: <?php echo json_encode($services); ?>,
-                datasets: [{
-                    label: 'Service Usage',
-                    data: <?php echo json_encode($usageCounts); ?>,
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)', // Adjust colors as needed
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scale: {
-                    angleLines: {
-                        display: false
-                    },
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
+       // JavaScript to render radar chart
+      var ctx = document.getElementById('serviceUsageChart').getContext('2d');
+      var serviceUsageChart = new Chart(ctx, {
+          type: 'radar',
+          data: {
+              labels: <?php echo json_encode($services); ?>,
+              datasets: [{
+                  label: 'Service Usage',
+                  data: <?php echo json_encode($usageCounts); ?>,
+                  backgroundColor: 'rgba(70, 130, 180, 0.2)', // Adjust colors to match your scheme
+                  borderColor: '#4682B4', // Adjust colors to match your scheme
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              scale: {
+                  angleLines: {
+                      display: false
+                  },
+                  ticks: {
+                      beginAtZero: true
+                  }
+              }
+          }
+      });
+
     </script>
     <script>
         var ctx = document.getElementById("chart-bars").getContext("2d");
@@ -506,19 +543,17 @@ new Chart(ctx, {
     },
   },
 });
-var ctx2 = document.getElementById("chart-line").getContext("2d");
+    var ctx2 = document.getElementById("chart-line").getContext("2d");
 
     var gradientStroke1 = ctx2.createLinearGradient(0, 230, 0, 50);
-
-    gradientStroke1.addColorStop(1, 'rgba(203,12,159,0.2)');
-    gradientStroke1.addColorStop(0.2, 'rgba(72,72,176,0.0)');
-    gradientStroke1.addColorStop(0, 'rgba(203,12,159,0)'); //purple colors
+    gradientStroke1.addColorStop(1, 'rgba(70, 130, 180, 0.2)'); // Adjust colors to match your scheme
+    gradientStroke1.addColorStop(0.2, 'rgba(72, 72, 176, 0.0)');
+    gradientStroke1.addColorStop(0, 'rgba(70, 130, 180, 0)'); // Adjust colors to match your scheme
 
     var gradientStroke2 = ctx2.createLinearGradient(0, 230, 0, 50);
-
-    gradientStroke2.addColorStop(1, 'rgba(20,23,39,0.2)');
-    gradientStroke2.addColorStop(0.2, 'rgba(72,72,176,0.0)');
-    gradientStroke2.addColorStop(0, 'rgba(20,23,39,0)'); //purple colors
+    gradientStroke2.addColorStop(1, 'rgba(20, 23, 39, 0.2)'); // Adjust colors to match your scheme
+    gradientStroke2.addColorStop(0.2, 'rgba(72, 72, 176, 0.0)');
+    gradientStroke2.addColorStop(0, 'rgba(20, 23, 39, 0)'); // Adjust colors to match your scheme
 
     new Chart(ctx2, {
       type: "line",
@@ -529,7 +564,7 @@ var ctx2 = document.getElementById("chart-line").getContext("2d");
             tension: 0.4,
             borderWidth: 0,
             pointRadius: 0,
-            borderColor: "#cb0c9f",
+            borderColor: "#4682B4",
             borderWidth: 3,
             backgroundColor: gradientStroke1,
             fill: true,

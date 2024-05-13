@@ -31,22 +31,54 @@ if(!isset($_SESSION["user"]) || $_SESSION['type'] != '1' || $_SESSION["user"] ==
         <!-- Stylesheet -->
         <link href="../css/style.css" rel="stylesheet">
         <style>
-             html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden; /* Optional: Hide horizontal scrollbar */
-        }
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden; /* Optional: Hide horizontal scrollbar */
+        font-family: Arial, sans-serif; /* Optional: Choose a commonly used font */
+    }
 
-        body {
-        background: linear-gradient(to bottom, #000000, #8A2BE2); /* Black to Violet gradient */
-        
-        }
-        .section-title h2 {
-            color: white;
-        } 
+    body {
+        background-color: #F2F2F2; /* Dominant Color */
+    }
 
-            </style>
+    .container {
+       /*  background-color: #B0C4DE; /* Secondary Color */
+        border-radius: 10px; /* Optional: Add some rounded corners */
+        /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow for depth */
+    }
+
+    .navbar-dark .navbar-nav .nav-link {
+        color: #FFF; /* Text color for navbar links */
+    }
+
+    .navbar-dark .navbar-nav .nav-link:hover {
+        color: #4682B4; /* Accent color on hover for navbar links */
+    }
+
+    .top-bar {
+        background-color: #4682B4; /* Accent Color */
+        color: #FFF; /* Text color for top bar */
+    }
+
+    .top-bar-item h3 {
+        color: #FFF; /* Text color for top bar headings */
+    }
+
+    .top-bar-item p {
+        color: #F2F2F2; /* Text color for top bar content */
+    }
+
+    .nav-bar {
+        background-color: #4682B4; /* Accent Color */
+    }
+    .backButton {
+    margin-left: 10%; /* Move the div 20% to the right */
+    margin-top: 2%;
+}
+</style>
+
 
 </head>
 <body>
@@ -131,7 +163,10 @@ if(!isset($_SESSION["user"]) || $_SESSION['type'] != '1' || $_SESSION["user"] ==
             </div>
         </div>
     </nav>
-    <a class="btn btn-primary" href="index.php" role="button">Back</a>
+    <div class="backButton">
+    <a class="btn btn-custom" href="index.php" role="button">Back</a>
+    </div>
+    
     <div class="container my-5">
     <div class="section-title">
     <h2 class="appointments-heading">Appointments</h2>
