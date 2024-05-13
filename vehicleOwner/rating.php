@@ -427,8 +427,19 @@ else
             data:{action:'load_data'},
             dataType:"JSON",
             success:function(data) {
-                $('#average_rating').text(data.average_rating);
-                $('#total_review').text(data.total_review);
+                var totalRating = 0;
+                var totalReview = data.total_review;
+                
+                // Calculate total rating
+                for (var i = 0; i < data.review_data.length; i++) {
+                    totalRating += parseInt(data.review_data[i].rating);
+                }
+
+                // Calculate average rating
+                var averageRating = totalReview > 0 ? totalRating / totalReview : 0;
+
+                $('#average_rating').text(averageRating.toFixed(1));
+                $('#total_review').text(totalReview);
 
                 var count_star = 0;
 
