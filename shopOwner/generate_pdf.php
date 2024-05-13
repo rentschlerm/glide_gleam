@@ -58,7 +58,7 @@ function generatePDFReport($conn)
             // Add table data here according to your requirements
             // Example:
             
-            $rows .= "<td>{$row['first_name']}</td>";
+            $rows .= "<td>{$row['first_name']}</td>" ;
             $rows .= "<td>{$row['shop_name']}</td>";
             $rows .= "<td>{$row['brand']}</td>";
             $rows .= "<td>{$row['model']}</td>";
@@ -111,11 +111,11 @@ function generatePDFReport($conn)
                 
                 <th>Customer Name</th>      
                 <th>Shop Name</th>
-                <th>Brand</th>
-                <th>Model</th>
+                <th>Vehicle Brand</th>
+                <th>Vehicle Model</th>
                 <th>Vehicle Year</th>
                 <th>License Plate</th>
-                <th>Color</th>
+                <th>Vehicle Color</th>
                 <th>Vehicle Type</th>
                 <th>Selected Service</th>
                 <th>Service Price</th>
