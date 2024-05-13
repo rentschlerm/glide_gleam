@@ -71,6 +71,9 @@
             background-color: #4682B4; /* Matching color from your scheme */
             color: #FFF; /* Text color */
         }
+        #system-time {
+        font-size: 24px;
+        font-weight: bold;
 
 </style>
 
@@ -175,20 +178,34 @@
           $totalSales = $totalSalesRow['total_sales'];
       }
       // Fetch today's sales for the shop owner
-        $currentDate = date("Y-m-d"); // Get current date
-        $todaySalesQuery = "SELECT SUM(sales) AS today_sales 
-                            FROM sales 
-                            JOIN shop_info ON sales.shop_info_id = shop_info.shop_info_id
-                            JOIN shop_owners ON shop_info.shop_owner_id = shop_owners.shop_owner_id
-                            WHERE shop_owners.shop_owner_id = '$shop_owner_id'
-                            AND DATE(dateSold) = '$currentDate'";
-        $todaySalesResult = $database->query($todaySalesQuery);
-        $todaySales = 0; // Initialize today's sales variable
+      $currentDate = date("Y-m-d"); // Get current date
+      // echo"$currentDate";
+      $todaySalesQuery = "SELECT SUM(sales) AS today_sales 
+                          FROM sales 
+                          JOIN shop_info ON sales.shop_info_id = shop_info.shop_info_id
+                          JOIN shop_owners ON shop_info.shop_owner_id = shop_owners.shop_owner_id
+                          WHERE shop_owners.shop_owner_id = '$shop_owner_id'
+                          AND DATE(dateSold) = '$currentDate'";
+      $todaySalesResult = $database->query($todaySalesQuery);
+      $todaySales = 0; // Initialize today's sales variable
 
-        if ($todaySalesResult->num_rows > 0) {
-            $todaySalesRow = $todaySalesResult->fetch_assoc();
-            $todaySales = $todaySalesRow['today_sales'];
-        }
+      if ($todaySalesResult) {
+          // Check if any rows are returned
+          if ($todaySalesResult->num_rows > 0) {
+              // Fetch today's sales data
+              $todaySalesRow = $todaySalesResult->fetch_assoc();
+              $todaySales = $todaySalesRow['today_sales'];
+          } else {
+              echo "No sales recorded for today.";
+          }
+      } else {
+          // Display error message if query execution fails
+          echo "Error executing today's sales query: " . $database->error;
+      }
+
+      // Output today's sales for debugging
+      echo "<div id='system-time'></div>";
+
           // Fetch number of customers who booked for the day
           $customersBookedQuery = "SELECT COUNT(*) AS booked_customers 
           FROM appointment 
@@ -658,6 +675,22 @@ new Chart(ctx, {
       },
     });
 
+    </script>
+     <script>
+        function updateTime() {
+            var now = new Date();
+            var hours = now.getHours().toString().padStart(2, '0');
+            var minutes = now.getMinutes().toString().padStart(2, '0');
+            var seconds = now.getSeconds().toString().padStart(2, '0');
+            var timeString = hours + ':' + minutes + ':' + seconds;
+            document.getElementById('system-time').textContent = timeString;
+        }
+
+        // Update time every second
+        setInterval(updateTime, 1000);
+
+        // Call updateTime once to initialize the time
+        updateTime();
     </script>
 </body>
 </html>
