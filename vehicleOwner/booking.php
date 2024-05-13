@@ -230,11 +230,12 @@ $shops = ($result->num_rows > 0)? mysqli_fetch_all($result, MYSQLI_ASSOC) : [];
         </div>
     </nav>
 
-
+<div class="container-fluid mt-4">
     <a class="btn btn-custom" href="index.php" role="button">Back</a>
 <button type="button" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#exampleModal">
   Create Appointment
 </button>
+</div>
     <?php
     
     if ($_POST){
@@ -291,53 +292,83 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
     }
+    ?>
 
-    // Fetch shop information from the database
-    $sql = "SELECT * FROM shop_info";
-$result = $database->query($sql);
-$shops = ($result->num_rows > 0)? mysqli_fetch_all($result, MYSQLI_ASSOC) : [];
-if (count($shops)) {
-    // Output data of each row
-    foreach ($shops as $shopKey => $value) {
-        // Display shop information
-        echo "<div>";
-        echo "<div class='section-title'><h2>Shop Name: " . $value["shop_name"]. "</h2></div>";
-        echo "<div class='paragraph-color'><p>Location: " . $value["location"] . "</p>";
-        echo "<p>Operating Hours: " . date('h:i A', strtotime($value["operating_from"])) . " to " . date('h:i A', strtotime($value["operating_to"])) . "</p></div>";
-        
-        // Fetch services for this shop
-        $serviceSql = "SELECT * FROM services WHERE shop_info_id = {$value['shop_info_id']}";
-        $serviceResult = $database->query($serviceSql);
-        if ($serviceResult->num_rows > 0) {
-            // Display available services in a table
-            echo "<p>Available Services:</p>";
-            echo "<table class='table'>";
-            echo "<thead><tr><th>Service</th><th>Vehicle Size</th><th>Price</th><th>Vehicle Type</th></tr></thead>";
-            echo "<tbody>";
-            while ($service = $serviceResult->fetch_assoc()) {
-                // Display each service in a row
-                echo "<tr>";
-                echo "<td>{$service['serviceName']}</td>";
-                echo "<td>{$service['vehicle_size']}</td>";
-                echo "<td>&#x20B1;{$service['service_price']}</td>";
-                echo "<td>{$service['vehicle_type']}</td>";
-            
-                echo "</tr>";
+<div class="container-fluid mt-5">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <?php
+        // Fetch shop information from the database
+        $sql = "SELECT * FROM shop_info";
+        $result = $database->query($sql);
+        $shops = ($result->num_rows > 0) ? mysqli_fetch_all($result, MYSQLI_ASSOC) : [];
+
+        if (count($shops)) {
+            // Output data of each shop
+            foreach ($shops as $shopKey => $shop) {
+                ?>
+                <div class="col mb-4">
+                    <!-- Shop Card -->
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Shop Name: <?php echo $shop["shop_name"]; ?></h5>
+                            <p class="card-text">Location: <?php echo $shop["location"]; ?></p>
+                            <p class="card-text">Operating Hours: <?php echo date('h:i A', strtotime($shop["operating_from"])) . " to " . date('h:i A', strtotime($shop["operating_to"])); ?></p>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#servicesModal_<?php echo $shop['shop_info_id']; ?>">
+                                View Services
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="servicesModal_<?php echo $shop['shop_info_id']; ?>" tabindex="-1" aria-labelledby="servicesModalLabel_<?php echo $shop['shop_info_id']; ?>" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="servicesModalLabel_<?php echo $shop['shop_info_id']; ?>">Services Offered by <?php echo $shop["shop_name"]; ?></h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <?php
+                                // Fetch services for this shop
+                                $serviceSql = "SELECT * FROM services WHERE shop_info_id = {$shop['shop_info_id']}";
+                                $serviceResult = $database->query($serviceSql);
+                                if ($serviceResult->num_rows > 0) {
+                                    // Display available services in a table
+                                    echo "<table class='table'>";
+                                    echo "<thead><tr><th>Service</th><th>Vehicle Size</th><th>Price</th><th>Vehicle Type</th></tr></thead>";
+                                    echo "<tbody>";
+                                    while ($service = $serviceResult->fetch_assoc()) {
+                                        // Display each service in a row
+                                        echo "<tr>";
+                                        echo "<td>{$service['serviceName']}</td>";
+                                        echo "<td>{$service['vehicle_size']}</td>";
+                                        echo "<td>&#x20B1;{$service['service_price']}</td>";
+                                        echo "<td>{$service['vehicle_type']}</td>";
+                                        echo "</tr>";
+                                    }
+                                    echo "</tbody></table>";
+                                } else {
+                                    echo "<p>No services available for this shop.</p>";
+                                }
+                                ?>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-custom" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php
             }
-            echo "</tbody></table>";
-            
         } else {
-            echo "<p>No services available for this shop.</p>";
+            echo "<p class='col'>No shops found</p>";
         }
-        echo "</div>";
-        echo "<hr>";
-    }
-} else {
-    echo "No shops found";
-}
+        ?>
+    </div>
+</div>
 
-$database->close();
-?>
 
 
 
@@ -407,8 +438,8 @@ $database->close();
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-custom" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-custom">Save changes</button>
                 </div>
             </div>
         </form>

@@ -189,6 +189,21 @@
             $todaySalesRow = $todaySalesResult->fetch_assoc();
             $todaySales = $todaySalesRow['today_sales'];
         }
+          // Fetch number of customers who booked for the day
+          $customersBookedQuery = "SELECT COUNT(*) AS booked_customers 
+          FROM appointment 
+          JOIN shop_info on appointment.shop_info_id = shop_info.shop_info_id
+          WHERE shop_owner_id = '$shop_owner_id' 
+          AND DATE(appointment_date) = '$currentDate'
+          AND status = 'Completed'";
+          $customersBookedResult = $database->query($customersBookedQuery);
+          $customersBooked = 0; // Initialize number of customers booked variable
+
+          if ($customersBookedResult->num_rows > 0) {
+          $customersBookedRow = $customersBookedResult->fetch_assoc();
+          $customersBooked = $customersBookedRow['booked_customers'];
+        }
+
       
     ?>
     <div class="container-fluid py-4">
@@ -222,7 +237,7 @@
                   <div class="numbers">
                     <p class="text-sm mb-0 text-capitalize font-weight-bold">Today's Customers</p>
                     <h5 class="font-weight-bolder mb-0">
-                      10
+                    <?php echo $customersBooked; ?>
                     </h5>
                   </div>
                 </div>
