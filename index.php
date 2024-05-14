@@ -62,6 +62,18 @@
     .nav-bar {
         background-color: #4682B4; /* Accent Color */
     }
+    .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
 </style>
 
 </head>
@@ -138,6 +150,7 @@
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
+                        <span class="close" onclick="closeModal()"data-dismiss="modal">&times;</span>
                     </div>
                     <div class="modal-body">
                         <center>
@@ -145,38 +158,59 @@
                             <table border="0" style="margin: 0;padding: 0;width: 60%;">
                                     <form action="signin.php" method="post"> <!-- Corrected form action -->
                                 
-                                <tr>
-                                    <td class="label-td">
-                                        <input type="email" name="email" class="input-text" placeholder="Your Email" required>
-                                        <i class="input-icon uil uil-at"></i>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="label-td">
-                                        <input type="password" name="password" class="input-text" placeholder="Password" required>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <input type="submit" value="Login" class="login-btn btn-custom btn">
-                                    </td>
-                                </tr>
-                                </form>
-                                
-                                <tr>
-                                    <td>
-                                        <br>
-                                        <label for="" class="sub-text" style="font-weight: 280;">Don't have an account? </label>
-                                        <a href="choose_account_type.php" class="hover-link1 non-style-link" data-toggle="modal" data-target="#signUp">Sign Up</a>
-                                        <br><br><br>
-                                    </td>
-                                </tr>
+                                 <!-- Email input -->
+                                    <div data-mdb-input-init class="form-outline mb-4">
+                                        <input type="email" name="email" id="form2Example1" placeholder="Your email address..." class="form-control" />
+                                    </div>
+
+                                    <!-- Password input -->
+                                    <div data-mdb-input-init class="form-outline mb-4">
+                                        <input type="password" name="password" id="form2Example2" placeholder="Your password..." class="form-control" />
+                                    </div>
+
+                                    <!-- 2 column grid layout for inline styling -->
+                                    <div class="row mb-4">
+                                        <div class="col d-flex justify-content-center">
+                                        <!-- Checkbox -->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="form2Example31" checked />
+                                            <label class="form-check-label" for="form2Example31"> Remember me </label>
+                                        </div>
+                                        </div>
+
+                                        <div class="col">
+                                        <!-- Simple link -->
+                                        <a href="#!">Forgot password?</a>
+                                        </div>
+                                    </div>
+
+                                    <!-- Submit button -->
+                                    <button  type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-custom btn-block mb-4">Sign in</button>
+
+                                    <!-- Register buttons -->
+                                    <div class="text-center">
+                                        <p>Not a member? <a href="choose_account_type.php" class="hover-link1 non-style-link" data-toggle="modal" data-target="#signUp">Register</a></p>
+                                        <p>or sign up with:</p>
+                                        <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
+                                        <i class="fab fa-facebook-f"></i>
+                                        </button>
+
+                                        <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
+                                        <i class="fab fa-google"></i>
+                                        </button>
+
+                                        <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
+                                        <i class="fab fa-twitter"></i>
+                                        </button>
+
+                                        <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
+                                        <i class="fab fa-github"></i>
+                                        </button>
+                                    </div>
+                                    </form>
                             </table>
                         </div>
                     </center>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-custom" data-dismiss="modal">Close</button>
                     </div>
                 </div>
 
@@ -185,16 +219,17 @@
 
 <!-- Modal for Sign up -->
 <div id="signUp" class="modal fade" role="dialog">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-sm">
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Sign up</h4>
+                <h4 class="modal-title">Register</h4>
+                <span class="close" onclick="closeModal()"data-dismiss="modal">&times;</span>
             </div>
             <div class="modal-body">
                 <div class="container">
                     <form action="./createAccount/save_user_type.php" method="POST" id="signups-form">
-                        <div class="col-sm-4">
+                        <div class="col-sm-12">
                             <select class="form-control" name="userType" id="userType"  onchange="handleUserType(this.value)" required>
                                 <option value="">Select User Type</option>
                                 <option value="shop_owner">Shop Owner</option>
@@ -202,12 +237,7 @@
                             </select>
                         </div>
                         <br>
-                        <div class="form-group row">
-                            <div class="col-sm-12 text-center">
-                                <button type="submit" class="btn btn-custom">Next</button>
-                                <button type="reset" class="btn btn-secondary">Reset</button>
-                            </div>
-                        </div>
+                        
                         <div class="form-group row">
                             <div class="col-sm-12 text-center">
                                 <p class="sub-text" style="font-weight: 280;">Already have an account? <a href="login.php" class="hover-link1 non-style-link">Login</a></p>
@@ -215,9 +245,6 @@
                         </div>
                     </form>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-custom" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -229,16 +256,18 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Shop Owner Details</h4>
+                <span class="close" onclick="closeModal()"data-dismiss="modal">&times;</span>
             </div>
-            <form action="./createAccount/save_user_type.php" method="POST" id="signup-form"> <!-- Add form tag here -->
+            <form action="./createAccount/save_user_type.php" method="POST" id="signup-form">
                 <div class="modal-body">
                     <!-- Form fields for shop owner -->
                     <div class="col-sm-4">
                     </div>
 
-                    <select class="form-control" name="userType" id="userType"  onload="handleUserType(this.value)" required>
+                    <select class="form-control" name="userType" id="userType"  onchange="handleUserType(this.value)" required>
 
                             <option value="shop_owner">Shop Owner</option>
+                            <option value="vehicle_owner">Vehicle Owner</option>
                         </select>
                             
                     <div class="form-group row">
@@ -273,16 +302,12 @@
                     <div class="form-group row">
                         <div class="col-sm-12 text-center">
                             <button type="submit" class="btn btn-custom">Next</button>
-                            <button type="reset" class="btn btn-secondary">Reset</button>
+                            <button type="reset" class="btn btn-custom">Reset</button>
                         </div>
                     </div>
                     <!-- Other fields for shop owner -->
                 </div>
-            </form> <!-- Close form tag here -->
-            <div class="modal-footer">
-                <!-- Shop owner modal footer -->
-                <button class="btn btn-custom" type="button" data-dismiss="modal">Close</button>
-            </div>
+            </form>
         </div>
     </div>
 </div>
@@ -295,6 +320,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Vehicle Owner Details</h4>
+                <span class="close" onclick="closeModal()"data-dismiss="modal">&times;</span>
             </div>
             <form action="./createAccount/save_user_type.php" method="POST" id="signup-form"> <!-- Add form tag here -->
             <div class="modal-body">
@@ -409,16 +435,13 @@
                 <div class="form-group row">
                     <div class="col-sm-12 text-center">
                         <button type="submit" class="btn btn-custom">Next</button>
-                        <button type="reset" class="btn btn-secondary">Reset</button>
+                        <button type="reset" class="btn btn-custom">Reset</button>
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-12 text-center">
                         <p class="sub-text" style="font-weight: 280;">Already have an account? <a href="login.php" class="hover-link1 non-style-link">Login</a></p>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-custom" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </form>
         </div>
@@ -560,6 +583,7 @@
         $('#vehicleOwnerModal').modal('show');
         
         // Close the main modal
+        $('#shopOwnerModal').modal('hide');
         $('#signUp').modal('hide');
     } else {
         $('#modal-placeholder').html('');

@@ -151,7 +151,7 @@ if(!isset($_SESSION["user"]) || $_SESSION['type'] != '1' || $_SESSION["user"] ==
                         <a class="nav-link" href="history.php">History</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="generate_pdf.php">REPORTS</a>
+                        <a class="nav-link" href="generate_pdf.php">Report</a>
                     </li>
                     <!-- <li class="nav-item">
                         <a class="nav-link" href="#">Settings</a>

@@ -122,14 +122,26 @@
         </div>
     </div>
     <!-- Top Bar End -->
+    <?php
+ $shop_owner_id = isset($_SESSION['id']) ? $_SESSION['id'] : ""; // Retrieve the shop owner's ID from session
+       
+$resultName = $database->query("SELECT first_name, last_name FROM shop_owners WHERE shop_owner_id = '$shop_owner_id' ");
+if ($resultName->num_rows > 0) {
+  $user = $resultName->fetch_assoc();
+  $userFirstName = $user['first_name'];
+  $userLastName = $user['last_name'];
+}
+?> 
 
     <!-- Navbar -->
     <nav class="nav-bar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
+        
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
+            <h2 style="color:white, font-size 25%"><?php echo "$userFirstName,$userLastName ";   ?></h2>
                 <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="index.php">Dashboard</a>
@@ -147,7 +159,7 @@
                         <a class="nav-link" href="history.php">History</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="generate_pdf.php">REPORTS</a>
+                        <a class="nav-link" href="generate_pdf.php">Report</a>
                     </li>
                     <!-- <li class="nav-item">
                         <a class="nav-link" href="#">Settings</a>
@@ -223,6 +235,7 @@
 
       
     ?>
+   
     <div class="container-fluid py-4">
       <div class="row">
         <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">

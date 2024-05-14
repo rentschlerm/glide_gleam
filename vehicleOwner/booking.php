@@ -236,7 +236,7 @@ $shops = ($result->num_rows > 0)? mysqli_fetch_all($result, MYSQLI_ASSOC) : [];
   Create Appointment
 </button>
  <!-- Search Bar -->
- <!-- <div class="row mb-4 mt-5">
+ <div class="row mb-4 mt-5">
         <div class="col">
             <form action="#" method="GET">
                 <div class="input-group">
@@ -245,7 +245,7 @@ $shops = ($result->num_rows > 0)? mysqli_fetch_all($result, MYSQLI_ASSOC) : [];
                 </div>
             </form>
         </div>
-    </div> -->
+    </div>
 
 </div>
     <?php

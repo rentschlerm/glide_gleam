@@ -146,7 +146,7 @@
                         <a class="nav-link" href="history.php">History</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="generate_pdf.php">REPORTS</a>
+                        <a class="nav-link" href="generate_pdf.php">Reports</a>
                     </li>
                     <!-- <li class="nav-item">
                         <a class="nav-link" href="#">Settings</a>
