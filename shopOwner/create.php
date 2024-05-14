@@ -19,11 +19,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $longitude = $_POST["longitude"];
    
     // Inserting data directly into the database
-    $insertQuery = "INSERT INTO shop_info (shop_owner_id, shop_name, location, operating_from, operating_to, longitude, latitude)
-                    VALUES ('$shop_owner_id', '$shop_name', '$location', '$operating_from', '$operating_to', '$longitude', '$latitude')";
+    $insertQuery = "INSERT INTO shop_info (shop_owner_id, shop_name, location, operating_from, operating_to,longitude, latitude)
+                    VALUES ('$shop_owner_id', '$shop_name', '$location', '$operating_from', '$operating_to', '$longitude','$latitude')";
 
     if ($database->query($insertQuery) === TRUE) {
-        $alertMessage = "Shop added successfully!";
+        echo"
+        <div class='alert-success'><span class='closebtn' onclick='this.parentElement.style.display='none';'>&times;</span>
+        Shop added successfully!
+        </div
+        
+        
+        ";
+        // $alertMessage = "Shop added successfully!2";
     } else {
         echo "Error: " . $insertQuery . "<br>" . $database->error;
     }
@@ -115,6 +122,55 @@ $database->close();
             height: 400px;
             width: 100%;
         }
+         /* The alert message box */
+    .alert {
+        padding: 20px;
+        background-color: #f44336; /* Red */
+        color: white;
+        text-align: center;
+        position: fixed;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 400px; /* Adjust width as needed */
+        margin-top: 20px;
+        z-index: 9999; /* Ensure it appears above other content */
+        margin-bottom: 15px;
+        opacity: 1;
+        transition: opacity 0.6s; /* 600ms to fade out */
+    }
+    .alert-success{
+        padding: 20px;
+        background-color: #7CFC00; /* Red */
+        color: white;
+        text-align: center;
+        position: fixed;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 400px; /* Adjust width as needed */
+        margin-top: 20px;
+        z-index: 9999; /* Ensure it appears above other content */
+        margin-bottom: 15px;
+        opacity: 1;
+        transition: opacity 0.6s; /* 600ms to fade out */
+    }
+    /* The close button */
+    .closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+    }
+
+    /* When moving the mouse over the close button */
+    .closebtn:hover {
+    color: black;
+    }
     </style>
 
 </head>
@@ -219,7 +275,7 @@ $database->close();
         </div>
         <h1>Add to map</h1>
         <div id="mapContainer"></div>
-        <button id="saveLocationBtn" type="submit" class="btn btn-custom">Add Shop</button>
+        <button id="saveLocationBtn" type="button" class="btn btn-custom">Add Shop</button>
     </form>
 </div>
 
@@ -325,6 +381,26 @@ $database->close();
     // event listener to the Save Location button
     document.getElementById('saveLocationBtn').addEventListener('click', saveLocation);
 </script>
+    <script>
+        // Get all elements with class="closebtn"
+        var close = document.getElementsByClassName("closebtn");
+        var i;
 
+        // Loop through all close buttons
+        for (i = 0; i < close.length; i++) {
+        // When someone clicks on a close button
+        close[i].onclick = function(){
+
+            // Get the parent of <span class="closebtn"> (<div class="alert">)
+            var div = this.parentElement;
+
+            // Set the opacity of div to 0 (transparent)
+            div.style.opacity = "0";
+
+            // Hide the div after 600ms (the same amount of milliseconds it takes to fade out)
+            setTimeout(function(){ div.style.display = "none"; }, 600);
+        }
+        }
+    </script>
 </body>
 </html>
