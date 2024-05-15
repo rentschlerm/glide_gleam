@@ -166,7 +166,6 @@ if ($result === false) {
 </nav>
     
     <div class="container my-5">
-    <a class="btn btn-custom" href="index.php" role="button">Back</a>
     <?php
     // Check if the result is not empty
     if ($result->num_rows > 0) {
