@@ -68,123 +68,106 @@ if ($result === false) {
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
 
-        .section-title h2 {
-            color: white;
-        } 
-        .heading-title{
-            color:white;
-        }
-
-        /* Style for the table header */
-        th {
-            background-color: #343a40; /* Dark grey */
-            color: #fff; /* White text */
-        }
-        /* Alternate row color for better readability */
-        tbody tr {
-            background-color: #fff; /* Violet */
-            color: #000000; /* White text */
-        }
-        tbody tr:nth-child(even) {
-            background-color: #fff; /* Violet */
-            color: #000000; /* White text */
-        }
-        /* Style for action buttons */
-        .action-btns .btn {
-            margin-right: 5px;
-        }
         html, body {
             height: 100%;
             margin: 0;
             padding: 0;
             overflow-x: hidden; /* Optional: Hide horizontal scrollbar */
+            font-family: Arial, sans-serif; /* Optional: Choose a commonly used font */
         }
 
         body {
-        background: linear-gradient(to bottom, #000000, #8A2BE2); /* Black to Violet gradient */
-        
+            background-color: #F2F2F2; /* Dominant Color */
         }
+
+        .container {
+            /* background-color: #B0C4DE; Secondary Color */
+            border-radius: 10px; /* Optional: Add some rounded corners */
+            /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); Optional: Add a subtle shadow for depth */
+        }
+
+        .navbar-dark .navbar-nav .nav-link {
+            color: #FFF; /* Text color for navbar links */
+        }
+
+        .navbar-dark .navbar-nav .nav-link:hover {
+            color: #4682B4; /* Accent color on hover for navbar links */
+        }
+
+        .top-bar {
+            background-color: #4682B4; /* Accent Color */
+            color: #FFF; /* Text color for top bar */
+        }
+
+        .top-bar-item h3 {
+            color: #FFF; /* Text color for top bar headings */
+        }
+
+        .top-bar-item p {
+            color: #F2F2F2; /* Text color for top bar content */
+        }
+
+        .nav-bar {
+            background-color: #4682B4; /* Accent Color */
+        }
+        /* Table Row Colors */
+        tbody tr:nth-child(even) {
+            background-color: #E6E6E6; /* Light Gray */
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: #FFFFFF; /* White */
+        }
+        /* Style for action buttons */
+        .action-btns .btn {
+            margin-right: 5px;
+        }   
+        .logo-link {
+            text-decoration: none; /* Remove underline from logo link */
+            color: #FFF; /* Set color for logo link */
+        }
+
+        .logo-link:hover {
+            color: #B0C4DE; /* Hover color for logo link */
+        }
+        .logo span {
+                color: #4682B4; /* Same color for the span */
+            }
+           
            
     </style>
 </head>
 <body>
-     <!-- Top Bar Start -->
-     <div class="top-bar">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-4 col-md-12">
-                        <div class="logo">
-                            <a href="index.php">
-                                <h1>Glide<span>Gleam</span></h1>
-                                <!-- <img src="img/logo.jpg" alt="Logo"> -->
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-8 col-md-7 d-none d-lg-block">
-                        <div class="row">
-                            <div class="col-4">
-                            </div>
-                            <div class="col-4">
-                                <div class="top-bar-item">
-                                    <div class="top-bar-icon">
-                                        <i class="fa fa-phone-alt"></i>
-                                    </div>
-                                    <div class="top-bar-text">
-                                        <h3>Call Us</h3>
-                                        <p>+012 345 6789</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="top-bar-item">
-                                    <div class="top-bar-icon">
-                                        <i class="far fa-envelope"></i>
-                                    </div>
-                                    <div class="top-bar-text">
-                                        <h3>Email Us</h3>
-                                        <p>info@example.com</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<nav class="nav-bar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="logo">
+                <a href="index.php" class="logo-link">
+                    <h1>Glide<span>Gleam</span></h1>
+                </a>
             </div>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="appointment.php">Appointments</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="history.php">History</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../signout.php">Logout</a>
+                </li>
+            </ul>
         </div>
-        <!-- Top Bar End -->
+    </div>
+</nav>
 
-    <!-- Navbar -->
-    <nav class="nav-bar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.php">Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="appointment.php">Appointments</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="booking.php">Car Wash</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="history.php">History</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Settings</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../signout.php">Logout</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-<body>
     <div class="alert alert-primary" role="alert">
     </div>
     <div class="container">

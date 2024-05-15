@@ -12,7 +12,7 @@ h3,
 h4,
 h5, 
 h6 {
-    color: #202C45;
+    color: #fcfcfd;
 }
 .password-container {
     position: relative;
@@ -66,7 +66,7 @@ a:focus {
 .btn.btn-custom:hover {
     border-color: #357ca5;
     background-color: #357ca5;
-    box-shadow: inset 200px 0 0 0 #202C45;
+    box-shadow: inset 200px 0 0 0 #3a5da8;
 }
 
 .btn:focus,

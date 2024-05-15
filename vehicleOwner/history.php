@@ -110,86 +110,53 @@ if ($result === false) {
         .action-btns .btn {
             margin-right: 5px;
         }
-        
+        .logo-link {
+    text-decoration: none; /* Remove underline from logo link */
+    color: #FFF; /* Set color for logo link */
+}
+
+.logo-link:hover {
+    color: #B0C4DE; /* Hover color for logo link */
+}
+.logo span {
+        color: #4682B4; /* Same color for the span */
+    }
            
            
     </style>
 </head>
 <body>
-    <!-- Top Bar Start -->
-    <div class="top-bar">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-4 col-md-12">
-                    <div class="logo">
-                        <a href="index.php">
-                            <h1>Glide<span>Gleam</span></h1>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-8 col-md-7 d-none d-lg-block">
-                    <div class="row">
-                        <div class="col-4"></div>
-                        <div class="col-4">
-                            <div class="top-bar-item">
-                                <div class="top-bar-icon">
-                                    <i class="fa fa-phone-alt"></i>
-                                </div>
-                                <div class="top-bar-text">
-                                    <h3>Call Us</h3>
-                                    <p>+012 345 6789</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="top-bar-item">
-                                <div class="top-bar-icon">
-                                    <i class="far fa-envelope"></i>
-                                </div>
-                                <div class="top-bar-text">
-                                    <h3>Email Us</h3>
-                                    <p>info@example.com</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<nav class="nav-bar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="logo">
+                <a href="index.php" class="logo-link">
+                    <h1>Glide<span>Gleam</span></h1>
+                </a>
             </div>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="appointment.php">Appointments</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="history.php">History</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../signout.php">Logout</a>
+                </li>
+            </ul>
         </div>
     </div>
-    <!-- Top Bar End -->
-
-    <!-- Navbar -->
-    <nav class="nav-bar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                <li class="nav-item">
-                        <a class="nav-link" href="index.php">Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="appointment.php">Appointments</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="booking.php">Car Wash</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="history.php">History</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../signout.php">Logout</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+</nav>
 
     <div class="container my-5">
-        <a class="btn btn-custom" href="index.php" role="button">Back</a>
         <?php
         // Check if the result is not empty
         if ($result->num_rows > 0) {

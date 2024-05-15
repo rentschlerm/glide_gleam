@@ -70,21 +70,8 @@ $shops = ($result->num_rows > 0)? mysqli_fetch_all($result, MYSQLI_ASSOC) : [];
             color: #4682B4; /* Accent color on hover for navbar links */
         }
 
-        .top-bar {
-            background-color: #4682B4; /* Accent Color */
-            color: #FFF; /* Text color for top bar */
-        }
-
-        .top-bar-item h3 {
-            color: #FFF; /* Text color for top bar headings */
-        }
-
-        .top-bar-item p {
-            color: #F2F2F2; /* Text color for top bar content */
-        }
-
         .nav-bar {
-            background-color: #4682B4; /* Accent Color */
+            background-color: #2C3E50 ; /* Accent Color */
         }
         /* Table Row Colors */
         tbody tr:nth-child(even) {
@@ -153,84 +140,51 @@ $shops = ($result->num_rows > 0)? mysqli_fetch_all($result, MYSQLI_ASSOC) : [];
     .closebtn:hover {
     color: black;
     }
+    .logo-link {
+    text-decoration: none; /* Remove underline from logo link */
+    color: #FFF; /* Set color for logo link */
+}
+
+.logo-link:hover {
+    color: #B0C4DE; /* Hover color for logo link */
+}
+.logo span {
+        color: #4682B4; /* Same color for the span */
+    }
 
     </style>
 </head>
 <body>
-     <!-- Top Bar Start -->
-     <div class="top-bar">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-4 col-md-12">
-                        <div class="logo">
-                        <a href="index.php">
-                <h1>Glide<span>Gleam</span></h1>
-                <!-- <img src="img/logo.jpg" alt="Logo"> -->
-            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-8 col-md-7 d-none d-lg-block">
-                        <div class="row">
-                            <div class="col-4">
-                            </div>
-                            <div class="col-4">
-                                <div class="top-bar-item">
-                                    <div class="top-bar-icon">
-                                        <i class="fa fa-phone-alt"></i>
-                                    </div>
-                                    <div class="top-bar-text">
-                                        <h3>Call Us</h3>
-                                        <p>+012 345 6789</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="top-bar-item">
-                                    <div class="top-bar-icon">
-                                        <i class="far fa-envelope"></i>
-                                    </div>
-                                    <div class="top-bar-text">
-                                        <h3>Email Us</h3>
-                                        <p>info@example.com</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<nav class="nav-bar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="logo">
+                <a href="index.php" class="logo-link">
+                    <h1>Glide<span>Gleam</span></h1>
+                </a>
             </div>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="appointment.php">Appointments</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="history.php">History</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../signout.php">Logout</a>
+                </li>
+            </ul>
         </div>
-        <!-- Top Bar End -->
+    </div>
+</nav>
 
-    <!-- Navbar -->
-    <nav class="nav-bar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-            <a href="index.php">
-                <h1>Glide<span>Gleam</span></h1>
-                <!-- <img src="img/logo.jpg" alt="Logo"> -->
-            </a>
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.php">Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="appointment.php">Appointments</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="history.php">History</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../signout.php">Logout</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-<!--End of Nav bar-->
  <!-- Left side card -->
  <div class="container mt-4">
         <div class="row justify-content-start">
