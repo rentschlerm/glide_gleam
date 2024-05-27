@@ -26,7 +26,6 @@ $shops = ($result->num_rows > 0)? mysqli_fetch_all($result, MYSQLI_ASSOC) : [];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Appointments</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- Google Font -->
@@ -37,11 +36,18 @@ $shops = ($result->num_rows > 0)? mysqli_fetch_all($result, MYSQLI_ASSOC) : [];
         <link href="lib/flaticon/font/flaticon.css" rel="stylesheet">
         <link href="lib/animate/animate.min.css" rel="stylesheet">
         <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+ <!-- Include HERE Maps JavaScript API -->
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-core.js"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-service.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>
+<script src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
           <!-- Include Chart.js library -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
         <!-- Stylesheet -->
         <link href="../css/style.css" rel="stylesheet">
+        <link href="../css/ui-dashboard.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" />
         <style>
         html, body {
@@ -140,21 +146,17 @@ $shops = ($result->num_rows > 0)? mysqli_fetch_all($result, MYSQLI_ASSOC) : [];
     .closebtn:hover {
     color: black;
     }
-    .logo-link {
-    text-decoration: none; /* Remove underline from logo link */
-    color: #FFF; /* Set color for logo link */
-}
+    #shopMapContainer {
+            width: 100%;
+            height: 500px;
+            margin-top: 20px;
+        }
 
-.logo-link:hover {
-    color: #B0C4DE; /* Hover color for logo link */
-}
-.logo span {
-        color: #4682B4; /* Same color for the span */
-    }
 
     </style>
 </head>
 <body>
+
 <nav class="nav-bar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -174,12 +176,36 @@ $shops = ($result->num_rows > 0)? mysqli_fetch_all($result, MYSQLI_ASSOC) : [];
                 <li class="nav-item">
                     <a class="nav-link" href="appointment.php">Appointments</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="history.php">History</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="../signout.php">Logout</a>
-                </li>
+                <div class="action">
+                <div class="profile" onclick="menuToggle();">
+                  <img src="../assets/avatar.jpg" />
+                </div>
+                <div class="menu">
+                <h2></h2>
+                <?php
+
+                    $shop_owner_id = isset($_SESSION['id']) ? trim($_SESSION['id']) : '';
+                    $resultName = $database->query("SELECT first_name, last_name FROM vehicle_owners WHERE vehicle_owner_id = '$shop_owner_id' ");
+                    if ($resultName->num_rows > 0) {
+                        $user = $resultName->fetch_assoc();
+                        $userFirstName = $user['first_name'];
+                        $userLastName = $user['last_name'];
+                    }
+                ?> 
+                  <h3><?php echo "$userFirstName $userLastName";   ?><br /><span>Vehicle Owner</span></h3>
+                  <ul>
+                    <li>
+                      <img src="../assets/icons/user.png" /><a href="#">My profile</a>
+                    </li>
+                    <li>
+                      <img src="../assets/icons/history.png" /><a href="history.php">History</a>
+                    </li>
+                    <li>
+                      <img src="../assets/icons/log-out.png" /><a href="../signout.php">Logout</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </ul>
         </div>
     </div>
@@ -254,7 +280,9 @@ $shops = ($result->num_rows > 0)? mysqli_fetch_all($result, MYSQLI_ASSOC) : [];
             </form>
         </div>
     </div>
-
+    <div class="container my-5">
+        <div id="shopMapContainer"></div>
+    </div>
     <button type="button" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Book Now!
     </button>
@@ -720,5 +748,57 @@ $(document).ready(function() {
 });
 
 </script> -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        var shopMap;
+        var shopDefaultLayers;
+        var shopPlatform;
+
+        function initShopMap() {
+            // Initialize platform
+            shopPlatform = new H.service.Platform({
+                'apikey': 'xzrMvhwIvXQkL4ODYBNn02k3U2AL1aC974XXIb6M9Eo' // Load HERE API key from PHP
+            });
+
+            // Obtain the default map types from the platform object
+            shopDefaultLayers = shopPlatform.createDefaultLayers();
+
+            // Initialize map object
+            shopMap = new H.Map(
+                document.getElementById('shopMapContainer'),
+                shopDefaultLayers.vector.normal.map,
+                {
+                    center: { lat: 12.8797, lng: 121.774 }, // Default center
+                    zoom: 6, // Default zoom level
+                    pixelRatio: window.devicePixelRatio || 1
+                }
+            );
+
+            // Load car wash shop locations
+            loadShopLocations();
+        }
+
+        // Load car wash shop locations
+        function loadShopLocations() {
+            $.ajax({
+                url: 'getShopLocations.php',
+                type: 'GET',
+                success: function(response) {
+                    console.log(response); // Log the response to inspect its structure
+                    response.forEach(function(location) {
+                        var marker = new H.map.Marker({ lat: parseFloat(location.latitude), lng: parseFloat(location.longitude) });
+                        shopMap.addObject(marker);
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error loading shop locations: ' + error);
+                }
+            });
+        }
+
+        // Load the map after the page is fully loaded
+        window.addEventListener('load', initShopMap);
+    </script>
 </body>
 </html>

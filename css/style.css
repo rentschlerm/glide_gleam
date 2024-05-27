@@ -6,13 +6,16 @@ body {
    
 }
 
-h1,
+
 h2, 
 h3, 
-h4,
 h5, 
 h6 {
-    color: #fcfcfd;
+    color: #344767;
+    
+}
+h1{
+    color: #d8caca;
 }
 .password-container {
     position: relative;
@@ -45,28 +48,164 @@ a:focus {
     outline: none;
     text-decoration: none;
 }
+.logo-link {
+    text-decoration: none; /* Remove underline from logo link */
+    color: #FFF; /* Set color for logo link */
+  }
+
+.logo-link:hover {
+      color: #B0C4DE; /* Hover color for logo link */
+  }
+.logo span {
+          color: #4682B4; /* Same color for the span */
+      }
+.action {
+    position: relative; /* Change to relative so it respects the parent container's position */
+    display: inline-block; /* Change to inline-block to fit the content */
+  }
+  
+  .action .profile {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  
+  .action .profile img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .action .menu {
+    position: absolute;
+    top: calc(100% + 10px); /* Position it below the profile picture */
+    right: 0;
+    padding: 10px 20px;
+    background: #fff;
+    width: 200px;
+    box-sizing: border-box; /* Change to border-box to include padding in width */
+    border-radius: 15px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1); /* Fix the box-shadow syntax */
+    transition: 0.5s;
+    visibility: hidden;
+    opacity: 0;
+    z-index: 1000; /* Adjust as needed */
+  }
+  
+  .action .menu.active {
+    top: 80px;
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  .action .menu::before {
+    content: "";
+    position: absolute;
+    top: -5px;
+    right: 28px;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    transform: rotate(45deg);
+  }
+  
+  .action .menu h3 {
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    padding: 20px 0;
+    font-weight: 500;
+    color: #555;
+    line-height: 1.5em;
+  }
+  
+  .action .menu h3 span {
+    font-size: 14px;
+    color: #cecece;
+    font-weight: 300;
+  }
+  
+  .action .menu ul li {
+    list-style: none;
+    padding: 16px 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+  }
+  
+  .action .menu ul li img {
+    max-width: 20px;
+    margin-right: 10px;
+    opacity: 0.5;
+    transition: 0.5s;
+  }
+  
+  .action .menu ul li:hover img {
+    opacity: 1;
+  }
+  
+  .action .menu ul li a {
+    display: inline-block;
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+    transition: 0.5s;
+  }
+  
+  .action .menu ul li:hover a {
+    color: #ff5d94;
+  }
+  .action:hover .menu {
+    visibility: visible;
+    opacity: 1;
+}
+  
    /* Button Styles */
  
 .btn.btn-custom {
-    padding: 10px 30px 12px 30px;
-    text-align: center; 
-    font-size: 16px;
-    font-weight: 500;
-    color: #ffffff;
-    background-color: #4682B4;
-    border-color: #4682B4;
-    border: none;
-    border-radius: 60px;
-    box-shadow: inset 0 0 0 0 #202C45;
-    transition: ease-out 0.5s;
-    -webkit-transition: ease-out 0.5s;
-    -moz-transition: ease-out 0.5s;
+    padding: 10px 30px 12px 30px !important;
+    text-align: center !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    color: #ffffff !important;
+    background-color: #4682B4 !important;
+    border-color: #4682B4 !important;
+    border: none !important;
+    border-radius: 60px !important;
+    box-shadow: inset 0 0 0 0 #202C45 !important;
+    transition: ease-out 0.5s !important;
+    -webkit-transition: ease-out 0.5s!important;
+    -moz-transition: ease-out 0.5s !important;
+}
+.btn.btn-custom:hover {
+    border-color: #357ca5 !important;
+    background-color: #357ca5 !important;
+    box-shadow: inset 200px 0 0 0 #3a5da8 !important;
 }
 
-.btn.btn-custom:hover {
-    border-color: #357ca5;
-    background-color: #357ca5;
-    box-shadow: inset 200px 0 0 0 #3a5da8;
+.btn.btn-danger{
+    padding: 10px 30px 12px 30px !important;
+    text-align: center !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    color: #ffffff !important;
+    background-color: #ea0606 !important;
+    border-color: #ea0606 !important;
+    border: none !important;
+    border-radius: 60px !important;
+    box-shadow: inset 0 0 0 0 #202C45 !important;
+}
+
+.btn.btn-danger:hover {
+    border-color: #c70505 !important;
+    background-color: #bb0505 !important;
+    box-shadow: inset 200px 0 0 0 #bb0505 !important;
 }
 
 .btn:focus,

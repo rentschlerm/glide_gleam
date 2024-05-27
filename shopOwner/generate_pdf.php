@@ -101,9 +101,9 @@ function generatePDFReport($conn)
     // Construct the PDF content
     $content = '';
     $content .= '
-        <h2 style="margin: 20; text-align: center;">Glide_Gleam</h2>
-        <p style="margin: 0; text-align: center;">CARWASH SHOP</p>
-        <p style="margin-top: 0px; text-align: center;">Reports</p>
+        <h1 style="margin: 0; text-align: center;">CARWASH SHOP</h1>
+        <h2 style="margin: 20; text-align: center;">Glide <span style="color: #4682B4">Gleam</span></h2>
+        <p style="margin-top: 0px; text-align: center;">Sales Reports</p>
         <p style="margin: 0; text-align: center;">' . $current_date . '</p>
         
         <table border="1" cellspacing="0" cellpadding="3">

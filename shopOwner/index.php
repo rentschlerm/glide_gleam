@@ -25,153 +25,128 @@
         <link href="../css/style.css" rel="stylesheet">
         <link href="../css/ui-dashboard.css" rel="stylesheet">
     <style>
-    html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        overflow-x: hidden; /* Optional: Hide horizontal scrollbar */
-        font-family: Arial, sans-serif; /* Optional: Choose a commonly used font */
-    }
+     html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* Optional: Hide horizontal scrollbar */
+            font-family: Arial, sans-serif; /* Optional: Choose a commonly used font */
+        }
 
-    body {
-        background-color: #F2F2F2; /* Dominant Color */
-    }
+        body {
+            background-color: #F2F2F2; /* Dominant Color */
+        }
 
-    .container {
-       /*  background-color: #B0C4DE; /* Secondary Color */
-        border-radius: 10px; /* Optional: Add some rounded corners */
-        /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow for depth */
-    }
+        .container {
+            /* background-color: #B0C4DE; Secondary Color */
+            border-radius: 10px; /* Optional: Add some rounded corners */
+            /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); Optional: Add a subtle shadow for depth */
+        }
 
-    .navbar-dark .navbar-nav .nav-link {
-        color: #FFF; /* Text color for navbar links */
-    }
+        .navbar-dark .navbar-nav .nav-link {
+            color: #FFF; /* Text color for navbar links */
+        }
 
-    .navbar-dark .navbar-nav .nav-link:hover {
-        color: #4682B4; /* Accent color on hover for navbar links */
-    }
+        .navbar-dark .navbar-nav .nav-link:hover {
+            color: #4682B4; /* Accent color on hover for navbar links */
+        }
 
-    .top-bar {
-        background-color: #4682B4; /* Accent Color */
-        color: #FFF; /* Text color for top bar */
-    }
+        .nav-bar {
+            background-color: #2C3E50 ; /* Accent Color */
+        }
+        /* Table Row Colors */
+        tbody tr:nth-child(even) {
+            background-color: #E6E6E6; /* Light Gray */
+        }
 
-    .top-bar-item h3 {
-        color: #FFF; /* Text color for top bar headings */
-    }
-
-    .top-bar-item p {
-        color: #F2F2F2; /* Text color for top bar content */
-    }
-
-    .nav-bar {
-        background-color: #4682B4; /* Accent Color */
-    }
-    .bg-gradient-custom {
+        tbody tr:nth-child(odd) {
+            background-color: #FFFFFF; /* White */
+        }
+        /* Style for action buttons */
+        .action-btns .btn {
+            margin-right: 5px;
+        }
+        /* Adjusted table size */
+        .table {
+            max-width: 800px; /* Set the maximum width of the table */
+            margin: 0 auto; /* Center the table horizontally */
+        }
+        .bg-gradient-custom {
             background-color: #4682B4; /* Matching color from your scheme */
             color: #FFF; /* Text color */
         }
         #system-time {
         font-size: 24px;
-        font-weight: bold;
+        font-weight: bold;}
+        
 
 </style>
 
 
 </head>
 <body>
-<!-- Top Bar Start -->
-    <div class="top-bar">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-4 col-md-12">
-                    <div class="logo">
-                        <a href="index.php">
-                            <h1>Glide<span>Gleam</span></h1>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-8 col-md-7 d-none d-lg-block">
-                    <div class="row">
-                        <div class="col-4"></div>
-                        <div class="col-4">
-                            <div class="top-bar-item">
-                                <div class="top-bar-icon">
-                                    <i class="fa fa-phone-alt"></i>
-                                </div>
-                                <div class="top-bar-text">
-                                    <h3>Call Us</h3>
-                                    <p>+012 345 6789</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="top-bar-item">
-                                <div class="top-bar-icon">
-                                    <i class="far fa-envelope"></i>
-                                </div>
-                                <div class="top-bar-text">
-                                    <h3>Email Us</h3>
-                                    <p>info@example.com</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Top Bar End -->
-    <?php
- $shop_owner_id = isset($_SESSION['id']) ? $_SESSION['id'] : ""; // Retrieve the shop owner's ID from session
-       
-$resultName = $database->query("SELECT first_name, last_name FROM shop_owners WHERE shop_owner_id = '$shop_owner_id' ");
-if ($resultName->num_rows > 0) {
-  $user = $resultName->fetch_assoc();
-  $userFirstName = $user['first_name'];
-  $userLastName = $user['last_name'];
-}
-?> 
+<?php
 
-    <!-- Navbar -->
-    <nav class="nav-bar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-        
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-            <h2 style="color:white, font-size 25%"><?php echo "$userFirstName,$userLastName ";   ?></h2>
-                <ul class="navbar-nav ml-auto">
+      $shop_owner_id = isset($_SESSION['id']) ? trim($_SESSION['id']) : '';
+      $resultName = $database->query("SELECT first_name, last_name FROM shop_owners WHERE shop_owner_id = '$shop_owner_id' ");
+      if ($resultName->num_rows > 0) {
+        $user = $resultName->fetch_assoc();
+        $userFirstName = $user['first_name'];
+        $userLastName = $user['last_name'];
+      }
+?> 
+<nav class="nav-bar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="logo">
+                <a href="index.php" class="logo-link">
+                    <h1>Glide<span>Gleam</span></h1>
+                </a>
+            </div>
+            <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="index.php">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="appointment.php">Appointments</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="history.php">History</a>
+                </li>
+                <div class="action">
+                <div class="profile" onclick="menuToggle();">
+                  <img src="../assets/avatar.jpg" />
+                </div>
+                <div class="menu">
+                <h2></h2>
+                  <h3><?php echo "$userFirstName $userLastName";   ?><br /><span>Shop Owner</span></h3>
+                  <ul>
+                    <li>
+                      <img src="../assets/icons/user.png" /><a href="profile.php">My profile</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="appointment.php">Appointments</a>
+                    <li>
+                      <img src="../assets/icons/edit.png" /><a href="services.php">Services</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="services.php">Services</a>
+                    <li>
+                      <img src="../assets/icons/shop.png" /><a href="addShop.php">Add shop</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="addShop.php">Shop</a>
+                    <li><img src="../assets/icons/reports.png" /><a href="generate_pdf.php">Report</a></li>
+                    <li>
+                      <img src="../assets/icons/log-out.png" /><a href="../signout.php">Logout</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="history.php">History</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="generate_pdf.php">Report</a>
-                    </li>
-                    <!-- <li class="nav-item">
-                        <a class="nav-link" href="#">Settings</a>
-                    </li> -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="../signout.php">Logout</a>
-                    </li>
-                </ul>
-            </div>
+                  </ul>
+                </div>
+              </div>
+            </ul>
         </div>
-    </nav>
+    </div>
+</nav>
 
+    
     <?php
 
       // Fetch total sales for the shop owner
@@ -273,7 +248,7 @@ if ($resultName->num_rows > 0) {
                 </div>
                 <div class="col-4 text-end">
                   <div class="icon icon-shape bg-gradient-custom shadow text-center border-radius-md">
-                  <i class="fas fa-globe text-lg opacity-10"></i> <!-- World icon -->
+                  <i class="fas fa-users text-lg opacity-10"></i> <!-- People icon -->
                   </div>
                 </div>
               </div>
@@ -294,7 +269,7 @@ if ($resultName->num_rows > 0) {
                 </div>
                 <div class="col-4 text-end">
                   <div class="icon icon-shape bg-gradient-custom shadow text-center border-radius-md">
-                  <i class="fas fa-graduation-cap text-lg opacity-10"></i> <!-- Graduation cap icon -->
+                  <i class="fas fa-user text-lg opacity-10"></i> <!-- Single person icon -->
                   </div>
                 </div>
               </div>
@@ -383,7 +358,7 @@ if ($resultName->num_rows > 0) {
                                 <div class="timeline-block mb-3">
                                     <span class="timeline-step">';
                         echo '<div class="col-4 text-end">';
-                        echo '<div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">';
+                        echo '<div class="icon icon-shape bg-gradient-custom shadow text-center border-radius-md">';
                         echo "<i>" . $row['queue_number'] . "</i>";
                         echo '<i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>';
                         echo '</div>';
@@ -704,6 +679,12 @@ new Chart(ctx, {
 
         // Call updateTime once to initialize the time
         updateTime();
+    </script>
+    <script>
+      function menuToggle() {
+        const toggleMenu = document.querySelector(".menu");
+        toggleMenu.classList.toggle("active");
+      }
     </script>
 </body>
 </html>

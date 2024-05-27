@@ -66,6 +66,7 @@ if ($result === false) {
 
         <!-- Stylesheet -->
         <link href="../css/style.css" rel="stylesheet">
+        <link href="../css/ui-dashboard.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" />
         <style>
     html, body {
@@ -135,6 +136,7 @@ if ($result === false) {
 </head>
 <body>
 
+
 <nav class="nav-bar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -154,17 +156,41 @@ if ($result === false) {
                 <li class="nav-item">
                     <a class="nav-link" href="appointment.php">Appointments</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="history.php">History</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="../signout.php">Logout</a>
-                </li>
+                <div class="action">
+                <div class="profile" onclick="menuToggle();">
+                  <img src="../assets/avatar.jpg" />
+                </div>
+                <div class="menu">
+                <h2></h2>
+                <?php
+
+      $shop_owner_id = isset($_SESSION['id']) ? trim($_SESSION['id']) : '';
+      $resultName = $database->query("SELECT first_name, last_name FROM shop_owners WHERE shop_owner_id = '$shop_owner_id' ");
+      if ($resultName->num_rows > 0) {
+        $user = $resultName->fetch_assoc();
+        $userFirstName = $user['first_name'];
+        $userLastName = $user['last_name'];
+      }
+?> 
+                  <h3><?php echo "$userFirstName $userLastName";   ?><br /><span>Vehicle Owner</span></h3>
+                  <ul>
+                    <li>
+                      <img src="../assets/icons/user.png" /><a href="#">My profile</a>
+                    </li>
+                    <li>
+                      <img src="../assets/icons/history.png" /><a href="history.php">History</a>
+                    </li>
+                    <li>
+                      <img src="../assets/icons/log-out.png" /><a href="../signout.php">Logout</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </ul>
         </div>
     </div>
 </nav>
-    
+
     <div class="container my-5">
     <?php
     // Check if the result is not empty

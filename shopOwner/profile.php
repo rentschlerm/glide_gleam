@@ -6,7 +6,7 @@ session_start();
 include("../connection.php");
 
 // Check if the user is logged in and has the correct type
-if(isset($_SESSION["user"]) && $_SESSION['type'] == '2'){
+if(isset($_SESSION["user"]) && $_SESSION['type'] == '1'){
     $useremail = $_SESSION["user"];
 } else {
     // Redirect to login page if user is not logged in or has incorrect type
@@ -182,35 +182,7 @@ if ($result === false) {
 </nav>
 
     <div class="container my-5">
-        <?php
-        // Check if the result is not empty
-        if ($result->num_rows > 0) {
-            // Output data of each row
-            while($row = $result->fetch_assoc()) {
-                // Output appointment details in a card
-                echo "<div class='card my-2'>";
-                echo "<div class='card-body'>";
-                echo "<h5 class='card-title'>Shop Name: " . $row["shop_name"]. "</h5>";
-                echo "<p class='card-text'>Location: " . $row["location"]. "</p>";
-                echo "<p class='card-text'>Queue Number: " . $row["queue_number"] . "</p>";
-                echo "<p class='card-text'>Appointment Date: " . date('F d, Y', strtotime($row["appointment_date"])). "</p>";
-                echo "<p class='card-text'>Appointment Time: " . date('h:i A', strtotime($row["appointment_date"])). "</p>";
-                echo "<p class='card-text'>Status: " . $row["status"]. "</p>";
-                // If services are available, display them
-                if (!empty($row["serviceName"])) {
-                    echo "<p class='card-text'>Selected Service: " . $row["serviceName"] . " (₱" . $row["service_price"] . ")</p>";
-                }
-                // Rate button
-// Rate button
-                echo "<a href='rating.php?id=" . $row["appointment_id"] . "' class='btn btn-custom'>Rate</a>";
-                echo "</div>";
-                echo "</div>";
-            }
-        } else {
-            // Output a message if no appointments are found
-            echo "<p>No past appointments found</p>";
-        }
-        ?>
+        
     </div>
 
 </body>

@@ -133,12 +133,12 @@
                     <li class="nav-item">
                         <!-- <a class="nav-link" href="#">Sign In</a> -->
                         <!-- Trigger the modal with a button -->
-                        <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#signIn">Sign in</button>
+                        <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#signIn" id="signInBtn">Sign in</button>
                     </li>
                     <li class="nav-item">
                         <!-- <a class="nav-link" href="#">Sign Up</a> -->&nbsp
                         
-                    </li><button type="button" class="btn btn-custom" data-toggle="modal" data-target="#signUp">Sign up</button>
+                    </li><button type="button" class="btn btn-custom" data-toggle="modal" data-target="#signUp" id="signUpBtn">Sign up</button>
                 </ul>
             </div>
         </div>
@@ -190,22 +190,7 @@
                                     <!-- Register buttons -->
                                     <div class="text-center">
                                         <p>Not a member? <a href="choose_account_type.php" class="hover-link1 non-style-link" data-toggle="modal" data-target="#signUp">Register</a></p>
-                                        <p>or sign up with:</p>
-                                        <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
-                                        <i class="fab fa-facebook-f"></i>
-                                        </button>
-
-                                        <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
-                                        <i class="fab fa-google"></i>
-                                        </button>
-
-                                        <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
-                                        <i class="fab fa-twitter"></i>
-                                        </button>
-
-                                        <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
-                                        <i class="fab fa-github"></i>
-                                        </button>
+                                        
                                     </div>
                                     </form>
                             </table>
@@ -223,7 +208,7 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Register</h4>
+                <h4 class="modal-title">Account Type</h4>
                 <span class="close" onclick="closeModal()"data-dismiss="modal">&times;</span>
             </div>
             <div class="modal-body">

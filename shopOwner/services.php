@@ -18,6 +18,7 @@ include("../connection.php");
     <!-- Your additional CSS styles -->
     <!-- Stylesheet -->
     <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/ui-dashboard.css" rel="stylesheet">
     <style>
         html, body {
             height: 100%;
@@ -70,87 +71,71 @@ include("../connection.php");
             background-color: #FFFFFF; /* White */
         }
     </style>
+  
+
+
 </head>
 <body>
-    <!-- Top Bar Start -->
-    <div class="top-bar">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-4 col-md-12">
-                    <div class="logo">
-                        <a href="index.php">
-                            <h1>Glide<span>Gleam</span></h1>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-8 col-md-7 d-none d-lg-block">
-                    <div class="row">
-                        <div class="col-4"></div>
-                        <div class="col-4">
-                            <div class="top-bar-item">
-                                <div class="top-bar-icon">
-                                    <i class="fa fa-phone-alt"></i>
-                                </div>
-                                <div class="top-bar-text">
-                                    <h3>Call Us</h3>
-                                    <p>+012 345 6789</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="top-bar-item">
-                                <div class="top-bar-icon">
-                                    <i class="far fa-envelope"></i>
-                                </div>
-                                <div class="top-bar-text">
-                                    <h3>Email Us</h3>
-                                    <p>info@example.com</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Top Bar End -->
+<?php
 
-    <!-- Navbar -->
-    <nav class="nav-bar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
+      $shop_owner_id = isset($_SESSION['id']) ? trim($_SESSION['id']) : '';
+      $resultName = $database->query("SELECT first_name, last_name FROM shop_owners WHERE shop_owner_id = '$shop_owner_id' ");
+      if ($resultName->num_rows > 0) {
+        $user = $resultName->fetch_assoc();
+        $userFirstName = $user['first_name'];
+        $userLastName = $user['last_name'];
+      }
+?> 
+<nav class="nav-bar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="logo">
+                <a href="index.php" class="logo-link">
+                    <h1>Glide<span>Gleam</span></h1>
+                </a>
+            </div>
+            <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="index.php">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="appointment.php">Appointments</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="history.php">History</a>
+                </li>
+                <div class="action">
+                <div class="profile" onclick="menuToggle();">
+                  <img src="../assets/avatar.jpg" />
+                </div>
+                <div class="menu">
+                <h2></h2>
+                  <h3><?php echo "$userFirstName $userLastName";   ?><br /><span>Shop Owner</span></h3>
+                  <ul>
+                    <li>
+                      <img src="../assets/icons/user.png" /><a href="profile.php">My profile</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="appointment.php">Appointments</a>
+                    <li>
+                      <img src="../assets/icons/edit.png" /><a href="services.php">Services</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="services.php">Services</a>
+                    <li>
+                      <img src="../assets/icons/shop.png" /><a href="addShop.php">Add shop</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="addShop.php">Shop</a>
+                    <li><img src="../assets/icons/reports.png" /><a href="generate_pdf.php">Report</a></li>
+                    <li>
+                      <img src="../assets/icons/log-out.png" /><a href="../signout.php">Logout</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="history.php">History</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="generate_pdf.php">Reports</a>
-                    </li>
-                    <!-- <li class="nav-item">
-                        <a class="nav-link" href="#">Settings</a>
-                    </li> -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="../signout.php">Logout</a>
-                    </li>
-                </ul>
-            </div>
+                  </ul>
+                </div>
+              </div>
+            </ul>
         </div>
-    </nav>
+    </div>
+</nav>
 
     
     <div class="container mt-4">
@@ -166,15 +151,15 @@ include("../connection.php");
         <div class="table-responsive">
             <div class="text-center">
                 <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Service Name</th>
-                            <th>Vehicle Size</th>
-                            <th>Price</th>
-                            <th>Vehicle Type</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
+                <thead>
+                    <tr>
+                        <th class="sortable" data-column="service_name">Service Name <span class="arrow-up">&#9650;</span><span class="arrow-down">&#9660;</span></th>
+                        <th class="sortable" data-column="vehicle_size">Vehicle Size <span class="arrow-up">&#9650;</span><span class="arrow-down">&#9660;</span></th>
+                        <th class="sortable" data-column="service_price">Price <span class="arrow-up">&#9650;</span><span class="arrow-down">&#9660;</span></th>
+                        <th class="sortable" data-column="vehicle_type">Vehicle Type <span class="arrow-up">&#9650;</span><span class="arrow-down">&#9660;</span></th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
                     <tbody>
                         <?php
                         if($database->connect_error) {
@@ -195,23 +180,22 @@ include("../connection.php");
                             die("Invalid query: " . $database->error);
                         }
 
-                        while ($row = $result2->fetch_assoc()) {
+                     while ($row = $result2->fetch_assoc()) {
                             echo "
                             <tr>
-                                <td>{$row['serviceName']}</td>
-                                <td>{$row['vehicle_size']}</td>
-                                <td>{$row['service_price']}</td>
-                                <td>{$row['vehicle_type']}</td>
+                                <td data-column='service_name'>{$row['serviceName']}</td>
+                                <td data-column='vehicle_size'>{$row['vehicle_size']}</td>
+                                <td data-column='service_price'>{$row['service_price']}</td>
+                                <td data-column='vehicle_type'>{$row['vehicle_type']}</td>
                                 
                                 <td class='action-btns'>
-                                    <a class='btn btn-custom btn-sm' href='/glide_gleam/shopOwner/editServices.php?service_id={$row['service_id']}'>
+                                    <a class='btn btn-custom' href='/glide_gleam/shopOwner/editServices.php?service_id={$row['service_id']}'>
                                         <i class='fas fa-edit fa-sm'></i> <!-- Edit icon -->
                                     </a>
-                                    <a class='btn btn-custom btn-sm' href='/glide_gleam/shopOwner/deleteServices.php?service_id={$row['service_id']}'>
+                                    <a class='btn btn-custom' href='/glide_gleam/shopOwner/deleteServices.php?service_id={$row['service_id']}'>
                                         <i class='fas fa-trash-alt fa-sm'></i> <!-- Delete icon -->
                                     </a>
                                 </td>
-
                             </tr>";
                         }
                         ?>
@@ -243,11 +227,99 @@ include("../connection.php");
 
         // Call the function after successful form submission
         // Assuming the form submission is handled using AJAX and you have a success callback
-        // Replace the following with your actual success callback
         function handleFormSubmission() {
             // Assuming the form submission is successful
             reloadServicesTable(); // Call the function to reload the services table
         }
     </script>
+    <!-- Script to sort the tables -->
+   <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        console.log("Script loaded successfully.");
+
+        let table = document.querySelector("table");
+        if (!table) {
+            console.error("Table element not found.");
+            return;
+        }
+
+        let tbody = table.querySelector("tbody");
+        if (!tbody) {
+            console.error("Tbody element not found.");
+            return;
+        }
+
+        let headers = table.querySelectorAll("th.sortable");
+        if (!headers || headers.length === 0) {
+            console.error("Sortable headers not found.");
+            return;
+        }
+
+        headers.forEach(header => {
+            header.addEventListener("click", () => {
+                let column = header.dataset.column;
+                let sortOrder = header.dataset.order || "asc";
+
+                sortOrder = sortOrder === "asc" ? "desc" : "asc";
+                header.dataset.order = sortOrder;
+
+                // Reset arrow icons in all other column headers
+                headers.forEach(otherHeader => {
+                    if (otherHeader !== header) {
+                        otherHeader.querySelector(".arrow-up").style.display = "none";
+                        otherHeader.querySelector(".arrow-down").style.display = "none";
+                    }
+                });
+
+                let arrows = header.querySelectorAll("span");
+                arrows.forEach(arrow => arrow.style.display = "none");
+                header.querySelector(sortOrder === "asc" ? ".arrow-up" : ".arrow-down").style.display = "inline";
+
+                sortTable(column, sortOrder);
+            });
+        });
+    });
+
+    function sortTable(column, order) {
+        let rows = Array.from(document.querySelectorAll("tbody tr"));
+
+        rows.sort((a, b) => {
+            let aValueElement = a.querySelector(`td[data-column='${column}']`);
+            let bValueElement = b.querySelector(`td[data-column='${column}']`);
+
+            // Check if the queried elements exist
+            if (!aValueElement || !bValueElement) {
+                return 0; // Return 0 to indicate equal values
+            }
+
+            let aValue = aValueElement.textContent.trim();
+            let bValue = bValueElement.textContent.trim();
+
+            // Sort alphabetically for Service Name and Vehicle Type
+            if (column === "service_name" || column === "vehicle_type") {
+                return order === "asc" ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+            }
+            
+            // Sort numerically for Price
+            if (column === "service_price") {
+                let aPrice = parseFloat(aValue.replace("$", ""));
+                let bPrice = parseFloat(bValue.replace("$", ""));
+                return order === "asc" ? aPrice - bPrice : bPrice - aPrice;
+            }
+            
+            // Custom sorting for Vehicle Size
+            if (column === "vehicle_size") {
+                const sizeOrder = { "Small": 1, "Medium": 2, "Large": 3 };
+                return order === "asc" ? sizeOrder[aValue] - sizeOrder[bValue] : sizeOrder[bValue] - sizeOrder[aValue];
+            }
+        });
+
+        let tbody = document.querySelector("tbody");
+        tbody.innerHTML = "";
+        rows.forEach(row => {
+            tbody.appendChild(row);
+        });
+    }
+</script>
 </body>
 </html>
